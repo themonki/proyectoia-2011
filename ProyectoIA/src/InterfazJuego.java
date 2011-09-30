@@ -152,7 +152,7 @@ public class InterfazJuego extends JFrame   {
 		canvasCampo.setTam(cantCuadros);
 		canvasCampo.repaint();
 
-		this.setSize(cantCuadros*100+200,cantCuadros*100+200);
+		this.setSize(cantCuadros*100+200,cantCuadros*100+300);
 		
 	}
 
