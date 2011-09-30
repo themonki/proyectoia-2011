@@ -7,17 +7,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.JComponent;
 import javax.swing.Timer;
 
 
-public class canvasGlobal  extends Canvas  implements ActionListener{
+public class canvasGlobal  extends JComponent  implements ActionListener{
 	int filas; 
 	
 	int posX=0,posY=0;
 	int direccion,casillas;
 	int pixelRecorrido=0;
 	Vector < Vector < Integer>> obstaculos= new Vector<Vector<Integer>>();
-	Vector < Vector < Integer>> posxYPosy= new Vector<Vector<Integer>>();
+	Vector < Integer[]> posxYPosy= new Vector<Integer[]>();
 	Vector <String[]> estadoDeLosCarros=new Vector<String[]>(1);
 
 	private Timer tiempo;
@@ -44,7 +45,7 @@ public class canvasGlobal  extends Canvas  implements ActionListener{
 			Image miImagen = (Toolkit.getDefaultToolkit()).getImage("imagen/"
 					+ estadoDeLosCarros.get(i)[1] + "/"
 					+ estadoDeLosCarros.get(i)[0] + ".gif");
-			g.drawImage(miImagen, posxYPosy.get(i).get(1) * 100, posxYPosy.get(i).get(0) * 100, this);
+			g.drawImage(miImagen, posxYPosy.get(i)[1] , posxYPosy.get(i)[0] , this);
 		}
 		
 		for (int i = 0; i < filas; i++) {
@@ -78,10 +79,10 @@ public class canvasGlobal  extends Canvas  implements ActionListener{
 	}
 	public void actionPerformed(ActionEvent e){
 		
-		System.out.print("action");
 		if (casillas*100==pixelRecorrido){tiempo.stop();pixelRecorrido=0;}
 		if (direccion==0)
-		{posX+=1;pixelRecorrido++;
+		{posxYPosy.get(0)[1]+=1;
+		pixelRecorrido++;
 		repaint(0 ,posY ,filas*100,100);
 		}
 		if (direccion==1)
@@ -133,9 +134,10 @@ public class canvasGlobal  extends Canvas  implements ActionListener{
 					else if(!(letra.equals("0"))  && !vectorLetras.contains(letra))
 					{
 						vectorLetras.add(letra);
-						Vector <Integer> pos = new Vector<Integer>();
-						pos.add(i);
-						pos.add(j);
+						Integer [] pos = new Integer [2];
+						pos[0]=i*100;
+						pos[1]=j*100;
+						
 						posxYPosy.add(pos);
 						int columnas=j+1,filas=i+1;
 						while(columnas<matrizPadre.length && (matrizPadre[i][columnas].equals(letra)) )
