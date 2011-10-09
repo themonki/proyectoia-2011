@@ -148,7 +148,7 @@ public Vector<Nodo> sacarHijos(){
 							movimiento.add("abajo");
 							movimiento.add(""+casillasAmover);
 							nodoHijo.setMover(movimiento);
-							nodoHijo.setCosto(costo+1);
+							nodoHijo.setCosto(costo+casillasAmover);
 							hijos.add(nodoHijo);
 							CANTIDAD_NODOS++;
 							
@@ -168,7 +168,7 @@ public Vector<Nodo> sacarHijos(){
 							movimiento.add("arriba");
 							movimiento.add(""+casillasAmover);
 							nodoHijo.setMover(movimiento);
-							nodoHijo.setCosto(costo+1);
+							nodoHijo.setCosto(costo+casillasAmover);
 							hijos.add(nodoHijo);
 							CANTIDAD_NODOS++;
 							
@@ -192,7 +192,7 @@ public Vector<Nodo> sacarHijos(){
 							movimiento.add("derecha");
 							movimiento.add(""+casillasAmover);
 							nodoHijo.setMover(movimiento);
-							nodoHijo.setCosto(costo+1);
+							nodoHijo.setCosto(costo+casillasAmover);
 							hijos.add(nodoHijo);
 							CANTIDAD_NODOS++;
 							
@@ -211,7 +211,7 @@ public Vector<Nodo> sacarHijos(){
 							movimiento.add("izquierda");
 							movimiento.add(""+casillasAmover);
 							nodoHijo.setMover(movimiento);
-							nodoHijo.setCosto(costo+1);
+							nodoHijo.setCosto(costo+casillasAmover);
 							hijos.add(nodoHijo);
 							CANTIDAD_NODOS++;
 							

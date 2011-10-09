@@ -16,7 +16,7 @@ public class BusquedaAmplitud {
 		do{
 			raiz = cola.remove(0);
 			resultadoValidacion =raiz.expandir();
-			cola.addAll(resultadoValidacion);			
+			cola.addAll(resultadoValidacion);
 		}while(resultadoValidacion.size()!=0);		
 		return raiz;		
 	}

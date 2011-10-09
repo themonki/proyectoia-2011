@@ -15,11 +15,12 @@ public class Ejecutar {
 		raiz.sacarDatoscarros();
 		Nodo.CANTIDAD_NODOS++;//para que cuente la raiz
 		
-		BusquedaAmplitud ba = new BusquedaAmplitud(raiz);
+	//	BusquedaAmplitud ba = new BusquedaAmplitud(raiz);
+		BusquedaCosto bc = new BusquedaCosto(raiz);
 		
 		Nodo resultado= new Nodo();
 		try{//exepcion de memoria
-		resultado = ba.realizarBusqueda();
+		resultado = bc.realizarBusqueda();
 		Vector<Vector<String>> movimientos = resultado.RETORNAR_MOVIMIENTO();
 		
 		for(int i =0; i < movimientos.size();i++){
