@@ -34,11 +34,8 @@ Stack<Nodo> pila;
 			resultadoValidacion =raiz.expandir();
 			eliminarNodosCiclos(resultadoValidacion);
 			for(int posVector=0; posVector<resultadoValidacion.size(); posVector++)
-			{
 				pila.push(resultadoValidacion.get(posVector));
-			}
-				
-			//pila.push(resultadoValidacion);
+			
 		}while(resultadoValidacion.size()!=0);		
 		return raiz;		
 	}
