@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Vector;
 
 public class Nodo {
@@ -303,7 +304,8 @@ public Vector<Nodo> sacarHijos(){
 	//aca se retorna la rama q tiene la solucion osea la primera en la pila cunado encuentra la meta
     public  Vector<Nodo> RETORNAR_RAMA() {
 
-        Vector <Nodo>rama = new Vector<Nodo>(0,1);      
+        Vector <Nodo>rama = new Vector<Nodo>(0,1);   
+               
 
         if (this.getPadre()==null) {//nodo raiz
             rama.add(this);
@@ -312,6 +314,30 @@ public Vector<Nodo> sacarHijos(){
             rama.add(this);
         }
         return rama;
+    }
+    
+    
+    public boolean comprobarCiclo(String[][] matrizAcomparar,Nodo nodoPadre)
+    {
+    	boolean resultado=false;
+    	
+    	if (nodoPadre==null) {//nodo raiz
+    		return false;
+    	}else {   
+    		resultado = Arrays.deepEquals(matrizAcomparar, nodoPadre.getContenido());
+    		if(resultado)
+    		{
+    			return true;
+    		}else
+     	  	  {
+    			return comprobarCiclo(matrizAcomparar,nodoPadre.getPadre());
+   		 
+     	  	  }
+            
+    	}
+    	
+    	
+    	
     }
 	
 	//esto es entendible

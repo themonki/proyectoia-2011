@@ -73,6 +73,20 @@ public class BusquedaCosto {
 		cola.add(raiz);
 	}
 	
+	private void eliminarNodosCiclos(Vector <Nodo> resultadoValidacion)
+	{
+		//System.out.println("llego1"); 
+		for(int posVector=0; posVector<resultadoValidacion.size();posVector++)
+		{
+			if(resultadoValidacion.get(posVector).comprobarCiclo(resultadoValidacion.get(posVector).getContenido(), resultadoValidacion.get(posVector).getPadre()))
+				resultadoValidacion.removeElementAt(posVector);
+				
+			
+				
+			
+		}
+	}
+	
 	public Nodo realizarBusqueda(){
 		
 		Vector <Nodo> resultadoValidacion;
@@ -81,8 +95,11 @@ public class BusquedaCosto {
 						
 			raiz = cola.poll();		
 			resultadoValidacion =raiz.expandir();
+			//SI QUIEREN COMENTAN ESTE ELIMINAR CICLOS Y VERAS Q SE HACE MAS GRANDE LA COLA DE PRIORIDAD
+			eliminarNodosCiclos(resultadoValidacion);
 			cola.addAll(resultadoValidacion);
-		}while(resultadoValidacion.size()!=0);		
+		}while(resultadoValidacion.size()!=0);	
+		System.out.println("tamano final cola de prioridad:  "+cola.size()); 
 		return raiz;		
 	}
 	
