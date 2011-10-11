@@ -5,7 +5,7 @@ public class Ejecutar {
 
 	public static void main(String[] args) {
 		Lector lectorObj= new Lector();
-		String [][] matrizPadre= lectorObj.leer("./mapa.txt");
+		String [][] matrizPadre= lectorObj.leer("./prueba.txt");
 		
 		Nodo raiz = new Nodo();
 		raiz.setPadre(null);
@@ -31,7 +31,9 @@ public class Ejecutar {
 		
 		}catch(java.lang.StackOverflowError e){
 			e.printStackTrace();
-		}		
+		}catch (java.lang.OutOfMemoryError e){			
+			System.out.println(Nodo.CANTIDAD_NODOS);
+		}	
 		//aca como dice la diapositiva del profe el primero de la cola sera la rama solucion
 		Vector<Nodo> ramaSolucion = resultado.RETORNAR_RAMA();
 
