@@ -15,7 +15,7 @@ public class Ejecutar {
 		raiz.sacarDatoscarros();
 		Nodo.CANTIDAD_NODOS++;//para que cuente la raiz
 		
-	//	BusquedaAmplitud ba = new BusquedaAmplitud(raiz);
+	//	BusquedaAmplitud ba = new BusquedaAmplitud(raiz);  	
 		BusquedaCosto bc = new BusquedaCosto(raiz);
 	//	BusquedaProfundidaSinCiclos bp = new BusquedaProfundidaSinCiclos(raiz);
 		
