@@ -147,8 +147,11 @@ public Vector<Nodo> sacarHijos(){
 							
 							movimiento.add(letra);
 							movimiento.add("abajo");
+							
 							movimiento.add(""+casillasAmover);
+							
 							nodoHijo.setMover(movimiento);
+							
 							nodoHijo.setCosto(costo+casillasAmover);
 							hijos.add(nodoHijo);
 							CANTIDAD_NODOS++;

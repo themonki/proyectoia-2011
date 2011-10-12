@@ -18,9 +18,9 @@ public class InterfazJuego extends JFrame   {
 	 
 	//boton
 	Button ejecutar,BotonAlgoritmo;
-	//etiqueta de adorno
 
 	JMenuBar barramenu;//la barra de arriva del juego 
+	
 	JMenu ayuda,archivo,cuadriculas, configuracion, busquedaInformada, busquedaNoInformada;//menus de la barra
 	
 	JRadioButtonMenuItem rbAmplitud, rbCosto, rbProfundidad, rbAvaro, rbAEstrella;
@@ -29,7 +29,7 @@ public class InterfazJuego extends JFrame   {
 	ManejadorRadioButton manejadorRadioButton = new ManejadorRadioButton();
 	
 	InterfazJuego (){
-		super("Animaciï¿½n Algoritmos de Busqueda Informada y No Informada");
+		super("Animación Algoritmos de Busqueda Informada y No Informada");
 
 
 		barramenu= new JMenuBar();
@@ -38,19 +38,24 @@ public class InterfazJuego extends JFrame   {
 		configuracion = new JMenu("Configuracion");
 		busquedaInformada= new JMenu("Busqueda Informada");
 		busquedaNoInformada= new JMenu("Busqueda No Informada");
+		
+		
 		JMenuItem i1,i2,i3,i4,i5,i6;//menus item 
 		//todo lo relacionado a la barra del menu
 		i1= new JMenuItem("Nuevo Juego");
+		i2= new JMenuItem("Salir");
+		//i3= new JMenuItem("acerca de.....");
+		
+		
 		i1.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
 			setVisible(false);
 			new InterfazJuego().setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );	
 		}});
-		i2= new JMenuItem("Salir");
+		
 		i2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);	}});
 
-		i3= new JMenuItem("acerca de.....");
 		
 		rbAmplitud = new JRadioButtonMenuItem("Preferente Por Amplitud");
 		rbAmplitud.setSelected(true);
@@ -76,13 +81,11 @@ public class InterfazJuego extends JFrame   {
 		//----------------------------------------------------------
 
 		//--------------------------------------------------------------
-		ayuda.add(i3);
+		
 		archivo.add(i1);
 		archivo.add(i2);
 
 
-		Font text9= new Font("Verdana", Font.BOLD, 12);
-		barramenu.setFont(text9);
 		barramenu.add(archivo);
 		barramenu.add(configuracion);
 		barramenu.add(ayuda);
@@ -94,39 +97,26 @@ public class InterfazJuego extends JFrame   {
 		inferiorIz.setBackground(Color.DARK_GRAY);
 
 		ejecutar= new Button("Iniciar Recorrido" );
+		ejecutar.setEnabled(false);
 
 		BotonAlgoritmo= new Button("Realizar Busqueda");
 
 
-		ejecutar.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				canvasCampo.mover(2, 0);
-				System.out.print("paso ");
-			}
-
-		}
-
-		);
-		
+		ejecutar.addActionListener(new ManejadorButton () );
+		BotonAlgoritmo.addActionListener(new ManejadorButton ());
 
 		canvasCampo= new canvasGlobal(7);  
-		matrizPadre=LectorObj.leer("imagen/mapa.txt");
-		System.out.print(matrizPadre);
+		
+		matrizPadre=LectorObj.leer("mapa.txt");
+		
+		
 		canvasCampo.sacarDatoscarros(matrizPadre);
 		
 		
 		add(canvasCampo);
+		
 		pintarcelda(7);//tablero 7*7
 		
-		//------------------------------------------------------    
-
-		//-----------------------------------------------------
-
-		//add(Celdas,BorderLayout.CENTER);
-
-
 
 
 		inferiorIz.add(ejecutar);
@@ -203,6 +193,63 @@ public class InterfazJuego extends JFrame   {
 		}
 
 	}
+	private class ManejadorButton implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource()==BotonAlgoritmo){
+				
+				
+				
+				
+				
+				Lector lectorObj= new Lector();
+				String [][] matrizPadre= lectorObj.leer("./prueba.txt");
+				
+				Nodo raiz = new Nodo();
+				raiz.setPadre(null);
+				raiz.setCosto(0);
+				raiz.setProfundidad(0);
+				raiz.setContenido(matrizPadre);
+				raiz.sacarDatoscarros();
+				Nodo.CANTIDAD_NODOS++;
+				
+				
+				BusquedaAmplitud algoritmo = new BusquedaAmplitud(raiz);
+				Nodo solucion=new Nodo();
+				solucion =algoritmo.realizarBusqueda();
+				Vector <Vector <String>> resultado =solucion.RETORNAR_MOVIMIENTO();
+				String [][] algo =solucion.getContenido();
+				String g = "";
+				for (int i=0;i<7;i++){
+					
+					for (int j=0 ;j<7;j++)
+						g+= " " +matrizPadre[i][j];
+					
+					g+="\n";
+				}
+				
+				System.out.println(g);	
+				
+				
+				
+				for (int i=0;i<resultado.size();i++){
+					
+					System.out.println("Mov "+i+" : " + resultado.get(i).get(0)+ "   "+resultado.get(i).get(1)+"   "+resultado.get(i).get(2) );
+					
+				};
+				
+				System.out.println();
+				
+			}			
+			if(e.getSource()==ejecutar){
+				
+			}
+		}
+		
+		
+	}
+
 
 
 }
