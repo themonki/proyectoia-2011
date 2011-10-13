@@ -14,7 +14,7 @@ public class Lector {
 
 			for (int j = 0; j < 7; j++) {
 
-				System.out.print(matriz[i][j]);
+				System.out.print(matriz[i][j] + " ");
 			}
 			System.out.println("");
 

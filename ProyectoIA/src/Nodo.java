@@ -167,9 +167,9 @@ public Vector<Nodo> sacarHijos(){
 							
 							movimiento.add(letra);
 							movimiento.add("arriba");
-							movimiento.add(""+casillasAmover);
+							movimiento.add(""+casillasAmoverParaReversa);
 							nodoHijo.setMover(movimiento);
-							nodoHijo.setCosto(costo+casillasAmover);
+							nodoHijo.setCosto(costo+casillasAmoverParaReversa);
 							hijos.add(nodoHijo);
 							CANTIDAD_NODOS++;
 							
@@ -210,9 +210,9 @@ public Vector<Nodo> sacarHijos(){
 							
 							movimiento.add(letra);
 							movimiento.add("izquierda");
-							movimiento.add(""+casillasAmover);
+							movimiento.add(""+casillasAmoverParaReversa);
 							nodoHijo.setMover(movimiento);
-							nodoHijo.setCosto(costo+casillasAmover);
+							nodoHijo.setCosto(costo+casillasAmoverParaReversa);
 							hijos.add(nodoHijo);
 							CANTIDAD_NODOS++;
 							
@@ -242,7 +242,7 @@ public Vector<Nodo> sacarHijos(){
 			for (int j = 0; j < matriz.length; j++)
 				MatrizHija[i][j] = matriz[i][j];
 
-		for (int iter = 0; iter < casillasAmover; iter++) {
+		for (int iter = 0; iter < casillasAmover; iter++) {			
 			MatrizHija[posx][posy] = "0";
 			posy = posy + dereOizq;
 		}
@@ -274,11 +274,13 @@ public Vector<Nodo> sacarHijos(){
 		for (int iter = 0; iter < casillasAmover; iter++) {
 			MatrizHija[posx][posy] = "0";
 			posx = posx + arribaOabajo;
+			
 		}
 		for (int iter = 0; iter < tamanoCarro; iter++) {
 			MatrizHija[posx][posy] = letra;
-			posx++;
+			posx++;			
 		}
+		
 		if (arribaOabajo == -1) {
 			for (int iter = 0; iter < casillasAmover; iter++) {
 				MatrizHija[posx][posy] = "0";
@@ -380,4 +382,22 @@ public Vector<Nodo> sacarHijos(){
 	public void setCosto(int v){
 		costo=v;
 	}
+	
+	/*
+	public static void main(String args[]){
+		Lector l= new Lector();
+		String [][] matrizPadre= l.leer("./prueba.txt");
+		
+		Nodo raiz = new Nodo();
+		raiz.setPadre(null);
+		raiz.setCosto(0);
+		raiz.setProfundidad(0);
+		raiz.setContenido(matrizPadre);
+		//raiz.sacarDatoscarros();
+		Nodo.CANTIDAD_NODOS++;//para que cuente la raiz
+		
+		l.imprimir(raiz.getContenido());
+		System.out.println();
+		l.imprimir(raiz.moverCarroVerticalmente(2, 2, 2, 2, "C", -1));
+	}*/
 }
