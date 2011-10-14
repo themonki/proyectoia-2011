@@ -13,15 +13,19 @@ import javax.swing.Timer;
 
 public class canvasGlobal  extends JComponent  implements ActionListener{
 	int filas; 
-	
+	int movimientoActual=0;
 	int posX=0,posY=0;
-	int direccion,casillas;
+	String  direccion;
+	int casillas;
 	int pixelRecorrido=0;
 	Vector < Vector < Integer>> obstaculos= new Vector<Vector<Integer>>();
 	Vector < Integer[]> posxYPosy= new Vector<Integer[]>();
 	Vector <String[]> estadoDeLosCarros=new Vector<String[]>(1);
+	Vector <Vector <String>> resultado;
 
 	private Timer tiempo;
+
+	private String letraCar;
 	//a continuacion los diferentes constructures 
 	public canvasGlobal(int cantFilas)	
 	{
@@ -44,7 +48,8 @@ public class canvasGlobal  extends JComponent  implements ActionListener{
 		for (int i = 0; i < estadoDeLosCarros.size(); i++) {
 			Image miImagen = (Toolkit.getDefaultToolkit()).getImage("imagen/"
 					+ estadoDeLosCarros.get(i)[1] + "/"
-					+ estadoDeLosCarros.get(i)[0] + ".gif");
+					+ estadoDeLosCarros.get(i)[0] +"/"+estadoDeLosCarros.get(i)[2]  +".gif");
+			
 			g.drawImage(miImagen, posxYPosy.get(i)[1] , posxYPosy.get(i)[0] , this);
 		}
 		
@@ -79,43 +84,94 @@ public class canvasGlobal  extends JComponent  implements ActionListener{
 	}
 	public void actionPerformed(ActionEvent e){
 		
-		if (casillas*100==pixelRecorrido){tiempo.stop();pixelRecorrido=0;}
-		if (direccion==0)
-		{posxYPosy.get(0)[1]+=1;
-		pixelRecorrido++;
-		repaint(0 ,posY ,filas*100,100);
+		if (casillas*100==pixelRecorrido)
+		{
+			movimientoActual++;
+			pixelRecorrido=0;
+			if(movimientoActual==resultado.size()) {tiempo.stop();return;}
+		
+			run();
+		
 		}
-		if (direccion==1)
-		{posX-=1;pixelRecorrido++;
-		repaint(0 ,posY ,filas*100,100);
+		if (direccion.equals("derecha"))
+		{
+			
+			int indexCarroAMover=indexOfLetra();
+			posxYPosy.get(indexCarroAMover)[1]+=1;
+		
+			pixelRecorrido++;
+		
+			repaint();
 		}
-		if (direccion==2)
-		{posY+=1;pixelRecorrido++;
-		repaint(posX ,0,100,filas*100);
+		if (direccion.equals("izquierda"))
+		{
+			
+			int indexCarroAMover=indexOfLetra();
+			posxYPosy.get(indexCarroAMover)[1]-=1;
+		
+			pixelRecorrido++;
+		
+			repaint();
 		}
-		if (direccion==3)
-		{posY-=1;pixelRecorrido++;
-		repaint(posX ,0,100,filas*100);
+		if (direccion.equals("arriba"))
+		{
+			
+			int indexCarroAMover=indexOfLetra();
+			posxYPosy.get(indexCarroAMover)[0]-=1;
+		
+			pixelRecorrido++;
+		
+			repaint();
+		}
+		if (direccion.equals("abajo"))
+		{
+			
+			int indexCarroAMover=indexOfLetra();
+			posxYPosy.get(indexCarroAMover)[0]+=1;
+		
+			pixelRecorrido++;
+		
+			repaint();
 		}
 		
 	}
-	public void mover (int casillas ,int direccion)
+	public void mover (int casillas ,String  direccion,String letraCar)
 	{
-		tiempo.start();
+		
 		this.direccion=direccion;
 		this.casillas=casillas; 
+		this.letraCar=letraCar;
 	}
 	
 	//public void update (Graphics g){
 		
 		//paint (g);
 	//}
+	
+	//metodo que retorna la posicion en el arreglo del carro que representa la letra
+	int  indexOfLetra()
+	{
+		for (int i=0;i<estadoDeLosCarros.size();i++)
 		
+		{
+			
+			if (estadoDeLosCarros.get(i)[0].equals( letraCar)) return i;
+			
+			
+		}
+		
+		
+		return -1;
+		
+		
+	}// generalizada
+	
+	
 	 void sacarDatoscarros(String[][] matrizPadre)// generalizada
 		{			
 			Vector <String> vectorLetras= new Vector<String>(1,1); 
 			String letra="";
-			int tamanoCarro=0;
+			int tamanoCarro=1;
 			String direccion="";
 
 			for(int i=0; i<matrizPadre.length;i++)
@@ -165,5 +221,16 @@ public class canvasGlobal  extends JComponent  implements ActionListener{
 				}
 			}						
 			repaint();
-		}	
+		}
+
+	public void setResultadoMov(Vector <Vector <String>> resultado) {
+		this.resultado=resultado;
+	}
+	
+	public void run()
+	{
+		tiempo.start();
+		mover(Integer.parseInt(resultado.get(movimientoActual).get(2)), resultado.get(movimientoActual).get(1), resultado.get(movimientoActual).get(0));
+		
+	}
 }

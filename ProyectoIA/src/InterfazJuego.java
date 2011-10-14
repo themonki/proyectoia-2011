@@ -15,6 +15,7 @@ public class InterfazJuego extends JFrame   {
 	JPanel inferiorIz;
 	canvasGlobal canvasCampo;
 	private String[][] matrizPadre;
+	Vector <Vector <String>> resultado;
 	 
 	//boton
 	Button ejecutar,BotonAlgoritmo;
@@ -40,7 +41,7 @@ public class InterfazJuego extends JFrame   {
 		busquedaNoInformada= new JMenu("Busqueda No Informada");
 		
 		
-		JMenuItem i1,i2,i3,i4,i5,i6;//menus item 
+		JMenuItem i1,i2;//menus item 
 		//todo lo relacionado a la barra del menu
 		i1= new JMenuItem("Nuevo Juego");
 		i2= new JMenuItem("Salir");
@@ -107,7 +108,7 @@ public class InterfazJuego extends JFrame   {
 
 		canvasCampo= new canvasGlobal(7);  
 		
-		matrizPadre=LectorObj.leer("mapa.txt");
+		matrizPadre=LectorObj.leer("prueba.txt");
 		
 		
 		canvasCampo.sacarDatoscarros(matrizPadre);
@@ -197,14 +198,7 @@ public class InterfazJuego extends JFrame   {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource()==BotonAlgoritmo){
-				
-				
-				
-				
-				
-				Lector lectorObj= new Lector();
-				String [][] matrizPadre= lectorObj.leer("./prueba.txt");
+			if(e.getSource()==BotonAlgoritmo){	
 				
 				Nodo raiz = new Nodo();
 				raiz.setPadre(null);
@@ -213,12 +207,13 @@ public class InterfazJuego extends JFrame   {
 				raiz.setContenido(matrizPadre);
 				raiz.sacarDatoscarros();
 				Nodo.CANTIDAD_NODOS++;
+				Nodo solucion=new Nodo();
 				
 				
 				BusquedaAmplitud algoritmo = new BusquedaAmplitud(raiz);
-				Nodo solucion=new Nodo();
+				
 				solucion =algoritmo.realizarBusqueda();
-				Vector <Vector <String>> resultado =solucion.RETORNAR_MOVIMIENTO();
+				resultado =solucion.RETORNAR_MOVIMIENTO();
 				String [][] algo =solucion.getContenido();
 				String g = "";
 				for (int i=0;i<7;i++){
@@ -239,10 +234,15 @@ public class InterfazJuego extends JFrame   {
 					
 				};
 				
-				System.out.println();
+				ejecutar.setEnabled(true);
 				
+			
 			}			
 			if(e.getSource()==ejecutar){
+				
+				canvasCampo.setResultadoMov(resultado);
+				canvasCampo.run();
+				
 				
 			}
 		}
