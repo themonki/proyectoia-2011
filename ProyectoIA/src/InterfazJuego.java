@@ -16,13 +16,15 @@ public class InterfazJuego extends JFrame   {
 	canvasGlobal canvasCampo;
 	private String[][] matrizPadre;
 	Vector <Vector <String>> resultado;
+	JTextArea areaEntrada;
+	JTextArea areaMovimiento;
 	 
 	//boton
 	Button ejecutar,BotonAlgoritmo;
 
 	JMenuBar barramenu;//la barra de arriva del juego 
 	
-	JMenu ayuda,archivo,cuadriculas, configuracion, busquedaInformada, busquedaNoInformada;//menus de la barra
+	JMenu archivo,cuadriculas, configuracion, busquedaInformada, busquedaNoInformada;//menus de la barra
 	
 	JRadioButtonMenuItem rbAmplitud, rbCosto, rbProfundidad, rbAvaro, rbAEstrella;
 	
@@ -34,20 +36,17 @@ public class InterfazJuego extends JFrame   {
 
 
 		barramenu= new JMenuBar();
-		ayuda= new JMenu(" Ayuda ");
+		//ayuda= new JMenu(" Ayuda ");
 		archivo= new JMenu("Archivo");
 		configuracion = new JMenu("Configuracion");
 		busquedaInformada= new JMenu("Busqueda Informada");
 		busquedaNoInformada= new JMenu("Busqueda No Informada");
 		
-		
+		//-------------------------------------------------------------------------------------
 		JMenuItem i1,i2;//menus item 
 		//todo lo relacionado a la barra del menu
 		i1= new JMenuItem("Nuevo Juego");
 		i2= new JMenuItem("Salir");
-		//i3= new JMenuItem("acerca de.....");
-		
-		
 		i1.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
 			setVisible(false);
 			new InterfazJuego().setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );	
@@ -56,6 +55,7 @@ public class InterfazJuego extends JFrame   {
 		i2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);	}});
+		//-----------------------------------------------------------------------------------------
 
 		
 		rbAmplitud = new JRadioButtonMenuItem("Preferente Por Amplitud");
@@ -79,9 +79,6 @@ public class InterfazJuego extends JFrame   {
 
 		configuracion.add(busquedaInformada);
 		configuracion.add(busquedaNoInformada);
-		//----------------------------------------------------------
-
-		//--------------------------------------------------------------
 		
 		archivo.add(i1);
 		archivo.add(i2);
@@ -89,14 +86,32 @@ public class InterfazJuego extends JFrame   {
 
 		barramenu.add(archivo);
 		barramenu.add(configuracion);
-		barramenu.add(ayuda);
+		//barramenu.add(ayuda);
+		
+		//-----------------------------------------------
 		setLayout( new BorderLayout());
 		setJMenuBar(barramenu);
+		
 		//aqui lo relacionado a la vantana
-		Celdas = new JPanel();// un gridlayaut donde estan los canvas 
-		inferiorIz= new JPanel(new  FlowLayout());//tiene el boton 
+		inferiorIz= new JPanel();//tiene el boton 
 		inferiorIz.setBackground(Color.DARK_GRAY);
 
+		
+		areaEntrada= new JTextArea("Matriz Entrada \n",20,20);
+		
+		areaMovimiento= new JTextArea("Movimientos para la  Solucion  \n",20,20);
+		
+
+		
+		JPanel panelaux= new JPanel( );
+		JScrollPane scrollAreaEntrada = new JScrollPane(areaEntrada);
+		areaEntrada.setLineWrap(true);
+		areaEntrada.setEditable(false);
+		JScrollPane scrollAreaMovimiento = new JScrollPane(areaMovimiento);
+		areaMovimiento.setLineWrap(true);
+		areaMovimiento.setEditable(false);
+
+		panelaux.setLayout(new BoxLayout(panelaux, BoxLayout.Y_AXIS));
 		ejecutar= new Button("Iniciar Recorrido" );
 		ejecutar.setEnabled(false);
 
@@ -105,7 +120,8 @@ public class InterfazJuego extends JFrame   {
 
 		ejecutar.addActionListener(new ManejadorButton () );
 		BotonAlgoritmo.addActionListener(new ManejadorButton ());
-
+		
+	
 		canvasCampo= new canvasGlobal(7);  
 		
 		matrizPadre=LectorObj.leer("prueba.txt");
@@ -120,11 +136,15 @@ public class InterfazJuego extends JFrame   {
 		
 
 
+		panelaux.add(scrollAreaEntrada);
+		panelaux.add(scrollAreaMovimiento);
 		inferiorIz.add(ejecutar);
 
 		inferiorIz.add(BotonAlgoritmo);
-
 		inferiorIz.setBackground(Color.LIGHT_GRAY);
+
+
+		add(panelaux,BorderLayout.EAST);
 
 		add(inferiorIz,BorderLayout.SOUTH);
 
@@ -143,7 +163,7 @@ public class InterfazJuego extends JFrame   {
 		canvasCampo.setTam(cantCuadros);
 		canvasCampo.repaint();
 
-		this.setSize(cantCuadros*100+200,cantCuadros*100+300);
+		this.setSize(cantCuadros*100+200+200,cantCuadros*100+200);
 		
 	}
 
@@ -226,14 +246,16 @@ public class InterfazJuego extends JFrame   {
 				
 				System.out.println(g);	
 				
+				areaEntrada.setText(areaEntrada.getText()+g);
 				
 				
+				String temp="";
 				for (int i=0;i<resultado.size();i++){
 					
-					System.out.println("Mov "+i+" : " + resultado.get(i).get(0)+ "   "+resultado.get(i).get(1)+"   "+resultado.get(i).get(2) );
+					temp+="Movimiento #"+i+" : " + resultado.get(i).get(0)+ "   "+resultado.get(i).get(1)+"   "+resultado.get(i).get(2) +"\n";
 					
 				};
-				
+				areaMovimiento.setText(areaMovimiento.getText()+temp);
 				ejecutar.setEnabled(true);
 				
 			
