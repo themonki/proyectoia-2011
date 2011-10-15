@@ -64,7 +64,7 @@ public class BusquedaCosto {
 	        } 
 	    } */
 	
-    Comparator<Nodo> comparator = new comparadorNodo(); 
+	ComparadorNodoCosto comparator = new ComparadorNodoCosto(); 
     PriorityQueue<Nodo> cola; 
        
 	
@@ -79,11 +79,12 @@ public class BusquedaCosto {
 		for(int posVector=0; posVector<resultadoValidacion.size();posVector++)
 		{
 			if(resultadoValidacion.get(posVector).comprobarCiclo(resultadoValidacion.get(posVector).getContenido(), resultadoValidacion.get(posVector).getPadre()))
-				resultadoValidacion.removeElementAt(posVector);
+			{
+				resultadoValidacion.removeElementAt(posVector); 
+				posVector--;				
 				
-			
+			}
 				
-			
 		}
 	}
 	
@@ -95,8 +96,8 @@ public class BusquedaCosto {
 						
 			raiz = cola.poll();		
 			resultadoValidacion =raiz.expandir();
-			//SI QUIEREN COMENTAN ESTE ELIMINAR CICLOS Y VERAS Q SE HACE MAS GRANDE LA COLA DE PRIORIDAD
-			eliminarNodosCiclos(resultadoValidacion);
+			
+		//	eliminarNodosCiclos(resultadoValidacion);
 			cola.addAll(resultadoValidacion);
 		}while(resultadoValidacion.size()!=0);	
 		System.out.println("tamano final cola de prioridad:  "+cola.size()); 

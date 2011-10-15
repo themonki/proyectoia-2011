@@ -5,7 +5,7 @@ public class Ejecutar {
 
 	public static void main(String[] args) {
 		Lector lectorObj= new Lector();
-		String [][] matrizPadre= lectorObj.leer("./prueba.txt");
+		String [][] matrizPadre= lectorObj.leer("./mapa.txt");
 		
 		Nodo raiz = new Nodo();
 		raiz.setPadre(null);
@@ -15,13 +15,15 @@ public class Ejecutar {
 		raiz.sacarDatoscarros();
 		Nodo.CANTIDAD_NODOS++;//para que cuente la raiz
 		
-		BusquedaAmplitud ba = new BusquedaAmplitud(raiz);  	
+	//	BusquedaAmplitud ba = new BusquedaAmplitud(raiz);  	
 	//	BusquedaCosto bc = new BusquedaCosto(raiz);
 	//	BusquedaProfundidaSinCiclos bp = new BusquedaProfundidaSinCiclos(raiz);
+	//	BusquedadAvara ba = new BusquedadAvara(raiz);
+		BusquedaAasterisco baa = new BusquedaAasterisco(raiz);
 		
 		Nodo resultado= new Nodo();
 		try{//exepcion de memoria
-		resultado = ba.realizarBusqueda();
+		resultado = baa.realizarBusqueda();
 		Vector<Vector<String>> movimientos = resultado.RETORNAR_MOVIMIENTO();
 		
 		for(int i =0; i < movimientos.size();i++){
@@ -31,7 +33,6 @@ public class Ejecutar {
 		
 		}catch(java.lang.StackOverflowError e){
 			e.printStackTrace();
-			System.out.println(Nodo.CANTIDAD_NODOS);
 		}catch (java.lang.OutOfMemoryError e){			
 			System.out.println(Nodo.CANTIDAD_NODOS);
 		}	
@@ -52,6 +53,7 @@ public class Ejecutar {
 		
 		System.out.println("Profundidad: "+ resultado.getProfundidad());
 		System.out.println("Costo: "+ resultado.getCosto());
+		System.out.println("Heuristica: "+ resultado.getValHeuristica());
 		System.out.println("Nodos creados: "+ Nodo.CANTIDAD_NODOS);
 	}
 }

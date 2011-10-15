@@ -1,13 +1,21 @@
 import java.util.Arrays;
 import java.util.Vector;
 
-public class Nodo {
+public class Nodo implements Cloneable{
 	//propiedades del nodo el estado de los carros es el vector q dice letra direccion y 
 	//tamaño del carro, letra q saldra es la letra a salir del parqueadero
 	private Nodo padre;
 	private String[][] matriz;
 	private int profundidad;
 	private int costo;
+	private int valHeuristica=0;
+	public int getValHeuristica() {
+		return valHeuristica;
+	}
+
+	public void setValHeuristica(int valHeuristica) {
+		this.valHeuristica = valHeuristica;
+	}
 	static Vector <String[]>estadoDeLosCarros=new Vector<String[]>(1,0);
 	private Vector<String> mover;//triplete: letra, direccion(arriba, abajo, der, izq), cantidad a mover
 	
@@ -17,6 +25,7 @@ public class Nodo {
 	public Nodo(Nodo p, String[][] matriz,int profPadre){
 		this.matriz = matriz;
 		padre = p;
+		
 		setProfundidad(profPadre+1);
 	}
 
@@ -93,6 +102,20 @@ public	void sacarDatoscarros()// generalizada
 			System.out.println("letra: "+estadoDeLosCarros.get(i)[0]+" direccion: "+ estadoDeLosCarros.get(i)[1]+" tama�o: "+estadoDeLosCarros.get(i)[2]);
 		}
 	}
+	
+	int aplicarHeuristica(String[][] matriz)
+	{
+		    int heuristica = 0;
+			int fila=2;
+			for(int columna=2;columna<7;columna++)
+			{
+				if(!(matriz[fila][columna].equals("1")) && !(matriz[fila][columna].equals("0")))
+					heuristica++;
+				
+			}
+			return heuristica;
+		
+	}
 
 	//esta es la funcion mas importante y larga, los try catch y finally los use para q no marcara error cuando se pasara del limite de la matriz osea se q con una validacion en el if se podia
 	//pero es q en la de sacar datos carros era muy complicado hacer los limites de la validacion en el if haci q los hice con excepciones en esta funcion sacar hijos talvez si se podia 
@@ -142,17 +165,17 @@ public Vector<Nodo> sacarHijos(){
 
 						while(auxj<matriz.length && matriz[auxj][k].equals("0"))
 						{
-							Nodo nodoHijo=new Nodo(this,moverCarroVerticalmente(casillasAmover, j, k,  numTamano, letra,1),profundidad);								
-							Vector<String> movimiento = new Vector<String>(0,1);
 							
+							//System.out.println("h"+valHeuristica);
+							Nodo nodoHijo=new Nodo(this,moverCarroVerticalmente(casillasAmover, j, k,  numTamano, letra,1),profundidad);								
+							Vector<String> movimiento = new Vector<String>(0,1);											
 							movimiento.add(letra);
 							movimiento.add("abajo");
-							
 							movimiento.add(""+casillasAmover);
-							
 							nodoHijo.setMover(movimiento);
-							
 							nodoHijo.setCosto(costo+casillasAmover);
+							//System.out.println(aplicarHeuristica(nodoHijo.getContenido()));
+							nodoHijo.setValHeuristica(aplicarHeuristica(nodoHijo.getContenido()));
 							hijos.add(nodoHijo);
 							CANTIDAD_NODOS++;
 							
@@ -164,15 +187,18 @@ public Vector<Nodo> sacarHijos(){
 						int casillasAmoverParaReversa=1;
 
 						while( auxjParaReversa>=0 && matriz[auxjParaReversa][k].equals("0"))
-						{        	
-							Nodo nodoHijo=new Nodo(this,moverCarroVerticalmente(casillasAmoverParaReversa, j, k,  numTamano, letra,-1),profundidad);
-							Vector<String> movimiento = new Vector<String>(0,1);
+						{  
 							
+							//System.out.println("h"+valHeuristica);
+							Nodo nodoHijo=new Nodo(this,moverCarroVerticalmente(casillasAmoverParaReversa, j, k,  numTamano, letra,-1),profundidad);
+							Vector<String> movimiento = new Vector<String>(0,1);							
 							movimiento.add(letra);
 							movimiento.add("arriba");
 							movimiento.add(""+casillasAmoverParaReversa);
 							nodoHijo.setMover(movimiento);
 							nodoHijo.setCosto(costo+casillasAmoverParaReversa);
+						//	System.out.println(aplicarHeuristica(nodoHijo.getContenido()));
+							nodoHijo.setValHeuristica(aplicarHeuristica(nodoHijo.getContenido()));
 							hijos.add(nodoHijo);
 							CANTIDAD_NODOS++;
 							
@@ -188,15 +214,18 @@ public Vector<Nodo> sacarHijos(){
 						int casillasAmover=1;
 						
 						while( auxK<matriz.length && matriz[j][auxK].equals("0"))
-						{        
-							Nodo nodoHijo=new Nodo(this,moverCarroHorizontalmente (casillasAmover, j, k,  numTamano, letra,1),profundidad);
-							Vector<String> movimiento = new Vector<String>(0,1);
+						{    
 							
+						//	System.out.println("h"+valHeuristica);
+							Nodo nodoHijo=new Nodo(this,(moverCarroHorizontalmente (casillasAmover, j, k,  numTamano, letra,1)),profundidad);
+							Vector<String> movimiento = new Vector<String>(0,1);
 							movimiento.add(letra);
 							movimiento.add("derecha");
 							movimiento.add(""+casillasAmover);
 							nodoHijo.setMover(movimiento);
 							nodoHijo.setCosto(costo+casillasAmover);
+						//	System.out.println(aplicarHeuristica(nodoHijo.getContenido()));
+							nodoHijo.setValHeuristica(aplicarHeuristica(nodoHijo.getContenido()));
 							hijos.add(nodoHijo);
 							CANTIDAD_NODOS++;
 							
@@ -208,14 +237,17 @@ public Vector<Nodo> sacarHijos(){
 
 						while(auxKParaReversa>0  && matriz[j][auxKParaReversa].equals("0"))
 						{
+							
+						//	System.out.println("h"+valHeuristica);
 							Nodo nodoHijo=new Nodo(this,moverCarroHorizontalmente (casillasAmoverParaReversa, j, k,  numTamano, letra,-1),profundidad);
 							Vector<String> movimiento = new Vector<String>(0,1);
-							
 							movimiento.add(letra);
 							movimiento.add("izquierda");
 							movimiento.add(""+casillasAmoverParaReversa);
 							nodoHijo.setMover(movimiento);
 							nodoHijo.setCosto(costo+casillasAmoverParaReversa);
+							//System.out.println(aplicarHeuristica(nodoHijo.getContenido()));
+							nodoHijo.setValHeuristica(aplicarHeuristica(nodoHijo.getContenido()));
 							hijos.add(nodoHijo);
 							CANTIDAD_NODOS++;
 							
@@ -245,7 +277,7 @@ public Vector<Nodo> sacarHijos(){
 			for (int j = 0; j < matriz.length; j++)
 				MatrizHija[i][j] = matriz[i][j];
 
-		for (int iter = 0; iter < casillasAmover; iter++) {			
+		for (int iter = 0; iter < casillasAmover; iter++) {
 			MatrizHija[posx][posy] = "0";
 			posy = posy + dereOizq;
 		}
@@ -277,13 +309,11 @@ public Vector<Nodo> sacarHijos(){
 		for (int iter = 0; iter < casillasAmover; iter++) {
 			MatrizHija[posx][posy] = "0";
 			posx = posx + arribaOabajo;
-			
 		}
 		for (int iter = 0; iter < tamanoCarro; iter++) {
 			MatrizHija[posx][posy] = letra;
-			posx++;			
+			posx++;
 		}
-		
 		if (arribaOabajo == -1) {
 			for (int iter = 0; iter < casillasAmover; iter++) {
 				MatrizHija[posx][posy] = "0";
@@ -343,7 +373,37 @@ public Vector<Nodo> sacarHijos(){
     	
     	
     	
-    }
+    }/*
+    public boolean comprobarCiclo(String[][] matrizAcomparar,Nodo nodoPadre) 
+    {
+    	Nodo nodoPadreAux=null;
+    	
+    	
+		try {
+			 nodoPadreAux = (Nodo)nodoPadre.clone();
+		    // nodoPadreAux = (Nodo)CopiaProfunda.copy(nodoPadre);
+
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		
+
+    	
+    	boolean resultado=false;
+    	
+		do
+    	{
+    		resultado = Arrays.deepEquals(matrizAcomparar, nodoPadreAux.getContenido());
+    		if(resultado)
+    			return resultado;
+    		nodoPadreAux=nodoPadreAux.getPadre();
+    		
+    	}while(nodoPadreAux!=null);
+    	return resultado;
+    	
+    }*/
 	
 	//esto es entendible
 
@@ -385,22 +445,4 @@ public Vector<Nodo> sacarHijos(){
 	public void setCosto(int v){
 		costo=v;
 	}
-	
-	/*
-	public static void main(String args[]){
-		Lector l= new Lector();
-		String [][] matrizPadre= l.leer("./prueba.txt");
-		
-		Nodo raiz = new Nodo();
-		raiz.setPadre(null);
-		raiz.setCosto(0);
-		raiz.setProfundidad(0);
-		raiz.setContenido(matrizPadre);
-		//raiz.sacarDatoscarros();
-		Nodo.CANTIDAD_NODOS++;//para que cuente la raiz
-		
-		l.imprimir(raiz.getContenido());
-		System.out.println();
-		l.imprimir(raiz.moverCarroVerticalmente(2, 2, 2, 2, "C", -1));
-	}*/
 }
