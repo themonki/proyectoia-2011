@@ -109,7 +109,7 @@ public	void sacarDatoscarros()// generalizada
 			int fila=2;
 			for(int columna=2;columna<7;columna++)
 			{
-				if(!(matriz[fila][columna].equals("1")) && !(matriz[fila][columna].equals("0")))
+				if(!(matriz[fila][columna].equals("1")) && !(matriz[fila][columna].equals("0")) && !(matriz[fila][columna].equals("A")))
 					heuristica++;
 				
 			}
