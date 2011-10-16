@@ -1,6 +1,7 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -28,11 +29,13 @@ public class InterfazJuego extends JFrame   {
 	
 	JRadioButtonMenuItem rbAmplitud, rbCosto, rbProfundidad, rbAvaro, rbAEstrella;
 	
-	
+	JMenuItem seleccionarArchivo;
 	ManejadorRadioButton manejadorRadioButton = new ManejadorRadioButton();
 	
+	static String dirArchivo="prueba.txt";
+		
 	InterfazJuego (){
-		super("Animación Algoritmos de Busqueda Informada y No Informada");
+		super("AnimaciÃ³n Algoritmos de Busqueda Informada y No Informada");
 
 
 		barramenu= new JMenuBar();
@@ -47,14 +50,16 @@ public class InterfazJuego extends JFrame   {
 		//todo lo relacionado a la barra del menu
 		i1= new JMenuItem("Nuevo Juego");
 		i2= new JMenuItem("Salir");
+		seleccionarArchivo=new JMenuItem("Cargar Archivo");
 		i1.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
 			setVisible(false);
-			new InterfazJuego().setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );	
+			new InterfazJuego().setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		}});
 		
 		i2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);	}});
+		seleccionarArchivo.addActionListener(new ManejadorButton());
 		//-----------------------------------------------------------------------------------------
 
 		
@@ -81,6 +86,7 @@ public class InterfazJuego extends JFrame   {
 		configuracion.add(busquedaNoInformada);
 		
 		archivo.add(i1);
+		archivo.add(seleccionarArchivo);
 		archivo.add(i2);
 
 
@@ -124,7 +130,8 @@ public class InterfazJuego extends JFrame   {
 	
 		canvasCampo= new canvasGlobal(7);  
 		
-		matrizPadre=LectorObj.leer("prueba.txt");
+				
+		matrizPadre=LectorObj.leer(dirArchivo);
 		
 		
 		canvasCampo.sacarDatoscarros(matrizPadre);
@@ -259,12 +266,25 @@ public class InterfazJuego extends JFrame   {
 				ejecutar.setEnabled(true);
 				
 			
-			}			
-			if(e.getSource()==ejecutar){
+			}else if(e.getSource()==ejecutar){
 				
 				canvasCampo.setResultadoMov(resultado);
-				canvasCampo.run();
+				canvasCampo.run();				
+			}else if(e.getSource()==seleccionarArchivo){
 				
+				JFileChooser manager = new JFileChooser(System.getProperty("user.dir"));
+				manager.setDialogTitle("Seleccionar Archivo de juego");
+				manager.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				manager.setApproveButtonText("Cargar");
+				int returnVal = manager.showSaveDialog(new JFrame());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {//si selecciona guardar
+					File file = manager.getSelectedFile();
+					dirArchivo=  file.getAbsolutePath();
+					//cargar el canvas!!
+					setVisible(false);
+					new InterfazJuego().setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+					dispose();
+				}
 				
 			}
 		}
