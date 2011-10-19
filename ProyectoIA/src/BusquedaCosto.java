@@ -97,18 +97,11 @@ public class BusquedaCosto {
 			raiz = cola.poll();		
 			resultadoValidacion =raiz.expandir();
 			
-		//	eliminarNodosCiclos(resultadoValidacion);
+			//eliminarNodosCiclos(resultadoValidacion);
 			cola.addAll(resultadoValidacion);
 		}while(resultadoValidacion.size()!=0);	
 		System.out.println("tamano final cola de prioridad:  "+cola.size()); 
 		return raiz;		
 	}
 	
-	
-	
-	
-	
-	
-	
-
 }

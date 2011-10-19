@@ -91,6 +91,7 @@ public class canvasGlobal  extends JComponent  implements ActionListener{
 			if(movimientoActual==resultado.size()) {
 				tiempo.stop();
 				resultado=null;
+				
 				return;}
 		
 			run();

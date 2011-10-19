@@ -241,12 +241,12 @@ public class InterfazJuego extends JFrame   {
 				Nodo solucion=new Nodo();
 				System.out.println("aqui");
 				
-				BusquedaAmplitud algoritmo = new BusquedaAmplitud(raiz);
-				System.out.println("aqui4");
+				/*BusquedaAmplitud algoritmo = new BusquedaAmplitud(raiz);*/
+				BusquedaCosto algoritmo= new BusquedaCosto(raiz);
 				solucion =algoritmo.realizarBusqueda();
-				System.out.println("aqui52");
+				
 				resultado =solucion.RETORNAR_MOVIMIENTO();
-				System.out.println("aqui62");
+				
 				String [][] algo =solucion.getContenido();
 				String g = "";
 				for (int i=0;i<7;i++){
