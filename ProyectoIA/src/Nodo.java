@@ -17,6 +17,7 @@ public class Nodo implements Cloneable{
 		this.valHeuristica = valHeuristica;
 	}
 	static Vector <String[]>estadoDeLosCarros=new Vector<String[]>(1,0);
+	
 	private Vector<String> mover;//triplete: letra, direccion(arriba, abajo, der, izq), cantidad a mover
 	
 	public static int CANTIDAD_NODOS=0;
@@ -47,6 +48,14 @@ public class Nodo implements Cloneable{
 		return new Vector <Nodo> (0,1);
 	}
 	
+	
+	public void iniEstadoCarros()
+	{
+		estadoDeLosCarros=null;
+		estadoDeLosCarros=new Vector<String[]>(1,0);
+		
+	}
+
 	//esta es la q saca los datos de letra direccion y tama�o del carro
 public	void sacarDatoscarros()// generalizada
 	{

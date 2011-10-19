@@ -11,7 +11,7 @@ import javax.swing.*;
 public class InterfazJuego extends JFrame   {
 
 
-	private static Lector LectorObj= new Lector();
+	private static Lector LectorObj;
 	JPanel Celdas;
 	JPanel inferiorIz;
 	canvasGlobal canvasCampo;
@@ -37,6 +37,8 @@ public class InterfazJuego extends JFrame   {
 	InterfazJuego (){
 		super("Animación Algoritmos de Busqueda Informada y No Informada");
 
+		
+		 LectorObj= new Lector();
 
 		barramenu= new JMenuBar();
 		//ayuda= new JMenu(" Ayuda ");
@@ -53,12 +55,14 @@ public class InterfazJuego extends JFrame   {
 		seleccionarArchivo=new JMenuItem("Cargar Archivo");
 		i1.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
 			setVisible(false);
+			dispose();
 			new InterfazJuego().setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+			
 		}});
 		
 		i2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);	}});
+					}});
 		seleccionarArchivo.addActionListener(new ManejadorButton());
 		//-----------------------------------------------------------------------------------------
 
@@ -226,7 +230,7 @@ public class InterfazJuego extends JFrame   {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==BotonAlgoritmo){	
-				
+				System.out.println("aca");
 				Nodo raiz = new Nodo();
 				raiz.setPadre(null);
 				raiz.setCosto(0);
@@ -235,12 +239,14 @@ public class InterfazJuego extends JFrame   {
 				raiz.sacarDatoscarros();
 				Nodo.CANTIDAD_NODOS++;
 				Nodo solucion=new Nodo();
-				
+				System.out.println("aqui");
 				
 				BusquedaAmplitud algoritmo = new BusquedaAmplitud(raiz);
-				
+				System.out.println("aqui4");
 				solucion =algoritmo.realizarBusqueda();
+				System.out.println("aqui52");
 				resultado =solucion.RETORNAR_MOVIMIENTO();
+				System.out.println("aqui62");
 				String [][] algo =solucion.getContenido();
 				String g = "";
 				for (int i=0;i<7;i++){
@@ -263,8 +269,10 @@ public class InterfazJuego extends JFrame   {
 					
 				};
 				areaMovimiento.setText(areaMovimiento.getText()+temp);
+				raiz.iniEstadoCarros();// PROBLEMAS POR SER UNA VARIABLE ESTATICA 
+				raiz=null;
 				ejecutar.setEnabled(true);
-				
+			
 			
 			}else if(e.getSource()==ejecutar){
 				
