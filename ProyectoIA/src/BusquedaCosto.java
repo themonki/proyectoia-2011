@@ -78,7 +78,9 @@ public class BusquedaCosto {
 		//System.out.println("llego1"); 
 		for(int posVector=0; posVector<resultadoValidacion.size();posVector++)
 		{
-			if(resultadoValidacion.get(posVector).comprobarCiclo(resultadoValidacion.get(posVector).getContenido(), resultadoValidacion.get(posVector).getPadre()))
+			//if(resultadoValidacion.get(posVector).comprobarCiclo(resultadoValidacion.get(posVector).getContenido(), resultadoValidacion.get(posVector).getPadre()))
+		if(resultadoValidacion.get(posVector).comprobarCiclo(resultadoValidacion.get(posVector).getContenido(), resultadoValidacion.get(posVector).getPadre()))
+			
 			{
 				resultadoValidacion.removeElementAt(posVector); 
 				posVector--;				
@@ -97,7 +99,7 @@ public class BusquedaCosto {
 			raiz = cola.poll();		
 			resultadoValidacion =raiz.expandir();
 			
-			//eliminarNodosCiclos(resultadoValidacion);
+			eliminarNodosCiclos(resultadoValidacion);
 			cola.addAll(resultadoValidacion);
 		}while(resultadoValidacion.size()!=0);	
 		System.out.println("tamano final cola de prioridad:  "+cola.size()); 

@@ -109,8 +109,11 @@ public class InterfazJuego extends JFrame   {
 		
 		areaEntrada= new JTextArea("Matriz Entrada \n",20,20);
 		
-		areaMovimiento= new JTextArea("Movimientos para la  Solucion  \n",20,20);
+		areaMovimiento= new JTextArea("Info Del Algoritmo \n",20,20);
 		
+		Font fontSubrayados = new Font("Book Antiqua", Font.BOLD, 16);
+		areaMovimiento.setFont(fontSubrayados);
+		areaEntrada.setFont(fontSubrayados);
 
 		
 		JPanel panelaux= new JPanel( );
@@ -230,7 +233,10 @@ public class InterfazJuego extends JFrame   {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==BotonAlgoritmo){	
-				System.out.println("aca");
+				
+				String stringmovimientos="";// para ver los movimientos resultantes
+				String stringMatrizEntrada = "";// para ver la matriz ingresada
+				
 				Nodo raiz = new Nodo();
 				raiz.setPadre(null);
 				raiz.setCosto(0);
@@ -241,34 +247,67 @@ public class InterfazJuego extends JFrame   {
 				Nodo solucion=new Nodo();
 				System.out.println("aqui");
 				
-				/*BusquedaAmplitud algoritmo = new BusquedaAmplitud(raiz);*/
-				BusquedaCosto algoritmo= new BusquedaCosto(raiz);
-				solucion =algoritmo.realizarBusqueda();
 				
-				resultado =solucion.RETORNAR_MOVIMIENTO();
-				
-				String [][] algo =solucion.getContenido();
-				String g = "";
-				for (int i=0;i<7;i++){
-					
-					for (int j=0 ;j<7;j++)
-						g+= " " +matrizPadre[i][j];
-					
-					g+="\n";
+				//LLAMADO DE LOS ALGORITMOS dependiendo del que este seleccionando
+				if(rbAmplitud.isSelected())
+				{ 
+					BusquedaAmplitud algoritmo = new BusquedaAmplitud(raiz);
+					 solucion =algoritmo.realizarBusqueda();
+					 stringmovimientos="Algoritmo: Busqueda Por Amplitud \n";
+				}
+				if(rbCosto.isSelected())
+				{ 
+					 BusquedaCosto  algoritmo = new BusquedaCosto(raiz);
+					 solucion=algoritmo.realizarBusqueda();
+					 stringmovimientos="Algoritmo: Busqueda Por Costo \n";
+				}
+				if(rbProfundidad.isSelected())
+				{ 
+					 BusquedaProfundidaSinCiclos  algoritmo = new BusquedaProfundidaSinCiclos(raiz);
+					 solucion=algoritmo.realizarBusqueda();
+					 stringmovimientos="Algoritmo: Busqueda Por Profundida Evitando Ciclos \n";
+				}
+				if(rbAEstrella.isSelected())
+				{ 
+					 BusquedaAasterisco  algoritmo = new BusquedaAasterisco(raiz);
+					 solucion=algoritmo.realizarBusqueda();
+					 stringmovimientos="Algoritmo: A* \n";
+				}
+				if(rbAvaro.isSelected())
+				{ 
+					 BusquedadAvara  algoritmo = new BusquedadAvara(raiz);
+					 solucion=algoritmo.realizarBusqueda();
+					 stringmovimientos="Algoritmo: Busqueda Avara \n";
 				}
 				
-				System.out.println(g);	
 				
-				areaEntrada.setText(areaEntrada.getText()+g);
+				stringmovimientos+="Costo : " +solucion.getCosto()+"\n";
+				stringmovimientos+="Profundida : " +solucion.getProfundidad()+"\n";
+				resultado =solucion.RETORNAR_MOVIMIENTO();
 				
 				
-				String temp="";
+				for (int i=0;i<7;i++){
+					
+					
+					for (int j=0 ;j<7;j++)
+						
+						stringMatrizEntrada+= " " +matrizPadre[i][j];
+					
+					
+					stringMatrizEntrada+="\n";
+				}
+				
+				areaEntrada.setText(areaEntrada.getText()+stringMatrizEntrada);
+				
+				
+				// para ver los movimientos retornados
 				for (int i=0;i<resultado.size();i++){
 					
-					temp+="Movimiento #"+i+" : " + resultado.get(i).get(0)+ "   "+resultado.get(i).get(1)+"   "+resultado.get(i).get(2) +"\n";
+					 stringmovimientos+="Movimiento #"+i+" : " + resultado.get(i).get(0)+ "   "+resultado.get(i).get(1)+"   "+resultado.get(i).get(2) +"\n";
 					
 				};
-				areaMovimiento.setText(areaMovimiento.getText()+temp);
+				
+				areaMovimiento.setText(areaMovimiento.getText()+stringmovimientos);
 				raiz.iniEstadoCarros();// PROBLEMAS POR SER UNA VARIABLE ESTATICA 
 				raiz=null;
 				ejecutar.setEnabled(true);
@@ -299,8 +338,6 @@ public class InterfazJuego extends JFrame   {
 		
 		
 	}
-
-
 
 }
 

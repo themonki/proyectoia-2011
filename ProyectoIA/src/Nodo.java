@@ -4,6 +4,7 @@ import java.util.Vector;
 public class Nodo implements Cloneable{
 	//propiedades del nodo el estado de los carros es el vector q dice letra direccion y 
 	//tamaño del carro, letra q saldra es la letra a salir del parqueadero
+	static int numnodos=0 ; 
 	private Nodo padre;
 	private String[][] matriz;
 	private int profundidad;
@@ -42,9 +43,14 @@ public class Nodo implements Cloneable{
 	//expandir como dije antes pregunta si es meta si lo es manda vector vacio si no manda los hijos
 	public Vector <Nodo> expandir()
 	{
+		numnodos++;
+	
 		if(!(esMeta())){		
 			return sacarHijos();
 		}
+		
+	
+		System.out.println("nodo #: " +numnodos );
 		return new Vector <Nodo> (0,1);
 	}
 	
@@ -368,7 +374,7 @@ public Vector<Nodo> sacarHijos(){
     	if (nodoPadre==null) {//nodo raiz
     		return false;
     	}else {   
-    		resultado = Arrays.deepEquals(matrizAcomparar, nodoPadre.getContenido());
+    		resultado = Arrays.deepEquals(matrizAcomparar, nodoPadre.getContenido());// no se si esto funcione
     		if(resultado)
     		{
     			return true;
