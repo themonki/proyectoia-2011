@@ -246,72 +246,78 @@ public class InterfazJuego extends JFrame   {
 				Nodo.CANTIDAD_NODOS++;
 				Nodo solucion=new Nodo();
 				System.out.println("aqui");
-				
+				String costoObtenido="";
+				long tiempoEjecucion=0;
 				
 				//LLAMADO DE LOS ALGORITMOS dependiendo del que este seleccionando
 				if(rbAmplitud.isSelected())
 				{ 
 					BusquedaAmplitud algoritmo = new BusquedaAmplitud(raiz);
-					 solucion =algoritmo.realizarBusqueda();
-					 stringmovimientos="Algoritmo: Busqueda Por Amplitud \n";
+					long tiempoInicio = System.currentTimeMillis();
+					solucion =algoritmo.realizarBusqueda();
+					tiempoEjecucion = System.currentTimeMillis() - tiempoInicio;
+					stringmovimientos="Algoritmo: Busqueda Por Amplitud \n";
 				}
-				if(rbCosto.isSelected())
+				else if(rbCosto.isSelected())
+				{
+					BusquedaCosto algoritmo = new BusquedaCosto(raiz);
+					long tiempoInicio = System.currentTimeMillis();
+					solucion = algoritmo.realizarBusqueda();
+					tiempoEjecucion = System.currentTimeMillis() - tiempoInicio;
+					stringmovimientos = "Algoritmo: Busqueda Por Costo \n";
+					costoObtenido = "Costo : " + solucion.getCosto() + "\n";
+				}
+				else if (rbProfundidad.isSelected()) {
+					BusquedaProfundidaSinCiclos algoritmo = new BusquedaProfundidaSinCiclos(raiz);
+					long tiempoInicio = System.currentTimeMillis();
+					solucion =algoritmo.realizarBusqueda();
+					tiempoEjecucion = System.currentTimeMillis() - tiempoInicio;
+					stringmovimientos = "Algoritmo: Busqueda Por Profundida Evitando Ciclos \n";
+				}
+				else if(rbAEstrella.isSelected())
 				{ 
-					 BusquedaCosto  algoritmo = new BusquedaCosto(raiz);
-					 solucion=algoritmo.realizarBusqueda();
-					 stringmovimientos="Algoritmo: Busqueda Por Costo \n";
+					BusquedaAasterisco  algoritmo = new BusquedaAasterisco(raiz);
+					long tiempoInicio = System.currentTimeMillis();
+					solucion =algoritmo.realizarBusqueda();
+					tiempoEjecucion = System.currentTimeMillis() - tiempoInicio;
+					stringmovimientos="Algoritmo: A* \n";
 				}
-				if(rbProfundidad.isSelected())
+				else if(rbAvaro.isSelected())
 				{ 
-					 BusquedaProfundidaSinCiclos  algoritmo = new BusquedaProfundidaSinCiclos(raiz);
-					 solucion=algoritmo.realizarBusqueda();
-					 stringmovimientos="Algoritmo: Busqueda Por Profundida Evitando Ciclos \n";
+					BusquedadAvara  algoritmo = new BusquedadAvara(raiz);					 
+					long tiempoInicio = System.currentTimeMillis();
+					solucion =algoritmo.realizarBusqueda();
+					tiempoEjecucion = System.currentTimeMillis() - tiempoInicio;
+					stringmovimientos="Algoritmo: Busqueda Avara \n";
 				}
-				if(rbAEstrella.isSelected())
-				{ 
-					 BusquedaAasterisco  algoritmo = new BusquedaAasterisco(raiz);
-					 solucion=algoritmo.realizarBusqueda();
-					 stringmovimientos="Algoritmo: A* \n";
-				}
-				if(rbAvaro.isSelected())
-				{ 
-					 BusquedadAvara  algoritmo = new BusquedadAvara(raiz);
-					 solucion=algoritmo.realizarBusqueda();
-					 stringmovimientos="Algoritmo: Busqueda Avara \n";
-				}
-				
-				
-				stringmovimientos+="Costo : " +solucion.getCosto()+"\n";
-				stringmovimientos+="Profundida : " +solucion.getProfundidad()+"\n";
+								
 				resultado =solucion.RETORNAR_MOVIMIENTO();
 				
-				
-				for (int i=0;i<7;i++){
-					
-					
-					for (int j=0 ;j<7;j++)
-						
-						stringMatrizEntrada+= " " +matrizPadre[i][j];
-					
+				for (int i=0;i<7;i++){				
+					for (int j=0 ;j<7;j++)						
+						stringMatrizEntrada+= " " +matrizPadre[i][j];					
 					
 					stringMatrizEntrada+="\n";
 				}
 				
-				areaEntrada.setText(areaEntrada.getText()+stringMatrizEntrada);
+				areaEntrada.append(stringMatrizEntrada);
+				areaEntrada.append("\n*************************\n");				
 				
-				
+				areaMovimiento.append("\n");
+				stringmovimientos+=costoObtenido; // si es necesario mostrar el costo
 				// para ver los movimientos retornados
-				for (int i=0;i<resultado.size();i++){
-					
+				for (int i=0;i<resultado.size();i++){					
 					 stringmovimientos+="Movimiento #"+i+" : " + resultado.get(i).get(0)+ "   "+resultado.get(i).get(1)+"   "+resultado.get(i).get(2) +"\n";
-					
-				};
+				}
 				
-				areaMovimiento.setText(areaMovimiento.getText()+stringmovimientos);
+				areaMovimiento.append(stringmovimientos);				
+				areaMovimiento.append("Cantidad de nodos: "+Nodo.CANTIDAD_NODOS +"\n");
+				areaMovimiento.append("Tiempo de computo: "+tiempoEjecucion+" ms\n");
+				areaMovimiento.append("Profundida : " +solucion.getProfundidad()+"\n");
+				areaMovimiento.append("\n*************************\n");
 				raiz.iniEstadoCarros();// PROBLEMAS POR SER UNA VARIABLE ESTATICA 
 				raiz=null;
-				ejecutar.setEnabled(true);
-			
+				ejecutar.setEnabled(true);			
 			
 			}else if(e.getSource()==ejecutar){
 				
