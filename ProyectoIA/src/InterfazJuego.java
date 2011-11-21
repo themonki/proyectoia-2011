@@ -232,8 +232,11 @@ public class InterfazJuego extends JFrame   {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
+			
 			if(e.getSource()==BotonAlgoritmo){	
-				
+				long a=System.currentTimeMillis();//tiempo actual 
+			
 				String stringmovimientos="";// para ver los movimientos resultantes
 				String stringMatrizEntrada = "";// para ver la matriz ingresada
 				
@@ -280,9 +283,14 @@ public class InterfazJuego extends JFrame   {
 					 stringmovimientos="Algoritmo: Busqueda Avara \n";
 				}
 				
+				long b=System.currentTimeMillis();//tiempo actual 
+				stringmovimientos+="Tiempo de busqueda (ms) : " +(b-a)+"\n";
 				
 				stringmovimientos+="Costo : " +solucion.getCosto()+"\n";
 				stringmovimientos+="Profundida : " +solucion.getProfundidad()+"\n";
+				stringmovimientos+="Nodos Expan. : " +solucion.getNodosExpandidos()+"\n";
+				stringmovimientos+="Nodos Creados. : " +solucion.getNodosCreados()+"\n";
+				
 				resultado =solucion.RETORNAR_MOVIMIENTO();
 				
 				
@@ -316,7 +324,12 @@ public class InterfazJuego extends JFrame   {
 			}else if(e.getSource()==ejecutar){
 				
 				canvasCampo.setResultadoMov(resultado);
-				canvasCampo.run();				
+				canvasCampo.run();	
+				
+				
+				
+				
+				
 			}else if(e.getSource()==seleccionarArchivo){
 				
 				JFileChooser manager = new JFileChooser(System.getProperty("user.dir"));

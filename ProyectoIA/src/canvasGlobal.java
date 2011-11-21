@@ -233,6 +233,7 @@ public class canvasGlobal  extends JComponent  implements ActionListener{
 	
 	public void run()
 	{
+		if(resultado.size()>15) tiempo.setDelay(1);
 		tiempo.start();
 		mover(Integer.parseInt(resultado.get(movimientoActual).get(2)), resultado.get(movimientoActual).get(1), resultado.get(movimientoActual).get(0));
 		

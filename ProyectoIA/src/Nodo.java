@@ -22,6 +22,7 @@ public class Nodo implements Cloneable{
 	private Vector<String> mover;//triplete: letra, direccion(arriba, abajo, der, izq), cantidad a mover
 	
 	public static int CANTIDAD_NODOS=0;
+	public static int CANTIDAD_NODOS_EXPANDIDOS=0;
 	public Nodo(){}
 
 	public Nodo(Nodo p, String[][] matriz,int profPadre){
@@ -43,14 +44,14 @@ public class Nodo implements Cloneable{
 	//expandir como dije antes pregunta si es meta si lo es manda vector vacio si no manda los hijos
 	public Vector <Nodo> expandir()
 	{
-		numnodos++;
+		CANTIDAD_NODOS_EXPANDIDOS++;
 	
 		if(!(esMeta())){		
 			return sacarHijos();
 		}
 		
 	
-		System.out.println("nodo #: " +numnodos );
+		//System.out.println("nodo #: " +numnodos );
 		return new Vector <Nodo> (0,1);
 	}
 	
@@ -425,6 +426,12 @@ public Vector<Nodo> sacarHijos(){
 	public Nodo getPadre() {
 		return padre;
 	}
+	public int getNodosExpandidos(){
+		return CANTIDAD_NODOS_EXPANDIDOS;
+	}
+	public int getNodosCreados(){
+		return CANTIDAD_NODOS;
+	}
 
 	public String[][] getContenido() {
 
@@ -460,4 +467,5 @@ public Vector<Nodo> sacarHijos(){
 	public void setCosto(int v){
 		costo=v;
 	}
+	
 }
