@@ -10,6 +10,7 @@ public class Nodo implements Cloneable{
 	private int profundidad;
 	private int costo;
 	private int valHeuristica=0;
+	
 	public int getValHeuristica() {
 		return valHeuristica;
 	}
@@ -36,9 +37,16 @@ public class Nodo implements Cloneable{
 
 	public boolean esMeta()
 	{
-		if(matriz[2][6].equals("A"))
-			return true;
-		return false;
+	
+		for (int i=6;true;i--)
+		{
+			
+			if(matriz[2][i].equals("A")) return true;
+
+		
+			
+			if(!matriz[2][i].equals("0")) return false;
+		}
 	}
 
 	//expandir como dije antes pregunta si es meta si lo es manda vector vacio si no manda los hijos

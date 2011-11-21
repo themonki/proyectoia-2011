@@ -35,7 +35,7 @@ public class InterfazJuego extends JFrame   {
 	static String dirArchivo="prueba.txt";
 		
 	InterfazJuego (){
-		super("AnimaciÃ³n Algoritmos de Busqueda Informada y No Informada");
+		super("Animación Algoritmos de Busqueda Informada y No Informada");
 
 		
 		 LectorObj= new Lector();
@@ -177,7 +177,7 @@ public class InterfazJuego extends JFrame   {
 		canvasCampo.setTam(cantCuadros);
 		canvasCampo.repaint();
 
-		this.setSize(cantCuadros*100+200+200,cantCuadros*100+200);
+		this.setSize(cantCuadros*100+200+200+50,cantCuadros*100+200);
 		
 	}
 
@@ -292,7 +292,12 @@ public class InterfazJuego extends JFrame   {
 				stringmovimientos+="Nodos Creados. : " +solucion.getNodosCreados()+"\n";
 				
 				resultado =solucion.RETORNAR_MOVIMIENTO();
+				Vector<String> mover= new Vector<String>();
+				mover.add("A");
+				mover.add("derecha");
+				mover.add("7");
 				
+				resultado.add(mover);
 				
 				for (int i=0;i<7;i++){
 					
