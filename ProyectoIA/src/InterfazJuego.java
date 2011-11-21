@@ -248,7 +248,7 @@ public class InterfazJuego extends JFrame   {
 				raiz.sacarDatoscarros();
 				Nodo.CANTIDAD_NODOS++;
 				Nodo solucion=new Nodo();
-				System.out.println("aqui");
+				
 				
 				
 				//LLAMADO DE LOS ALGORITMOS dependiendo del que este seleccionando
