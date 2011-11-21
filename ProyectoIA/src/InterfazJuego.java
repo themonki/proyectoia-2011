@@ -50,7 +50,7 @@ public class InterfazJuego extends JFrame   {
 		//-------------------------------------------------------------------------------------
 		JMenuItem i1,i2;//menus item 
 		//todo lo relacionado a la barra del menu
-		i1= new JMenuItem("Nuevo Juego");
+		i1= new JMenuItem("Nuevo ");
 		i2= new JMenuItem("Salir");
 		seleccionarArchivo=new JMenuItem("Cargar Archivo");
 		i1.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {
