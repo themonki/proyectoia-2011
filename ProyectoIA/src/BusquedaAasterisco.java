@@ -43,7 +43,7 @@ public class BusquedaAasterisco {
 			
 			//eliminarNodosCiclos(resultadoValidacion);
 			cola.addAll(resultadoValidacion);
-		}while(resultadoValidacion.size()!=0);	
+		}while(!raiz.esMeta());	
 		System.out.println("tamano final cola de prioridad:  "+cola.size()); 
 		return raiz;		
 	}

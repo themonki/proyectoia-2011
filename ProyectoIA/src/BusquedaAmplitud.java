@@ -41,7 +41,7 @@ public class BusquedaAmplitud {
 			
 			
 		
-		}while(resultadoValidacion.size()!=0);	
+		}while(!raiz.esMeta());	
 		
 		return raiz;		
 	}

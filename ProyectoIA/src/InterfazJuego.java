@@ -358,4 +358,3 @@ public class InterfazJuego extends JFrame   {
 	}
 
 }
-

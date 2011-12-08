@@ -31,7 +31,7 @@ public class canvasGlobal  extends JComponent  implements ActionListener{
 	{
 		this.filas= cantFilas;
 		setBackground(Color.white);
-		tiempo= new Timer(10, this);//timer que ejecuta las ordenes progresivamente	
+		tiempo= new Timer(1, this);//timer que ejecuta las ordenes progresivamente	
 	}
 	
 	//constructor por default 

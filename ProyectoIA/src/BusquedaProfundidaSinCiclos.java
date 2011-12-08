@@ -93,7 +93,7 @@ Vector <Nodo> resultadoValidacion;
 			for(int posVector=0; posVector<resultadoValidacion.size(); posVector++)
 				pila.push(resultadoValidacion.get(posVector));
 			
-		}while(resultadoValidacion.size()!=0);		
+		}while(!raiz.getEsMeta());		
 		return raiz;		
 	}
 

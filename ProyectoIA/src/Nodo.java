@@ -10,6 +10,7 @@ public class Nodo implements Cloneable{
 	private int profundidad;
 	private int costo;
 	private int valHeuristica=0;
+	private boolean esMeta=false;
 	
 	public int getValHeuristica() {
 		return valHeuristica;
@@ -57,7 +58,7 @@ public class Nodo implements Cloneable{
 		if(!(esMeta())){		
 			return sacarHijos();
 		}
-		
+		esMeta=true;
 	
 		//System.out.println("nodo #: " +numnodos );
 		return new Vector <Nodo> (0,1);
@@ -233,7 +234,7 @@ public Vector<Nodo> sacarHijos(){
 					}
 
 					if(direccion.equals("horizontal") )
-					{
+					 {
 						int auxK=k+numTamano;	
 						int casillasAmover=1;
 						
@@ -256,10 +257,11 @@ public Vector<Nodo> sacarHijos(){
 							casillasAmover++;
 							auxK++;							
 						}
-						int auxKParaReversa=k-1;
+						int auxKParaReversa=k-1;// ayuda avalidar la posicion 
 						int casillasAmoverParaReversa=1;
 
-						while(auxKParaReversa>0  && matriz[j][auxKParaReversa].equals("0"))
+						
+						while(auxKParaReversa>=0  && matriz[j][auxKParaReversa].equals("0"))
 						{
 							
 						//	System.out.println("h"+valHeuristica);
@@ -278,13 +280,37 @@ public Vector<Nodo> sacarHijos(){
 							casillasAmoverParaReversa++;
 							auxKParaReversa--;
 						}
+						System.out.println("hijos length 2 "+hijos.size()+letra);
 						k=k+numTamano-1;
 					}
 				}// fin if letra
 			}
 		}
 	}
+	
+	//verhijos(hijos);
+	//System.out.println("hijos length "+hijos.size());
 	return hijos;
+	}
+
+	private void verhijos(Vector<Nodo> hijos) {
+	 
+		
+		for (int i=0;i<hijos.size();i++){
+		String [][] matriz= hijos.get(i).getContenido();
+		int prof=hijos.get(i).getCosto();
+			for (int j=0;j<7;j++)
+			{
+				String fila = "" ;
+				for (int k=0;k<7;k++){
+					fila+=matriz[j][k] ;
+					
+				}
+			System.out.println(fila);
+			}
+			
+			System.out.println(prof);
+		}
 	}
 
 	//bueno aqui viene la parte de analisis osea yo les explico el codigo pero deben coger una hoja y un papel y simular los movimientos de los carros
@@ -352,7 +378,7 @@ public Vector<Nodo> sacarHijos(){
 		Vector<Vector<String>> movimiento = new Vector<Vector<String>>(0,1);
 
 		if (this.getPadre() == null) {// nodo raiz
-			//movimiento.add(this);//no ahi movimiento a agregar
+			//movimiento.add(this);//no hay movimiento a agregar
 		} else {
 			movimiento.addAll(this.getPadre().RETORNAR_MOVIMIENTO());
 			movimiento.add(this.mover);
@@ -376,6 +402,8 @@ public Vector<Nodo> sacarHijos(){
     }
     
     
+    
+    // compara las matrices de cada nodo de la rama para mirar si se repite el estado 
     public boolean comprobarCiclo(String[][] matrizAcomparar,Nodo nodoPadre)
     {
     	boolean resultado=false;
@@ -397,37 +425,10 @@ public Vector<Nodo> sacarHijos(){
     	
     	
     	
-    }/*
-    public boolean comprobarCiclo(String[][] matrizAcomparar,Nodo nodoPadre) 
-    {
-    	Nodo nodoPadreAux=null;
-    	
-    	
-		try {
-			 nodoPadreAux = (Nodo)nodoPadre.clone();
-		    // nodoPadreAux = (Nodo)CopiaProfunda.copy(nodoPadre);
-
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		
-		
-
-    	
-    	boolean resultado=false;
-    	
-		do
-    	{
-    		resultado = Arrays.deepEquals(matrizAcomparar, nodoPadreAux.getContenido());
-    		if(resultado)
-    			return resultado;
-    		nodoPadreAux=nodoPadreAux.getPadre();
-    		
-    	}while(nodoPadreAux!=null);
-    	return resultado;
-    	
-    }*/
+    }
+    
+    
+   
 	
 	//esto es entendible
 
@@ -474,6 +475,9 @@ public Vector<Nodo> sacarHijos(){
 	}
 	public void setCosto(int v){
 		costo=v;
+	}
+	public boolean getEsMeta(){
+		return esMeta;
 	}
 	
 }

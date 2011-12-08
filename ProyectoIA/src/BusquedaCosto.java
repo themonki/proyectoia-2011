@@ -93,16 +93,18 @@ public class BusquedaCosto {
 	public Nodo realizarBusqueda(){
 		
 		Vector <Nodo> resultadoValidacion;
-		Nodo raiz;
+		Nodo raiz = new Nodo();
 		do{
+			if(cola.size()==0)break;
 						
 			raiz = cola.poll();		
+		
 			resultadoValidacion =raiz.expandir();
 			
 			eliminarNodosCiclos(resultadoValidacion);
 			cola.addAll(resultadoValidacion);
-		}while(resultadoValidacion.size()!=0);	
-		System.out.println("tamano final cola de prioridad:  "+cola.size()); 
+		}while(!raiz.getEsMeta());	
+		
 		return raiz;		
 	}
 	
