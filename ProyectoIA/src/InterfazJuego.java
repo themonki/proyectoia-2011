@@ -225,6 +225,7 @@ public class InterfazJuego extends JFrame   {
 				rbCosto.setSelected(false);
 				rbAEstrella.setSelected(false);
 			}
+			
 		}
 
 	}
@@ -258,29 +259,34 @@ public class InterfazJuego extends JFrame   {
 					 solucion =algoritmo.realizarBusqueda();
 					 stringmovimientos="Algoritmo: Busqueda Por Amplitud \n";
 				}
-				if(rbCosto.isSelected())
+				else if(rbCosto.isSelected())
 				{ 
 					 BusquedaCosto  algoritmo = new BusquedaCosto(raiz);
 					 solucion=algoritmo.realizarBusqueda();
 					 stringmovimientos="Algoritmo: Busqueda Por Costo \n";
 				}
-				if(rbProfundidad.isSelected())
+				else if(rbProfundidad.isSelected())
 				{ 
 					 BusquedaProfundidaSinCiclos  algoritmo = new BusquedaProfundidaSinCiclos(raiz);
 					 solucion=algoritmo.realizarBusqueda();
 					 stringmovimientos="Algoritmo: Busqueda Por Profundida Evitando Ciclos \n";
 				}
-				if(rbAEstrella.isSelected())
+				else if(rbAEstrella.isSelected())
 				{ 
 					 BusquedaAasterisco  algoritmo = new BusquedaAasterisco(raiz);
 					 solucion=algoritmo.realizarBusqueda();
 					 stringmovimientos="Algoritmo: A* \n";
 				}
-				if(rbAvaro.isSelected())
+				else if(rbAvaro.isSelected())
 				{ 
 					 BusquedadAvara  algoritmo = new BusquedadAvara(raiz);
 					 solucion=algoritmo.realizarBusqueda();
 					 stringmovimientos="Algoritmo: Busqueda Avara \n";
+				}
+				else {
+					
+					mensajeNoSeleccion("Seleccione El Algoritmo de Busqueda");
+					return;
 				}
 				
 				long b=System.currentTimeMillis();//tiempo actual 
@@ -354,6 +360,12 @@ public class InterfazJuego extends JFrame   {
 			}
 		}
 		
+		
+	}
+	public void mensajeNoSeleccion(String mensaje) {
+		JOptionPane.showMessageDialog(
+				   this,
+				   mensaje);
 		
 	}
 
