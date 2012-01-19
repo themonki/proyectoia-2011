@@ -4,11 +4,19 @@ public class MiniMaxClass {
 	
 	
 	Nodo raiz ; 
-	Vector <Vector <Nodo>> arbol ;
-	private int profundida=2;  
-	
+	Vector <Vector <Nodo>> arbol= new Vector<Vector<Nodo>>() ;
+	private int profundida=3;  
+	char [][] TableroInicial={
+			{'.','.','.','.','.','.'},
+			{'.','.','.','.','.','.'},
+			{'.','.','Q','.','p','.'},
+			{'k','.','.','q','.','p'},
+			{'.','.','.','.','.','.'},
+			{'.','.','.','K','.','.'},
+	};
 	public MiniMaxClass() 
 	{
+		raiz= new Nodo(TableroInicial, 0, null);
 		Vector<Nodo> temp = new Vector<Nodo>();
 		temp.add(raiz);
 				
@@ -27,11 +35,67 @@ public class MiniMaxClass {
 			
 			}
 			
+			System.out.println("hijos :: "+hijos.size());
+			
 			arbol.add(hijos);
 			
 			
 		}
 		
+		decisionMiniMax();
+		
+		
+	}
+	
+	public void decisionMiniMax()
+	{
+		Vector <Nodo> hojas=arbol.get(arbol.size()-1);
+		Vector <Nodo> SiguienteJugada=arbol.get(1);
+		Nodo respuesta= new Nodo();
+		int mayorMax=-999999;
+		for (int i=0;i<hojas.size();i++)
+		{
+			hojas.get(i).asignarMinMax(funcionDeUtilidad(hojas.get(i).getTablero()));
+			System.out.println("utilidad max::"+funcionDeUtilidad(hojas.get(i).getTablero()));
+			
+			
+		}
+		
+		
+		
+		for (int j=0;j<SiguienteJugada.size();j++)
+		{
+			System.out.println("Nodo max::"+SiguienteJugada.get(j).getMinMax());
+			if (SiguienteJugada.get(j).getMinMax()>mayorMax){
+				
+				respuesta=SiguienteJugada.get(j);
+				mayorMax=SiguienteJugada.get(j).getMinMax();
+			}
+			
+			
+		}
+		System.out.println("decision que tomo");
+		
+		CheckTheCheck ver =new CheckTheCheck() ;
+		ver.verEstado(respuesta.getTablero());
+		
+		
+	}
+	
+	public int    funcionDeUtilidad(char [][] tablero ){
+		
+		int MaxFichas = 0,MinFichas=0;
+		for (int i=0;i<6;i++)
+			for (int j=0;j<6;j++)
+				if (tablero [i][j]!='.')
+				{
+				
+					if (Character.isUpperCase(tablero[i][j]) ) MaxFichas++;
+					else MinFichas++;}
+		
+		
+		return MaxFichas-MinFichas;
+	
 		
 	}
 	
@@ -52,27 +116,8 @@ public class MiniMaxClass {
 	
 	public static void main (String args []){
 		
-		char[][] tablero ={
-			{'.','.','.','.','.','.','.','.'} ,
-			{'.','.','.','.','.','.','.','.'},
-			{'.','.','.','.','.','.','.','.'},
-			{'.','.','.','.','.','.','.','.'},
-			{'.','.','.','.','.','q','K','.'},
-			{'.','.','.','.','.','.','.','.'},
-			{'.','.','.','.','.','.','.','.'},
-			{'.','.','Q','k','.','.','.','.'}};
-		
-		char[][] tablero2=new char [6][6];
-		for (int i=0;i<6;i++)
-			for (int j=0;j<6;j++)
-				tablero2 [i][j] =tablero[i][j];
-		
-		tablero2[5][5]='n';
-		
-		System.out.println(tablero[5][5] );
-		System.out.println(tablero );
-		System.out.println(tablero2 );
-		
+	
+		MiniMaxClass init = new MiniMaxClass();
 		
 	}
 

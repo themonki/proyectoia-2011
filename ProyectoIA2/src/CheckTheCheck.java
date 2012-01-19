@@ -4,13 +4,7 @@ import java.util.*;
 
 public class CheckTheCheck {
 
-	static char[][] tablero ={
-		{'.','.','.','.','.','.'} ,
-		{'.','.','.','.','.','.'},
-		{'.','.','.','.','.','.'},
-		{'.','.','.','.','k','.'},
-		{'.','.','.','.','.','.'},
-		{'.','.','.','.','.','.'},};
+	char[][] tablero ,TableroCheck;
 
 	static int[] dxPeon = {+1,+1,+1};
 	static int[] dyPeon = {-1,+1,0};
@@ -26,19 +20,20 @@ public class CheckTheCheck {
 	static int[] dxRey = {1,-1,0,0,+1,-1,-1,+1};
 	
 
-	static Vector <Nodo> hijos= new Vector<Nodo>() ; 
+
+	Vector <Nodo> hijos= new Vector<Nodo>() ; 
+	Nodo padre;
+
+	public  void expandir(Nodo padre) {
 
 
-
-
-
-	public  void expandir(int altura) {
-
-
+		this.padre=padre;
+		this.tablero=padre.getTablero();
+		
 
 		boolean isBlanca;
-		if (altura%2==0)  isBlanca=true; else isBlanca=false   ;
-		System.out.println(isBlanca);
+		if (padre.getAltura()%2==0)  isBlanca=true; else isBlanca=false   ;
+	
 
 		char amenazante='.';
 
@@ -51,6 +46,8 @@ public class CheckTheCheck {
 				
 				if(Character.isUpperCase(actual) && !isBlanca || (!Character.isUpperCase(actual) &&  isBlanca ) ) ;
 				else {
+					
+					
 					
 					switch(Character.toUpperCase(actual)) {//convierte la letra a mayuscula y busca el caso correspondiente
 
@@ -104,24 +101,17 @@ public class CheckTheCheck {
 	}
 
 
+	public  boolean isCheck(char comparador) {
 
 
 
-
-	public  void isCheck() {
-
-
-
-		// for(int caseid=1; ; caseid++) {
-
-		if(tableroVacio()) return;
-		//readln(); //linea de separacion entre casos de entrada
+	
 
 		char amenazante='.';
 
-		//outer:	        
-		for(int i=0; i<8; i++) {
-			for(int j=0; j<8; j++) {
+			        
+		for(int i=0; i<6; i++) {
+			for(int j=0; j<6; j++) {
 
 				final char actual=tablero[i][j];
 
@@ -156,8 +146,11 @@ public class CheckTheCheck {
 				}
 				if(amenazante!='.') {
 					System.err.println("amenazante at "+i+","+j+" : "+amenazante);
+					boolean temo =Character.isUpperCase(comparador)^Character.isUpperCase(amenazante);
+					System.out.println("amena :: "+temo+comparador+amenazante);
+					return Character.isUpperCase(comparador)^Character.isUpperCase(amenazante);
 
-					break ;
+					
 				}
 			}
 		}
@@ -168,18 +161,21 @@ public class CheckTheCheck {
 		else {//si encontro un amenazante  si es mayuscula el amenazante  entonces  el amenazado el es rey negro 
 			String amenazado = Character.isUpperCase(amenazante) ? "black" : "white";
 			System.out.println(amenazado+" king is in check. "+ amenazante);
-		}    
+		}
+		return false;    
 	}
 
 
 
-	static boolean recorrido1pasoExpandir(int x, int y, int[] dx, int[] dy, int signoX,boolean isCaballo) {
+	 boolean recorrido1pasoExpandir(int x, int y, int[] dx, int[] dy, int signoX,boolean isCaballo) {
 		final char actual=tablero[x][y];
 		for(int dir=0; dir<dx.length; dir++) {
 			int xx = x+dx[dir]*signoX, yy = y+dy[dir];
 
-			if(valid(xx,yy)&& dy[dir]!=0 && esFichaEnemiga(actual, tablero[xx][yy]))// miro si es valida la posicion y si tengo uno que matar 
+			if(valid(xx,yy)&& dy[dir]!=0 && tablero[xx][yy]!='.' && esFichaEnemiga(actual, tablero[xx][yy]) && !isCaballo)// miro si es valida la posicion y si tengo uno que matar 
 			{
+				
+				System.out.println("if  1 "+tablero[xx][yy])  ;
 
 
 				char [][] nuevoTablero= new char [6][6]; 
@@ -187,33 +183,64 @@ public class CheckTheCheck {
 				nuevoTablero[xx][yy]=actual;
 				nuevoTablero[x][y]='.';
 
-				verEstado(nuevoTablero);
+				
+				TableroCheck=nuevoTablero;
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
-				Nodo hijo = new Nodo( nuevoTablero);	        	
-				hijos.add(hijo);
+				//si mi movimiento hace que quede en jaque mi rey no creo ese nodo
+				if (!isCheck (actual)){
+					verEstado(nuevoTablero);
+				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	       	
+				hijos.add(hijo);}
 
 			}
 
-			if (valid(xx,yy) && ((dy[dir]==0  && tablero[xx][yy]=='.') || isCaballo) )// en caso de que se pueda mover a su frente 
+			if (valid(xx,yy) && dy[dir]==0  && tablero[xx][yy]=='.' && !isCaballo) // en caso de que se pueda mover a su frente 
 			{
+				System.out.println("if  2 ");
+
+				esFichaEnemiga(actual, tablero[xx][yy]);
+				char [][] nuevoTablero= new char [6][6]; 
+				nuevoEstado(nuevoTablero);
+				nuevoTablero[xx][yy]=actual;
+				
+				
+				nuevoTablero[x][y]='.';
+
+			
+				TableroCheck=nuevoTablero;
+				if (!isCheck (actual)){
+					verEstado(nuevoTablero);
+				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
+				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	        	
+				hijos.add(hijo);}	
+			}
+			
+			if (valid(xx,yy) &&  isCaballo )// en caso de que se pueda mover a su frente 
+			{
+				System.out.println("if  3");
 
 				char [][] nuevoTablero= new char [6][6]; 
 				nuevoEstado(nuevoTablero);
 				nuevoTablero[xx][yy]=actual;
-				//5141989 gustavo 
+				
 				
 				nuevoTablero[x][y]='.';
 
-				verEstado(nuevoTablero);
+				
+				TableroCheck=nuevoTablero;
+				if (!isCheck (actual)){
+					verEstado(nuevoTablero);
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
-				Nodo hijo = new Nodo( nuevoTablero);	        	
-				hijos.add(hijo);	
-			}   
+				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	        	
+				hijos.add(hijo);	}
+			}
+			
+			
 		}
 		return false;
 	}
 
-	static boolean recorridoMultipleExpandir(int x, int y, int[] dx, int[] dy) {
+	 boolean recorridoMultipleExpandir(int x, int y, int[] dx, int[] dy) {
 		final char actual=tablero[x][y];
 
 		for(int dir=0; dir<dx.length; dir++) {
@@ -228,15 +255,22 @@ public class CheckTheCheck {
 
 
 
-				verEstado(nuevoTablero);
+			
+				TableroCheck=nuevoTablero;
+				
+				if (!isCheck (actual))
+				
+				{
+					
+					verEstado(nuevoTablero);
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
-				Nodo hijo = new Nodo( nuevoTablero);	        	
+				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	        	
 
-				hijos.add(hijo);
+				hijos.add(hijo);}
 
 				xx+=dx[dir];
 				yy+=dy[dir];
-			}
+				}
 
 			// if(valid(xx,yy) && esReyEnemigo(actual,tablero[xx][yy]))
 			// return true;
@@ -244,42 +278,42 @@ public class CheckTheCheck {
 		return false;
 	}
 
-	static boolean recorrido1paso(int x, int y, int[] dx, int[] dy, int signoX) {
-		final char actual=tablero[x][y];
+	boolean recorrido1paso(int x, int y, int[] dx, int[] dy, int signoX) {
+		final char actual=TableroCheck[x][y];
 		for(int dir=0; dir<dx.length; dir++) {
 			int xx = x+dx[dir]*signoX, yy = y+dy[dir];
-			if(valid(xx,yy) && esReyEnemigo(actual, tablero[xx][yy]))
+			if(valid(xx,yy) && esReyEnemigo(actual, TableroCheck[xx][yy]))
 				return true;
 		}
 
 		return false;
 	}
 
-	static boolean recorridoMultiple(int x, int y, int[] dx, int[] dy) {
-		final char actual=tablero[x][y];
+	boolean recorridoMultiple(int x, int y, int[] dx, int[] dy) {
+		final char actual=TableroCheck[x][y];
 		for(int dir=0; dir<dx.length; dir++) {
 			int xx=x+dx[dir], yy=y+dy[dir];
-			while(valid(xx,yy) && tablero[xx][yy]=='.') {
+			while(valid(xx,yy) && TableroCheck[xx][yy]=='.') {
 				xx+=dx[dir];
 				yy+=dy[dir];
 			}
 
-			if(valid(xx,yy) && esReyEnemigo(actual,tablero[xx][yy]))
+			if(valid(xx,yy) && esReyEnemigo(actual,TableroCheck[xx][yy]))
 				return true;
 		}
 		return false;
 	}
 
 
-	static boolean tableroVacio() {
+	boolean tableroVacio() {
 		for(int i=0; i<8; i++)
 			for(int j=0; j<8; j++)
-				if(tablero[i][j]!='.') 
+				if(TableroCheck[i][j]!='.') 
 					return false;
 		return true;
 	}
 
-	static boolean esReyEnemigo(char actual, char otra) {	
+	boolean esReyEnemigo(char actual, char otra) {	
 		//verfica que la otra ficha sea un rey y luego que ambos no sean mayusculas ni minisculas  
 		//es un xor que toma verdad cuando hay un true y un false mas no dos true o dos false
 		return Character.toUpperCase(otra)=='K' &&
@@ -287,17 +321,17 @@ public class CheckTheCheck {
 
 	}
 
-	static boolean esFichaEnemiga(char actual, char otra) {	
+	boolean esFichaEnemiga(char actual, char otra) {	
 		//verifica que ambos no sean mayusculas 
 		return   (Character.isUpperCase(actual) ^ Character.isUpperCase(otra));
 
 	}
 
-	static boolean valid(int x, int y) {
+	boolean valid(int x, int y) {
 		return x>=0 && x<6 && y>=0 && y<6;
 	}
 
-	static boolean nuevoEstado(char [][] state) {
+	boolean nuevoEstado(char [][] state) {
 
 
 		for (int i=0;i<6;i++)
@@ -307,15 +341,12 @@ public class CheckTheCheck {
 		return false ; 
 	}
 
-	public static void main (String args []){
-		CheckTheCheck alo = new CheckTheCheck();
-
-		alo.expandir(1);
-
-
+	public Vector <Nodo> getHijos(){
+		return hijos;
+		
 	}
 
-	public static String  verEstado(char [][] stateTablero) {
+	public  String  verEstado(char [][] stateTablero) {
 
 		String matriz = "";
 		for (int i=0;i<6;i++){
@@ -332,7 +363,5 @@ public class CheckTheCheck {
 		// TODO Auto-generated method stub
 
 	}
-
-
 
 }
