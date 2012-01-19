@@ -3,20 +3,13 @@ package Interfaz;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -108,7 +101,8 @@ public class Interfaz extends JFrame{
 		
 		setSize(600,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);	
+		setVisible(true);
+		
 	}
 	
 	public void cargarFondo(){
@@ -132,8 +126,41 @@ public class Interfaz extends JFrame{
 		
 	}
 	
-	public void comprobarMovimientos(){
+	
+	/**
+	 * En el segundo click
+	 */
+	public void comprobarMovimientos(char pieza, int posxNow, int posyNow, int posx, int posy ){
+		String piezaConvertida = Character.toString(pieza);
+		String elementoUbicar = Character.toString(tablero[posx][posy]);
+		String minusculas = "bknpq.";
+		boolean fichaNegra= minusculas.contains(piezaConvertida);
+		boolean fichaContrariaVacia;
+		if(fichaNegra)
+		{
+			fichaContrariaVacia=!minusculas.contains(elementoUbicar);
+		}else{
+			fichaContrariaVacia=minusculas.contains(elementoUbicar);
+			}
 		
+		
+		
+		if(pieza == 'p' || pieza == 'P'){//peon
+			
+		}else if(pieza== 'k' || pieza == 'K'){//Rey			
+			if(fichaNegra && fichaContrariaVacia){
+				boolean moverse = false;
+				int restax = Math.abs((posxNow-posx));
+			}else{
+				
+			}
+		}else if(pieza== 'n' || pieza == 'N'){//caballo
+			
+		}else if(pieza== 'b' || pieza == 'B'){// alfil
+			
+		}else if(pieza== 'q' || pieza == 'Q'){// reina
+			
+		}
 	}
 	
 	private class Manejador implements MouseListener, ActionListener{
@@ -218,7 +245,7 @@ public class Interfaz extends JFrame{
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Interfaz a = new Interfaz();
+		new Interfaz();
 		
 		
 	}
