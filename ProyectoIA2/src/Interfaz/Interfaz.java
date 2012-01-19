@@ -23,7 +23,7 @@ import javax.swing.JScrollPane;
 public class Interfaz extends JFrame{
 	
 	JPanel panel;
-	Color c [] = {Color.blue, Color.red}, colorViejo, colorSelect = Color.yellow;
+	Color c [] = {Color.white, Color.GRAY}, colorViejo, colorSelect = Color.yellow;
 	Manejador manejador = new Manejador();
 	boolean seleccionado = false;
 	int posSeleccionado [] = {-1,-1};
