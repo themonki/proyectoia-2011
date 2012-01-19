@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -23,12 +24,12 @@ import javax.swing.JScrollPane;
 public class Interfaz extends JFrame{
 	
 	JPanel panel;
-	Color c [] = {Color.white, Color.GRAY}, colorViejo, colorSelect = Color.yellow;
+	Color c [] = {Color.white, Color.GRAY}, colorViejo, colorSelect = Color.green;
 	Manejador manejador = new Manejador();
-	boolean seleccionado = false;
+	boolean seleccionado = false, flagClick = true;
 	int posSeleccionado [] = {-1,-1};
 	JLabel etiquetaSelect;
-	boolean flagClick = true;
+	JButton botonJugadaSiguiente;
 	
 	private char tablero[][] = new char[6][6];
 	
@@ -85,7 +86,9 @@ public class Interfaz extends JFrame{
 		JScrollPane scroll = new JScrollPane(panel);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-
+		
+		botonJugadaSiguiente = new JButton("Siguiente Jugada");
+		botonJugadaSiguiente.addActionListener(manejador);
 		
 		GridBagLayout gl = new GridBagLayout();
 		panel.setLayout(gl);
@@ -93,7 +96,8 @@ public class Interfaz extends JFrame{
 
 				
 		JPanel p1 = new JPanel(new java.awt.BorderLayout());
-		p1.add(scroll);
+		p1.add(scroll, BorderLayout.CENTER);
+		p1.add(botonJugadaSiguiente, BorderLayout.SOUTH);
 		contenedor.add(p1, BorderLayout.CENTER);
 		
 		cargarImagenes();
@@ -122,6 +126,10 @@ public class Interfaz extends JFrame{
 			selecFondo--;
 		}
 	}
+	
+	/**
+	 * 
+	 */
 	public void posiblesMovimientos(){
 		
 	}
@@ -130,17 +138,17 @@ public class Interfaz extends JFrame{
 	/**
 	 * En el segundo click
 	 */
-	public void comprobarMovimientos(char pieza, int posxNow, int posyNow, int posx, int posy ){
+	public boolean comprobarMovimientos(char pieza, int posxNow, int posyNow, int posx, int posy ){
 		String piezaConvertida = Character.toString(pieza);
 		String elementoUbicar = Character.toString(tablero[posx][posy]);
-		String minusculas = "bknpq.";
+		String minusculas = "bknpq";
 		boolean fichaNegra= minusculas.contains(piezaConvertida);
 		boolean fichaContrariaVacia;
 		if(fichaNegra)
 		{
-			fichaContrariaVacia=!minusculas.contains(elementoUbicar);
+			fichaContrariaVacia=!minusculas.contains(elementoUbicar) || elementoUbicar.contains(".");
 		}else{
-			fichaContrariaVacia=minusculas.contains(elementoUbicar);
+			fichaContrariaVacia=minusculas.contains(elementoUbicar)|| elementoUbicar.contains(".");
 			}
 		
 		
@@ -149,10 +157,19 @@ public class Interfaz extends JFrame{
 			
 		}else if(pieza== 'k' || pieza == 'K'){//Rey			
 			if(fichaNegra && fichaContrariaVacia){
-				boolean moverse = false;
-				int restax = Math.abs((posxNow-posx));
-			}else{
-				
+				int restax = Math.abs((posxNow-posx)), restay = Math.abs((posyNow-posy));
+				if(restax<=1){
+					if(restay<=1){
+						return true;
+					}
+				}
+			}else if(!fichaNegra && fichaContrariaVacia){
+				int restax = Math.abs((posxNow-posx)), restay = Math.abs((posyNow-posy));
+				if(restax<=1){
+					if(restay<=1){
+						return true;
+					}
+				}
 			}
 		}else if(pieza== 'n' || pieza == 'N'){//caballo
 			
@@ -161,6 +178,8 @@ public class Interfaz extends JFrame{
 		}else if(pieza== 'q' || pieza == 'Q'){// reina
 			
 		}
+		
+		return false;
 	}
 	
 	private class Manejador implements MouseListener, ActionListener{
@@ -168,13 +187,15 @@ public class Interfaz extends JFrame{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+			if(!flagClick){
+				return;
+			}
 			JLabel etq = (JLabel)e.getSource();
 			int contador=0;
 			for(int posy = 0; posy < 6 ;posy++)
 				for(int posx = 0; posx < 6 ; posx++ ){
 				if (etq == panel.getComponent(contador)) {
-					if (seleccionado){
+					if (seleccionado){//segundo click
 						seleccionado = false;
 						if (posSeleccionado[0] == posx	&& posSeleccionado[1] == posy) {
 							// no ahi cambios es el mismo
@@ -182,6 +203,14 @@ public class Interfaz extends JFrame{
 							colorViejo = null;
 							etiquetaSelect = null;
 						} else {
+							//no se puede mover ahi
+							if(!comprobarMovimientos(tablero[posSeleccionado[0]][posSeleccionado[1]],
+									posSeleccionado[0],posSeleccionado[1], posx, posy)){
+								JOptionPane.showMessageDialog(null, "No se puede mover");
+								seleccionado = true;
+								return;
+							}
+							
 							// se actualiza la matriz
 							etiquetaSelect.setBackground(colorViejo);
 							tablero[posx][posy] = tablero[posSeleccionado[0]][posSeleccionado[1]];
@@ -191,8 +220,10 @@ public class Interfaz extends JFrame{
 							posSeleccionado[1] = -1;
 							colorViejo = null;
 							etiquetaSelect = null;
+							flagClick=false;
+
 						}
-					} else {
+					} else {// primer click
 						if (tablero[posx][posy] != '.'){
 							etiquetaSelect = etq;
 							colorViejo = etiquetaSelect.getBackground();
@@ -201,12 +232,13 @@ public class Interfaz extends JFrame{
 							posSeleccionado[0] = posx;
 							posSeleccionado[1] = posy;
 						}
-					}  
+					}
 					return;
 				}
 				contador++;
 			}
-		}		
+			
+		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
@@ -236,6 +268,7 @@ public class Interfaz extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			// este seria para el boton de movimiento maquina
+			flagClick=true;
 		}
 		
 	}
