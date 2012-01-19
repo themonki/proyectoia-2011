@@ -3,6 +3,7 @@ package Interfaz;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -15,8 +16,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 
 
@@ -30,6 +35,9 @@ public class Interfaz extends JFrame{
 	int posSeleccionado [] = {-1,-1};
 	JLabel etiquetaSelect;
 	JButton botonJugadaSiguiente;
+	java.awt.Dimension d = new java.awt.Dimension(80,80);//tamaño del cuadro
+	JRadioButtonMenuItem principiante, amateur;
+	JMenuItem nuevoJuego;
 	
 	private char tablero[][] = new char[6][6];
 	
@@ -48,7 +56,6 @@ public class Interfaz extends JFrame{
 				JLabel temp = (JLabel)(panel.getComponent(contador));
 				ImageIcon img = new ImageIcon("imagenes/"+tablero[j][i]+".gif");		
 				//temp.setIcon(img);				
-				java.awt.Dimension d = new java.awt.Dimension(80,80);
 				if(d.width>0 && d.height>0){
 					img.setImage(img.getImage().getScaledInstance(d.width, d.height, Image.SCALE_DEFAULT));
 					temp.setIcon(img);
@@ -81,30 +88,66 @@ public class Interfaz extends JFrame{
 	
 	public void initComponet(){
 		Container contenedor = getContentPane();
+		
+		JMenuBar menu = new JMenuBar();
+		JMenu archivo = new JMenu("Archivo"),dificultad = new JMenu("Dificultad");
+		nuevoJuego = new JMenuItem("Nuevo Juego");
+		principiante = new JRadioButtonMenuItem("principiante");
+		amateur=new JRadioButtonMenuItem("Amateur");
+		
+		principiante.setSelected(true);
+		
+		principiante.addActionListener(manejador);
+		amateur.addActionListener(manejador);
+		nuevoJuego.addActionListener(manejador);
+		
+		dificultad.add(principiante);
+		dificultad.add(amateur);
+		archivo.add(nuevoJuego);
+		archivo.add(dificultad);
+		menu.add(archivo);
+		this.setJMenuBar(menu);
+		
 				
 		panel = new JPanel();
-		JScrollPane scroll = new JScrollPane(panel);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		//JScrollPane scroll = new JScrollPane(panel);
+		//scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		//scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
 		botonJugadaSiguiente = new JButton("Siguiente Jugada");
 		botonJugadaSiguiente.addActionListener(manejador);
+		botonJugadaSiguiente.setEnabled(false);
 		
 		GridBagLayout gl = new GridBagLayout();
 		panel.setLayout(gl);
 		cargarFondo();
 
 				
-		JPanel p1 = new JPanel(new java.awt.BorderLayout());
-		p1.add(scroll, BorderLayout.CENTER);
-		p1.add(botonJugadaSiguiente, BorderLayout.SOUTH);
-		contenedor.add(p1, BorderLayout.CENTER);
+		JPanel p1 = new JPanel(new java.awt.BorderLayout()), pboton = new JPanel();
+		JPanel panelJuego = new JPanel(gl);
+		
+		GridBagConstraints constrain = new GridBagConstraints();
+		constrain.gridy=1;
+		panelJuego.add(new JLabel("Blancas"), constrain);
+		constrain.gridy=2;
+		panelJuego.add(panel, constrain);
+		constrain.gridy=3;
+		panelJuego.add(new JLabel("Negras"), constrain);
+		
+		pboton.add(botonJugadaSiguiente);
+		
+		p1.add(panelJuego, BorderLayout.CENTER);		
+		p1.add(pboton, BorderLayout.SOUTH);
+		
+		contenedor.add(p1);
 		
 		cargarImagenes();
 		
 		
 		setSize(600,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation((screenSize.width)/2-getWidth()/2,(screenSize.height)/2-getHeight()/2);
 		setVisible(true);
 		
 	}
@@ -137,6 +180,9 @@ public class Interfaz extends JFrame{
 	
 	/**
 	 * En el segundo click
+	 * el posxNow y el posyNow son la posicion de la ficha seleccionada (color verde)
+	 * posx y posy son la posicion donde se va a mover
+	 * pieza es la ficha seleccionada (color verde)
 	 */
 	public boolean comprobarMovimientos(char pieza, int posxNow, int posyNow, int posx, int posy ){
 		String piezaConvertida = Character.toString(pieza);
@@ -148,38 +194,68 @@ public class Interfaz extends JFrame{
 		{
 			fichaContrariaVacia=!minusculas.contains(elementoUbicar) || elementoUbicar.contains(".");
 		}else{
-			fichaContrariaVacia=minusculas.contains(elementoUbicar)|| elementoUbicar.contains(".");
-			}
+			fichaContrariaVacia= minusculas.contains(elementoUbicar) || elementoUbicar.contains(".");
+		}	
 		
-		
+		if(!fichaContrariaVacia){//si donde se va a mover NO ahi una ficha contraria o un espacio vacio
+			return false;
+		}
+		int restax = Math.abs((posxNow-posx)), restay = Math.abs((posyNow-posy));
 		
 		if(pieza == 'p' || pieza == 'P'){//peon
 			
-		}else if(pieza== 'k' || pieza == 'K'){//Rey			
-			if(fichaNegra && fichaContrariaVacia){
-				int restax = Math.abs((posxNow-posx)), restay = Math.abs((posyNow-posy));
-				if(restax<=1){
-					if(restay<=1){
-						return true;
-					}
-				}
-			}else if(!fichaNegra && fichaContrariaVacia){
-				int restax = Math.abs((posxNow-posx)), restay = Math.abs((posyNow-posy));
-				if(restax<=1){
-					if(restay<=1){
-						return true;
-					}
-				}
+		}else if(pieza== 'k' || pieza == 'K'){//Rey
+			if(restax<=1 && restay<=1 ){
+				return true;				
 			}
 		}else if(pieza== 'n' || pieza == 'N'){//caballo
-			
-		}else if(pieza== 'b' || pieza == 'B'){// alfil
-			
+			if(restax==1 && restay ==2){
+				return true;
+			}else if(restax == 2 && restay == 1){
+				return true;
+			}
+		}else if(pieza== 'b' || pieza == 'B'){// alfil			
+			if(restax==restay && comprobarCaminoLibreDiagonal(posxNow, posyNow, posx, posy)){				
+				return true;
+			}
 		}else if(pieza== 'q' || pieza == 'Q'){// reina
-			
+			if(restax==restay && comprobarCaminoLibreDiagonal(posxNow, posyNow, posx, posy)){				
+				return true;
+			}else if(restax==0 && comprobarCaminoLibreHorizontal(posxNow, posyNow, posx, posy)){
+				return true;
+			}else if(restay==0 && comprobarCaminoLibreVertical(posxNow, posyNow, posx, posy)){				
+				return true;
+			}
 		}
 		
 		return false;
+	}
+	
+	public boolean comprobarCaminoLibreDiagonal(int iniciox, int inicioy, int finx, int finy){
+		return comprobarCaminoLibre(iniciox, inicioy, finx, finy, 1, 1);
+	}
+	public boolean comprobarCaminoLibreHorizontal(int iniciox, int inicioy, int finx, int finy){
+		return comprobarCaminoLibre(iniciox, inicioy, finx, finy, 0, 1);
+	}
+	public boolean comprobarCaminoLibreVertical(int iniciox, int inicioy, int finx, int finy){
+		return comprobarCaminoLibre(iniciox, inicioy, finx, finy, 1, 0);
+	}
+	
+	public boolean comprobarCaminoLibre(int iniciox, int inicioy, int finx, int finy, int moverx, int movery){
+		int iteracionx =iniciox,iteraciony =inicioy, signox, signoy,divisor = Math.abs((finx-iniciox));
+		
+		if(divisor==0){signox=0;}else{signox=(finx-iniciox)/divisor;}
+		divisor = Math.abs((finy-inicioy));
+		if(divisor==0){signoy=0;}else{signoy=(finy-inicioy)/divisor;}
+		while((iteracionx!=finx || iteraciony!=finy) && 
+				(iteracionx<6 && iteraciony<6) && (iteracionx>=0 && iteraciony>=0)){			
+			if((iteracionx!=iniciox || iteraciony!=inicioy) && tablero[iteracionx][iteraciony]!='.'){
+				return false;
+			}
+			iteracionx=iteracionx + 1*moverx*signox;
+			iteraciony=iteraciony + 1*movery*signoy;
+		}	
+		return true;
 	}
 	
 	private class Manejador implements MouseListener, ActionListener{
@@ -221,9 +297,13 @@ public class Interfaz extends JFrame{
 							colorViejo = null;
 							etiquetaSelect = null;
 							flagClick=false;
-
+							botonJugadaSiguiente.setEnabled(true);
 						}
 					} else {// primer click
+						String may = "BKNPQ";
+						if(may.contains(Character.toString(tablero[posx][posy]))){
+							return;// PARA NO MOVER LAS FICHAS BLANCAS
+						}
 						if (tablero[posx][posy] != '.'){
 							etiquetaSelect = etq;
 							colorViejo = etiquetaSelect.getBackground();
@@ -268,7 +348,21 @@ public class Interfaz extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			// este seria para el boton de movimiento maquina
-			flagClick=true;
+			if(e.getSource()==botonJugadaSiguiente){
+				flagClick=true;
+				botonJugadaSiguiente.setEnabled(false);
+			}else if(e.getSource()==amateur){
+				amateur.setSelected(true);
+				principiante.setSelected(false);
+			}else if(e.getSource()==principiante){				
+				amateur.setSelected(false);
+				principiante.setSelected(true);
+			}else if(e.getSource()==nuevoJuego){
+				dispose();
+				new Interfaz();
+			}
+			
+
 		}
 		
 	}
