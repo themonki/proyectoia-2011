@@ -31,10 +31,12 @@ public class CheckTheCheck {
 		this.tablero=padre.getTablero();
 		
 
+		System.out.println("altura "+padre.altura);
 		boolean isBlanca;
 		if (padre.getAltura()%2==0)  isBlanca=true; else isBlanca=false   ;
 	
 
+		System.out.println("blanca "+isBlanca);
 		char amenazante='.';
 
 		//	        
@@ -44,8 +46,9 @@ public class CheckTheCheck {
 				final char actual=tablero[i][j];
 
 				
-				if(Character.isUpperCase(actual) && !isBlanca || (!Character.isUpperCase(actual) &&  isBlanca ) ) ;
-				else {
+				if(Character.isUpperCase(actual) && isBlanca || (!Character.isUpperCase(actual) &&  !isBlanca ) ) 
+				 {
+					System.out.println ("actual entro "+  actual );
 					
 					
 					
@@ -75,9 +78,11 @@ public class CheckTheCheck {
 						break;
 
 					case 'Q': //reina
+						System.out.println("si expandio "+ amenazante);
 						if(recorridoMultipleExpandir(i,j, dxTorre, dyTorre) ||
 								recorridoMultipleExpandir(i,j, dxAlfil, dyAlfil))
 							amenazante=actual;
+						System.out.println("si expandio fin "+ amenazante);
 						break;
 						
 					case 'K': //reina
@@ -113,7 +118,7 @@ public class CheckTheCheck {
 		for(int i=0; i<6; i++) {
 			for(int j=0; j<6; j++) {
 
-				final char actual=tablero[i][j];
+				final char actual=TableroCheck[i][j];
 
 				switch(Character.toUpperCase(actual)) {//convierte la letra a mayuscula y busca el caso correspondiente
 
@@ -145,10 +150,12 @@ public class CheckTheCheck {
 					break;
 				}
 				if(amenazante!='.') {
-					System.err.println("amenazante at "+i+","+j+" : "+amenazante);
+					System.err.println("amenazante at "+i+","+j+" : "+amenazante+comparador);
 					boolean temo =Character.isUpperCase(comparador)^Character.isUpperCase(amenazante);
-					System.out.println("amena :: "+temo+comparador+amenazante);
-					return Character.isUpperCase(comparador)^Character.isUpperCase(amenazante);
+					//System.out.println("amena :: "+temo+comparador+amenazante);
+					amenazante='.';
+					if (temo==true) return true ;
+					
 
 					
 				}
@@ -162,6 +169,8 @@ public class CheckTheCheck {
 			String amenazado = Character.isUpperCase(amenazante) ? "black" : "white";
 			System.out.println(amenazado+" king is in check. "+ amenazante);
 		}
+		
+		
 		return false;    
 	}
 
@@ -175,7 +184,7 @@ public class CheckTheCheck {
 			if(valid(xx,yy)&& dy[dir]!=0 && tablero[xx][yy]!='.' && esFichaEnemiga(actual, tablero[xx][yy]) && !isCaballo)// miro si es valida la posicion y si tengo uno que matar 
 			{
 				
-				System.out.println("if  1 "+tablero[xx][yy])  ;
+				//System.out.println("if  1 "+tablero[xx][yy])  ;
 
 
 				char [][] nuevoTablero= new char [6][6]; 
@@ -250,23 +259,27 @@ public class CheckTheCheck {
 
 				char [][] nuevoTablero= new char [6][6]; 
 				nuevoEstado(nuevoTablero);
+				char tem = tablero[xx][yy];
 				nuevoTablero[xx][yy]=actual;
+				
 				nuevoTablero[x][y]='.';
 
 
 
 			
 				TableroCheck=nuevoTablero;
-				
+				if (actual == 'Q'&&tem=='r') verEstado(nuevoTablero);
+				System.out.println(!isCheck (actual) +":::" +actual +" temp:: "+tem+" "+actual);
 				if (!isCheck (actual))
 				
 				{
 					
-					verEstado(nuevoTablero);
+					//verEstado(nuevoTablero);
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
 				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	        	
 
-				hijos.add(hijo);}
+				hijos.add(hijo);
+				}
 
 				xx+=dx[dir];
 				yy+=dy[dir];

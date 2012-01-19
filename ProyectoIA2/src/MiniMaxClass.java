@@ -5,14 +5,14 @@ public class MiniMaxClass {
 	
 	Nodo raiz ; 
 	Vector <Vector <Nodo>> arbol= new Vector<Vector<Nodo>>() ;
-	private int profundida=3;  
+	private int profundida=2;  
 	char [][] TableroInicial={
 			{'.','.','.','.','.','.'},
 			{'.','.','.','.','.','.'},
-			{'.','.','Q','.','p','.'},
-			{'k','.','.','q','.','p'},
+			{'.','.','N','.','.','.'},
 			{'.','.','.','.','.','.'},
-			{'.','.','.','K','.','.'},
+			{'.','.','.','p','.','.'},
+			{'.','.','.','.','.','.'},
 	};
 	public MiniMaxClass() 
 	{
@@ -56,7 +56,7 @@ public class MiniMaxClass {
 		for (int i=0;i<hojas.size();i++)
 		{
 			hojas.get(i).asignarMinMax(funcionDeUtilidad(hojas.get(i).getTablero()));
-			System.out.println("utilidad max::"+funcionDeUtilidad(hojas.get(i).getTablero()));
+			//System.out.println("utilidad max::"+funcionDeUtilidad(hojas.get(i).getTablero()));
 			
 			
 		}
@@ -65,7 +65,7 @@ public class MiniMaxClass {
 		
 		for (int j=0;j<SiguienteJugada.size();j++)
 		{
-			System.out.println("Nodo max::"+SiguienteJugada.get(j).getMinMax());
+			//System.out.println("Nodo max::"+SiguienteJugada.get(j).getMinMax());
 			if (SiguienteJugada.get(j).getMinMax()>mayorMax){
 				
 				respuesta=SiguienteJugada.get(j);
@@ -74,10 +74,11 @@ public class MiniMaxClass {
 			
 			
 		}
-		System.out.println("decision que tomo");
+		System.out.println("decision que tomo :::" +respuesta.getMinMax());
 		
 		CheckTheCheck ver =new CheckTheCheck() ;
 		ver.verEstado(respuesta.getTablero());
+		
 		
 		
 	}
