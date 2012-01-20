@@ -115,10 +115,11 @@ public class MiniMaxClass {
 			};
 		
 
-	
-		
-		MiniMaxClass init = new MiniMaxClass(TableroInicial);
-		init.decisionMiniMax();
+	  char o='Q';
+	  int a=o;
+		System.out.println("char :: "+a);
+		//MiniMaxClass init = new MiniMaxClass(TableroInicial);
+		//init.decisionMiniMax();
 		
 	}
 
