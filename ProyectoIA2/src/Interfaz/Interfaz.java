@@ -67,6 +67,9 @@ public class Interfaz extends JFrame{
 	
 	public Interfaz(){
 		super();
+		
+		
+		
 		for(int i = 0; i < 6; i ++)
 			for(int j = 0; j < 6 ; j++ )
 				tablero[i][j]= '.';
@@ -80,7 +83,8 @@ public class Interfaz extends JFrame{
 		tablero[5][5]='q';
 		tablero[2][5]='p';
 		tablero[1][4]='n';
-		tablero[0][5]='b';		
+		tablero[0][5]='b';
+		
 		initComponet();		
 	}
 	
