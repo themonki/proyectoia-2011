@@ -29,13 +29,13 @@ import javax.swing.JScrollPane;
 public class Interfaz extends JFrame{
 	
 	JPanel panel;
-	Color c [] = {Color.white, Color.GRAY}, colorViejo, colorSelect = Color.green;
+	Color c [] = {Color.white, Color.DARK_GRAY}, colorViejo, colorSelect = Color.green;
 	Manejador manejador = new Manejador();
 	boolean seleccionado = false, flagClick = true;//nota:cambiarlo a false
 	int posSeleccionado [] = {-1,-1};
 	JLabel etiquetaSelect;
 	JButton botonJugadaSiguiente;
-	java.awt.Dimension d = new java.awt.Dimension(80,80);//tamaño del cuadro
+	java.awt.Dimension d = new java.awt.Dimension(70,110);//tamaño del cuadro
 	JRadioButtonMenuItem principiante, amateur;
 	JMenuItem nuevoJuego;
 	
