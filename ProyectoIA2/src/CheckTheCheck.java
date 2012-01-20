@@ -222,7 +222,7 @@ public class CheckTheCheck {
 				hijos.add(hijo);}	
 			}
 			
-			if (valid(xx,yy) &&  isCaballo )// en caso de que se pueda mover a su frente 
+			if (valid(xx,yy) &&  isCaballo  && ( tablero[xx][yy]=='.'||esFichaEnemiga(actual, tablero[xx][yy])))// en caso de que se pueda mover a su frente 
 			{
 				System.out.println("if  3");
 
