@@ -350,6 +350,11 @@ public class CheckTheCheck {
 	}
 
 	public Vector <Nodo> getHijos(){
+	
+		if (hijos.size()==0){// nodo hoja 
+			
+			padre.asignarMinMax(padre.funcionDeUtilidad());
+		}
 		return hijos;
 		
 	}
@@ -373,3 +378,4 @@ public class CheckTheCheck {
 	}
 
 }
+

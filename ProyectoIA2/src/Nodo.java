@@ -103,6 +103,23 @@ public class Nodo {
 		
 	}
 	
+	public int    funcionDeUtilidad( ){
+		
+		int MaxFichas = 0,MinFichas=0;
+		for (int i=0;i<6;i++)
+			for (int j=0;j<6;j++)
+				if (Tablero [i][j]!='.')
+				{
+				
+					if (Character.isUpperCase(Tablero[i][j]) ) MaxFichas++;
+					else MinFichas++;}
+		
+		
+		return MaxFichas-MinFichas;
+	
+		
+	}
+	
 	
 
 }

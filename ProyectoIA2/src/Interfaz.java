@@ -33,7 +33,7 @@ public class Interfaz extends JFrame{
 	JPanel panel;
 	JLabel etiquetaSelect;
 	JButton botonJugadaSiguiente;
-	java.awt.Dimension d = new java.awt.Dimension(80,80);//tamaño del cuadro
+	java.awt.Dimension d = new java.awt.Dimension(70,110);//tamaño del cuadro
 	JRadioButtonMenuItem principiante, amateur;
 	JMenuItem nuevoJuego;
 	
