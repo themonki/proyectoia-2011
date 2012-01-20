@@ -98,6 +98,8 @@ public class Nodo {
 			
 		}
 		
+		if (padre==null){System.out.println("papa  "+maxOmin);}
+		
 		
 		
 		
@@ -114,9 +116,8 @@ public class Nodo {
 					if (Character.isUpperCase(Tablero[i][j]) ) MaxFichas++;
 					else MinFichas++;}
 		
-		
+		System.out.println(MaxFichas-MinFichas);
 		return MaxFichas-MinFichas;
-	
 		
 	}
 	

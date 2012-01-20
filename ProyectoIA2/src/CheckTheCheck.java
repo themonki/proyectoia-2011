@@ -252,9 +252,11 @@ public class CheckTheCheck {
 
 		for(int dir=0; dir<dx.length; dir++) {
 			int xx=x+dx[dir], yy=y+dy[dir];
+			
 			while(valid(xx,yy) && (tablero[xx][yy]=='.' || esFichaEnemiga(actual, tablero[xx][yy]))) {
 
 
+				
 				char [][] nuevoTablero= new char [6][6]; 
 				nuevoEstado(nuevoTablero);
 				char tem = tablero[xx][yy];
@@ -264,20 +266,24 @@ public class CheckTheCheck {
 
 
 
+				System.out.println("  " + actual);
 			
 				if (!isCheck (nuevoTablero,actual))
 				
 				{
 					
-					//verEstado(nuevoTablero);
+					verEstado(nuevoTablero);
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
 				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	        	
 
 				hijos.add(hijo);
 				}
 
+				if(tem!='.' &&esFichaEnemiga(actual, tablero[xx][yy])) {break;};
 				xx+=dx[dir];
 				yy+=dy[dir];
+				
+				
 				}
 
 			// if(valid(xx,yy) && esReyEnemigo(actual,tablero[xx][yy]))
@@ -351,10 +357,10 @@ public class CheckTheCheck {
 
 	public Vector <Nodo> getHijos(){
 	
-		if (hijos.size()==0){// nodo hoja 
+		/*if (hijos.size()==0){// nodo hoja 
 			
 			padre.asignarMinMax(padre.funcionDeUtilidad());
-		}
+		}*/
 		return hijos;
 		
 	}
