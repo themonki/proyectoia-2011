@@ -31,7 +31,7 @@ public class Interfaz extends JFrame{
 	JPanel panel;
 	Color c [] = {Color.white, Color.GRAY}, colorViejo, colorSelect = Color.green;
 	Manejador manejador = new Manejador();
-	boolean seleccionado = false, flagClick = true;
+	boolean seleccionado = false, flagClick = true;//nota:cambiarlo a false
 	int posSeleccionado [] = {-1,-1};
 	JLabel etiquetaSelect;
 	JButton botonJugadaSiguiente;
@@ -49,24 +49,9 @@ public class Interfaz extends JFrame{
 		this.tablero = tablero;
 	}	
 	
-	public void cargarImagenes(){
-		int contador = 0;
-		for(int i = 0; i < 6 ; i++){
-			for(int j = 0; j < 6 ; j++){
-				JLabel temp = (JLabel)(panel.getComponent(contador));
-				ImageIcon img = new ImageIcon("imagenes/"+tablero[j][i]+".gif");		
-				//temp.setIcon(img);				
-				if(d.width>0 && d.height>0){
-					img.setImage(img.getImage().getScaledInstance(d.width, d.height, Image.SCALE_DEFAULT));
-					temp.setIcon(img);
-				}
-				contador++;
-			}
-		}
-	}
-	
 	public Interfaz(){
 		super();
+		
 		for(int i = 0; i < 6; i ++)
 			for(int j = 0; j < 6 ; j++ )
 				tablero[i][j]= '.';
@@ -80,12 +65,11 @@ public class Interfaz extends JFrame{
 		tablero[5][5]='q';
 		tablero[2][5]='p';
 		tablero[1][4]='n';
-		tablero[0][5]='b';		
+		tablero[0][5]='b';
+		
 		initComponet();		
 	}
-	
-	
-	
+		
 	public void initComponet(){
 		Container contenedor = getContentPane();
 		
@@ -128,11 +112,11 @@ public class Interfaz extends JFrame{
 		
 		GridBagConstraints constrain = new GridBagConstraints();
 		constrain.gridy=1;
-		panelJuego.add(new JLabel("Blancas"), constrain);
+		panelJuego.add(new JLabel("Negras"), constrain);
 		constrain.gridy=2;
 		panelJuego.add(panel, constrain);
 		constrain.gridy=3;
-		panelJuego.add(new JLabel("Negras"), constrain);
+		panelJuego.add(new JLabel("Blancas"), constrain);
 		
 		pboton.add(botonJugadaSiguiente);
 		
@@ -150,6 +134,22 @@ public class Interfaz extends JFrame{
 		setLocation((screenSize.width)/2-getWidth()/2,(screenSize.height)/2-getHeight()/2);
 		setVisible(true);
 		
+	}
+	
+	public void cargarImagenes(){
+		int contador = 0;
+		for(int i = 0; i < 6 ; i++){
+			for(int j = 0; j < 6 ; j++){
+				JLabel temp = (JLabel)(panel.getComponent(contador));
+				ImageIcon img = new ImageIcon("imagenes/"+((int)tablero[j][i])+".gif");		
+				//temp.setIcon(img);				
+				if(d.width>0 && d.height>0){
+					img.setImage(img.getImage().getScaledInstance(d.width, d.height, Image.SCALE_DEFAULT));
+					temp.setIcon(img);
+				}
+				contador++;
+			}
+		}
 	}
 	
 	public void cargarFondo(){
@@ -170,12 +170,7 @@ public class Interfaz extends JFrame{
 		}
 	}
 	
-	/**
-	 * 
-	 */
-	public void posiblesMovimientos(){
-		
-	}
+	
 	
 	
 	/**
