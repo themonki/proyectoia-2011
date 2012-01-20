@@ -18,7 +18,7 @@ public class Nodo {
 	}
 	public Nodo(char[][] Tablero, int altura,Nodo padre) {
 		
-		
+		this.padre=padre;
 		this.Tablero=Tablero;
 		
 		this.altura=altura;
@@ -94,11 +94,18 @@ public class Nodo {
 		
 		if (padre!=null)
 		{
-			asignarMinMax(maxOmin);
+			padre.asignarMinMax(maxOmin);
 			
 		}
 		
-		if (padre==null){System.out.println("papa  "+maxOmin);}
+		if (padre==null)
+		{
+			System.out.println("papa  "+maxOmin+" altura  " + this.getAltura());
+			
+			CheckTheCheck algo = new CheckTheCheck();
+			algo.verEstado(Tablero);
+			
+		}
 		
 		
 		

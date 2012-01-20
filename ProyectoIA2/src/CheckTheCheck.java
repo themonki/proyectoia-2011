@@ -26,6 +26,7 @@ public class CheckTheCheck {
 
 	public  void expandir(Nodo padre) {
 
+		
 
 		this.padre=padre;
 		this.tablero=padre.getTablero();
@@ -219,7 +220,9 @@ public class CheckTheCheck {
 					verEstado(nuevoTablero);
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
 				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	        	
-				hijos.add(hijo);}	
+				hijos.add(hijo);
+				
+				}	
 			}
 			
 			if (valid(xx,yy) &&  isCaballo  && ( tablero[xx][yy]=='.'||esFichaEnemiga(actual, tablero[xx][yy])))// en caso de que se pueda mover a su frente 
