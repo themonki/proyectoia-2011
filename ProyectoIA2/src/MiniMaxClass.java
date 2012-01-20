@@ -56,7 +56,7 @@ public class MiniMaxClass {
 		for (int i=0;i<hojas.size();i++)
 		{
 			hojas.get(i).asignarMinMax(hojas.get(i).funcionDeUtilidad());
-			//System.out.println("utilidad max::"+funcionDeUtilidad(hojas.get(i).getTablero()));
+			System.out.println("utilidad max::"+hojas.get(i).funcionDeUtilidad());
 			
 			
 		}
@@ -65,7 +65,7 @@ public class MiniMaxClass {
 		
 		for (int j=0;j<SiguienteJugada.size();j++)
 		{
-			//System.out.println("Nodo max::"+SiguienteJugada.get(j).getMinMax());
+			System.out.println("Nodo max::"+SiguienteJugada.get(j).getMinMax());
 			if (SiguienteJugada.get(j).getMinMax()>mayorMax){
 				
 				respuesta=SiguienteJugada.get(j);

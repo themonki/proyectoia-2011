@@ -196,7 +196,7 @@ public class CheckTheCheck {
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
 				//si mi movimiento hace que quede en jaque mi rey no creo ese nodo
 				if (!isCheck (nuevoTablero,actual)){
-					verEstado(nuevoTablero);
+					//verEstado(nuevoTablero);
 				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	       	
 				hijos.add(hijo);}
 
@@ -217,7 +217,7 @@ public class CheckTheCheck {
 			
 				
 				if (!isCheck (nuevoTablero,actual)){
-					verEstado(nuevoTablero);
+				//	verEstado(nuevoTablero);
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
 				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	        	
 				hijos.add(hijo);
@@ -239,7 +239,7 @@ public class CheckTheCheck {
 				
 				
 				if (!isCheck (nuevoTablero,actual)){
-					verEstado(nuevoTablero);
+					//verEstado(nuevoTablero);
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
 				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	        	
 				hijos.add(hijo);	}
@@ -275,7 +275,7 @@ public class CheckTheCheck {
 				
 				{
 					
-					verEstado(nuevoTablero);
+					//verEstado(nuevoTablero);
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
 				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	        	
 
@@ -360,10 +360,10 @@ public class CheckTheCheck {
 
 	public Vector <Nodo> getHijos(){
 	
-		/*if (hijos.size()==0){// nodo hoja 
+		if (hijos.size()==0){// nodo hoja 
 			
 			padre.asignarMinMax(padre.funcionDeUtilidad());
-		}*/
+		}
 		return hijos;
 		
 	}

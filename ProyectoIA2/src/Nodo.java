@@ -100,10 +100,10 @@ public class Nodo {
 		
 		if (padre==null)
 		{
-			System.out.println("papa  "+maxOmin+" altura  " + this.getAltura());
+			//System.out.println("papa  "+maxOmin+" altura  " + this.getAltura());
 			
 			CheckTheCheck algo = new CheckTheCheck();
-			algo.verEstado(Tablero);
+			//algo.verEstado(Tablero);
 			
 		}
 		
@@ -115,13 +115,47 @@ public class Nodo {
 	public int    funcionDeUtilidad( ){
 		
 		int MaxFichas = 0,MinFichas=0;
-		for (int i=0;i<6;i++)
-			for (int j=0;j<6;j++)
+		for (int i=0;i<6;i++){
+			for (int j=0;j<6;j++){
 				if (Tablero [i][j]!='.')
 				{
 				
-					if (Character.isUpperCase(Tablero[i][j]) ) MaxFichas++;
-					else MinFichas++;}
+					int temp=0;
+					
+					switch(Character.toUpperCase(Tablero[i][j])) {//convierte la letra a mayuscula y busca el caso correspondiente
+
+					case 'P': temp=1;//peon
+						
+						
+						break;
+
+					case 'N': temp=4;//Caballo
+						
+						break;
+
+					case 'B':temp=4; //alfil
+						
+						break;
+
+					case 'R':temp=4; //torre
+				
+						break;
+
+					case 'Q':temp=6; //reina
+						
+						
+						break;
+						
+					case 'K':temp=1000000; //reina
+					
+						break;
+					}
+					
+					if (Character.isUpperCase(Tablero[i][j]) ) MaxFichas+=temp;
+					else MinFichas+=temp;
+					
+				
+				}}}
 		
 		System.out.println(MaxFichas-MinFichas);
 		return MaxFichas-MinFichas;
