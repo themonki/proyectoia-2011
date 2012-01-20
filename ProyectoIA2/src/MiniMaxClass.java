@@ -55,7 +55,7 @@ public class MiniMaxClass {
 		int mayorMax=-999999;
 		for (int i=0;i<hojas.size();i++)
 		{
-			hojas.get(i).asignarMinMax(funcionDeUtilidad(hojas.get(i).getTablero()));
+			hojas.get(i).asignarMinMax(hojas.get(i).funcionDeUtilidad());
 			//System.out.println("utilidad max::"+funcionDeUtilidad(hojas.get(i).getTablero()));
 			
 			
@@ -85,22 +85,7 @@ public class MiniMaxClass {
 		
 	}
 	
-	public int    funcionDeUtilidad(char [][] tablero ){
-		
-		int MaxFichas = 0,MinFichas=0;
-		for (int i=0;i<6;i++)
-			for (int j=0;j<6;j++)
-				if (tablero [i][j]!='.')
-				{
-				
-					if (Character.isUpperCase(tablero[i][j]) ) MaxFichas++;
-					else MinFichas++;}
-		
-		
-		return MaxFichas-MinFichas;
-	
-		
-	}
+
 	
 	public void verHijos(Vector <Nodo> hijos)
 	
@@ -121,11 +106,11 @@ public class MiniMaxClass {
 		char [][] TableroInicial=
 			{
 		
-				{'.','.','.','.','.','.'},
-				{'.','P','.','.','.','.'},
-				{'.','.','N','.','.','.'},
-				{'.','.','.','.','.','.'},
-				{'.','.','.','p','.','.'},
+				{'.','.','.','.','q','.'},
+				{'.','.','.','.','r','K'},
+				{'.','.','.','.','r','.'},
+				{'Q','Q','.','.','.','.'},
+				{'.','k','.','.','.','.'},
 				{'.','.','.','.','.','.'},
 			};
 		
