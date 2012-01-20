@@ -6,15 +6,15 @@ public class MiniMaxClass {
 	Nodo raiz ; 
 	Vector <Vector <Nodo>> arbol= new Vector<Vector<Nodo>>() ;
 	private int profundida=2;  
-	char [][] TableroInicial={
+	/*char [][] TableroInicial={
 			{'.','.','.','.','.','.'},
-			{'.','.','.','.','.','.'},
+			{'.','P','.','.','.','.'},
 			{'.','.','N','.','.','.'},
 			{'.','.','.','.','.','.'},
 			{'.','.','.','p','.','.'},
 			{'.','.','.','.','.','.'},
-	};
-	public MiniMaxClass() 
+	};*/
+	public MiniMaxClass(char [][] TableroInicial ) 
 	{
 		raiz= new Nodo(TableroInicial, 0, null);
 		Vector<Nodo> temp = new Vector<Nodo>();
@@ -42,12 +42,12 @@ public class MiniMaxClass {
 			
 		}
 		
-		decisionMiniMax();
+		//decisionMiniMax();
 		
 		
 	}
 	
-	public void decisionMiniMax()
+	public char [][] decisionMiniMax()
 	{
 		Vector <Nodo> hojas=arbol.get(arbol.size()-1);
 		Vector <Nodo> SiguienteJugada=arbol.get(1);
@@ -78,6 +78,8 @@ public class MiniMaxClass {
 		
 		CheckTheCheck ver =new CheckTheCheck() ;
 		ver.verEstado(respuesta.getTablero());
+		
+		return respuesta.getTablero();
 		
 		
 		
@@ -116,9 +118,22 @@ public class MiniMaxClass {
 	}
 	
 	public static void main (String args []){
+		char [][] TableroInicial=
+			{
 		
+				{'.','.','.','.','.','.'},
+				{'.','P','.','.','.','.'},
+				{'.','.','N','.','.','.'},
+				{'.','.','.','.','.','.'},
+				{'.','.','.','p','.','.'},
+				{'.','.','.','.','.','.'},
+			};
+		
+
 	
-		MiniMaxClass init = new MiniMaxClass();
+		
+		MiniMaxClass init = new MiniMaxClass(TableroInicial);
+		init.decisionMiniMax();
 		
 	}
 

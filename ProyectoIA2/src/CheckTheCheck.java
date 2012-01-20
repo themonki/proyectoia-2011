@@ -48,9 +48,6 @@ public class CheckTheCheck {
 				
 				if(Character.isUpperCase(actual) && isBlanca || (!Character.isUpperCase(actual) &&  !isBlanca ) ) 
 				 {
-					System.out.println ("actual entro "+  actual );
-					
-					
 					
 					switch(Character.toUpperCase(actual)) {//convierte la letra a mayuscula y busca el caso correspondiente
 
@@ -106,11 +103,12 @@ public class CheckTheCheck {
 	}
 
 
-	public  boolean isCheck(char comparador) {
+	public  boolean isCheck(char [][] tableroComparar,char comparador) {
 
 
 
 	
+		TableroCheck=tableroComparar;
 
 		char amenazante='.';
 
@@ -193,10 +191,10 @@ public class CheckTheCheck {
 				nuevoTablero[x][y]='.';
 
 				
-				TableroCheck=nuevoTablero;
+				
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
 				//si mi movimiento hace que quede en jaque mi rey no creo ese nodo
-				if (!isCheck (actual)){
+				if (!isCheck (nuevoTablero,actual)){
 					verEstado(nuevoTablero);
 				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	       	
 				hijos.add(hijo);}
@@ -216,8 +214,8 @@ public class CheckTheCheck {
 				nuevoTablero[x][y]='.';
 
 			
-				TableroCheck=nuevoTablero;
-				if (!isCheck (actual)){
+				
+				if (!isCheck (nuevoTablero,actual)){
 					verEstado(nuevoTablero);
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
 				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	        	
@@ -236,8 +234,8 @@ public class CheckTheCheck {
 				nuevoTablero[x][y]='.';
 
 				
-				TableroCheck=nuevoTablero;
-				if (!isCheck (actual)){
+				
+				if (!isCheck (nuevoTablero,actual)){
 					verEstado(nuevoTablero);
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
 				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	        	
@@ -267,10 +265,7 @@ public class CheckTheCheck {
 
 
 			
-				TableroCheck=nuevoTablero;
-				if (actual == 'Q'&&tem=='r') verEstado(nuevoTablero);
-				System.out.println(!isCheck (actual) +":::" +actual +" temp:: "+tem+" "+actual);
-				if (!isCheck (actual))
+				if (!isCheck (nuevoTablero,actual))
 				
 				{
 					
