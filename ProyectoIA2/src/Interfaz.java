@@ -28,7 +28,7 @@ public class Interfaz extends JFrame{
 	Jugar juego;
 	Color c [] = {Color.white, Color.GRAY}, colorViejo, colorSelect = Color.green;
 	Manejador manejador = new Manejador();
-	boolean seleccionado = false, flagClick = true;//nota:cambiarlo a false
+	boolean seleccionado = false, flagClick = false;//nota:cambiarlo a false
 	int posSeleccionado [] = {-1,-1};
 	JPanel panel;
 	JLabel etiquetaSelect;
@@ -101,7 +101,7 @@ public class Interfaz extends JFrame{
 		
 		botonJugadaSiguiente = new JButton("Siguiente Jugada");
 		botonJugadaSiguiente.addActionListener(manejador);
-		botonJugadaSiguiente.setEnabled(false);
+		botonJugadaSiguiente.setEnabled(true);
 		
 		GridBagLayout gl = new GridBagLayout();
 		panel.setLayout(gl);

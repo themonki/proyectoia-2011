@@ -6,7 +6,7 @@ import java.util.Random;
 public class Jugar {
 	
 	private char tablero[][] = new char[6][6];
-	
+	CheckTheCheck check = new CheckTheCheck();
 	public Jugar(){
 		generarPartida();
 	}
@@ -28,7 +28,7 @@ public class Jugar {
 		char fichas[] = {'k', 'K', 'p', 'P', 'p', 'P','p', 'P','p', 'P','q','Q','b','B','n','N'};
 		Random randomx = new Random(), randomy ;
 		int x = randomx.nextInt(6), y;
-		CheckTheCheck check = new CheckTheCheck();
+		
 		
 		randomy=new Random(42344543);
 		y = randomy.nextInt(6);
@@ -41,7 +41,7 @@ public class Jugar {
 				if(!check.isCheck(tablero, 'k') && !check.isCheck(tablero, 'K')){
 					contador++;
 				}else{
-					tablero[x][y]=',';				
+					tablero[x][y]='.';
 				}
 			}		
 			
@@ -91,11 +91,24 @@ public class Jugar {
 					return true;
 				}else if(!fichaNegra && posx<posxNow){
 					return true;
-				}	
+				}
 			}
 		}else if(pieza== 'k' || pieza == 'K'){//Rey
-			if(restax<=1 && restay<=1 ){
-				return true;				
+			if(restax<=1 && restay<=1){
+				tablero[posx][posy] = tablero[posxNow][posyNow];
+				tablero[posxNow][posyNow]=',';
+				if(fichaNegra && !check.isCheck(tablero, 'k')){
+					tablero[posxNow][posyNow] = tablero[posx][posy];
+					tablero[posx][posy]=elementoUbicar.charAt(0);
+					return true;
+				}else if(!fichaNegra && !check.isCheck(tablero, 'K')){
+					tablero[posxNow][posyNow] = tablero[posx][posy];
+					tablero[posx][posy]=elementoUbicar.charAt(0);
+					return true;
+				}else{
+					tablero[posxNow][posyNow] = tablero[posx][posy];
+					tablero[posx][posy]=elementoUbicar.charAt(0);
+				}
 			}
 		}else if(pieza== 'n' || pieza == 'N'){//caballo
 			if(restax==1 && restay ==2){
@@ -145,6 +158,10 @@ public class Jugar {
 			iteraciony=iteraciony + 1*movery*signoy;
 		}	
 		return true;
+	}
+	
+	public void ganaMin(){
+		
 	}
 	
 	public void jugadaMax(){
