@@ -24,7 +24,7 @@ public class CheckTheCheck {
 	Vector <Nodo> hijos= new Vector<Nodo>() ; 
 	Nodo padre;
 
-	public  void expandir(Nodo padre) {
+	public  void expandir(Nodo padre,boolean isBlanca) {
 
 		
 
@@ -33,8 +33,7 @@ public class CheckTheCheck {
 		
 
 		System.out.println("altura "+padre.altura);
-		boolean isBlanca;
-		if (padre.getAltura()%2==0)  isBlanca=true; else isBlanca=false   ;
+		
 	
 
 		System.out.println("blanca "+isBlanca);
@@ -145,6 +144,11 @@ public class CheckTheCheck {
 				case 'Q': //reina
 					if(recorridoMultiple(i,j, dxTorre, dyTorre) ||
 							recorridoMultiple(i,j, dxAlfil, dyAlfil))
+						amenazante=actual;
+					break;
+					
+				case 'K': //reina
+					if(recorrido1paso(i,j, dxRey, dyRey,1))
 						amenazante=actual;
 					break;
 				}

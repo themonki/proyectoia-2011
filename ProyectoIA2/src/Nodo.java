@@ -26,9 +26,13 @@ public class Nodo {
 	
 	public  Vector <Nodo> expandir ()
 	{
+		boolean isBlanca;
+		if (getAltura()%2==0 )  isBlanca=true; else isBlanca=false   ;
+		
+		
 		CheckTheCheck check= new CheckTheCheck() ;
 		Vector <Nodo> hijos = new Vector<Nodo>();
-		check.expandir(this);
+		check.expandir(this,isBlanca);
 		hijos=check.getHijos();
 		
 		return hijos ;

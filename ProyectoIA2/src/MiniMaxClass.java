@@ -5,7 +5,7 @@ public class MiniMaxClass {
 	
 	Nodo raiz ; 
 	Vector <Vector <Nodo>> arbol= new Vector<Vector<Nodo>>() ;
-	private int profundida=2;  
+	private int profundida=4;  
 	/*char [][] TableroInicial={
 			{'.','.','.','.','.','.'},
 			{'.','P','.','.','.','.'},
@@ -14,8 +14,9 @@ public class MiniMaxClass {
 			{'.','.','.','p','.','.'},
 			{'.','.','.','.','.','.'},
 	};*/
-	public MiniMaxClass(char [][] TableroInicial ) 
+	public MiniMaxClass(char [][] TableroInicial, int dificultad ) 
 	{
+		this.profundida=dificultad;
 		raiz= new Nodo(TableroInicial, 0, null);
 		Vector<Nodo> temp = new Vector<Nodo>();
 		temp.add(raiz);
