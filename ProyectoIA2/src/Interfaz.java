@@ -51,7 +51,7 @@ public class Interfaz extends JFrame{
 		super();
 		juego = new Jugar();
 		tablero = juego.getTablero();
-		
+		/*
 		for(int i = 0; i < 6; i ++)
 			for(int j = 0; j < 6 ; j++ )
 				tablero[i][j]= '.';
@@ -66,7 +66,7 @@ public class Interfaz extends JFrame{
 		tablero[2][4]='p';
 		tablero[1][4]='n';
 		tablero[0][5]='b';
-		
+		*/
 		initComponet();
 				
 	}

@@ -1,3 +1,5 @@
+import java.util.Random;
+
 
 
 
@@ -18,6 +20,38 @@ public class Jugar {
 	}
 	
 	public void generarPartida(){
+		for(int i = 0; i < 6; i ++)
+			for(int j = 0; j < 6 ; j++ )
+				tablero[i][j]= '.';
+		
+		int contador=0, max = 16;
+		char fichas[] = {'k', 'K', 'p', 'P', 'p', 'P','p', 'P','p', 'P','q','Q','b','B','n','N'};
+		Random randomx = new Random(), randomy ;
+		int x = randomx.nextInt(6), y;
+		CheckTheCheck check = new CheckTheCheck();
+		
+		randomy=new Random(42344543);
+		y = randomy.nextInt(6);
+		
+		tablero[x][y]=fichas[contador];
+		contador++;
+		do{
+			if(tablero[x][y]=='.'){
+				tablero[x][y]= fichas[contador];
+				if(!check.isCheck(tablero, 'k') && !check.isCheck(tablero, 'K')){
+					contador++;
+				}else{
+					tablero[x][y]=',';				
+				}
+			}		
+			
+			x=randomx.nextInt(6);
+			y=randomy.nextInt(6);
+			
+			
+		}while(contador<max);
+		
+		
 		
 	}
 	
