@@ -30,7 +30,7 @@ public class Jugar {
 		int x = randomx.nextInt(6), y;
 		
 		
-		randomy=new Random(42344543);
+		randomy=new Random();
 		y = randomy.nextInt(6);
 		
 		tablero[x][y]=fichas[contador];
