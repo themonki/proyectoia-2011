@@ -184,7 +184,7 @@ public class Interfaz extends JFrame{
 				if (etq == panel.getComponent(contador)) {
 					if (seleccionado){//segundo click
 						seleccionado = false;
-						if (posSeleccionado[0] == posx	&& posSeleccionado[1] == posy) {
+						if(posSeleccionado[0] == posx	&& posSeleccionado[1] == posy) {
 							// no ahi cambios es el mismo
 							etq.setBackground(colorViejo);							
 							colorViejo = null;
@@ -210,11 +210,11 @@ public class Interfaz extends JFrame{
 							flagClick=false;
 							botonJugadaSiguiente.setEnabled(true);
 						}
-					} else {// primer click
+					} else {// primer click						
 						String may = "BKNPQ";
 						if(may.contains(Character.toString(tablero[posx][posy]))){
 							return;// PARA NO MOVER LAS FICHAS BLANCAS
-						}
+						}						
 						if (tablero[posx][posy] != '.'){
 							etiquetaSelect = etq;
 							colorViejo = etiquetaSelect.getBackground();
@@ -264,7 +264,8 @@ public class Interfaz extends JFrame{
 				botonJugadaSiguiente.setEnabled(false);
 				juego.jugadaMax();
 				tablero=juego.getTablero();
-				cargarImagenes();			
+				cargarImagenes();
+				juego.ganaMin(tablero);
 			}else if(e.getSource()==amateur){
 				amateur.setSelected(true);
 				principiante.setSelected(false);

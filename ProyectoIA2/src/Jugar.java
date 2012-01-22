@@ -1,4 +1,7 @@
 import java.util.Random;
+import java.util.Vector;
+
+import javax.swing.JOptionPane;
 
 
 
@@ -43,11 +46,9 @@ public class Jugar {
 				}else{
 					tablero[x][y]='.';
 				}
-			}		
-			
+			}			
 			x=randomx.nextInt(6);
-			y=randomy.nextInt(6);
-			
+			y=randomy.nextInt(6);			
 			
 		}while(contador<max);
 		
@@ -72,7 +73,7 @@ public class Jugar {
 			fichaContrariaVacia=!minusculas.contains(elementoUbicar) || elementoUbicar.contains(".");
 		}else{
 			fichaContrariaVacia= minusculas.contains(elementoUbicar) || elementoUbicar.contains(".");
-		}	
+		}
 		
 		if(!fichaContrariaVacia){//si donde se va a mover NO ahi una ficha contraria o un espacio vacio
 			return false;
@@ -160,8 +161,15 @@ public class Jugar {
 		return true;
 	}
 	
-	public void ganaMin(){
-		
+	public void ganaMin(char tablero [][]){
+		Nodo raiz= new Nodo(tablero, 0, null);
+		CheckTheCheck check = new CheckTheCheck();
+		check.expandir(raiz,false);
+		Vector <Nodo> v = check.getHijos();
+		JOptionPane.showMessageDialog(null, v.size());
+		if(v.size()==0){
+			JOptionPane.showMessageDialog(null, "MATE");
+		}
 	}
 	
 	public void jugadaMax(){
@@ -170,5 +178,4 @@ public class Jugar {
 		CheckTheCheck check = new CheckTheCheck();
 		check.verEstado(tablero);
 	}
-
 }

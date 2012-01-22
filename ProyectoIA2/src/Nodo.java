@@ -128,7 +128,7 @@ public class Nodo {
 					
 					switch(Character.toUpperCase(Tablero[i][j])) {//convierte la letra a mayuscula y busca el caso correspondiente
 
-					case 'P': temp=1;//peon
+					case 'P': temp=2;//peon
 						
 						
 						break;
