@@ -78,8 +78,8 @@ public class Jugar {
 		if(!fichaContrariaVacia){//si donde se va a mover NO ahi una ficha contraria o un espacio vacio
 			return false;
 		}
-		
-		if(checkNegras(posxNow, posyNow, posx, posy, elementoUbicar)){//chequea si al moverla ahi jaque			
+		boolean t = checkNegras(posxNow, posyNow, posx, posy, elementoUbicar);
+		if(t){//chequea si al moverla ahi jaque			
 			return false;
 		}
 		int restax = Math.abs((posxNow-posx)), restay = Math.abs((posyNow-posy));		
@@ -100,7 +100,7 @@ public class Jugar {
 			}
 		}else if(pieza== 'k' || pieza == 'K'){//Rey
 			if(restax<=1 && restay<=1){
-				JOptionPane.showMessageDialog(null, "Negro");
+				JOptionPane.showMessageDialog(null, "Negro "+ t +" "+elementoUbicar);
 				return true;
 //				CheckTheCheck check2 = new CheckTheCheck();
 //				tablero[posx][posy] = tablero[posxNow][posyNow];

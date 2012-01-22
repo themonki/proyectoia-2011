@@ -52,22 +52,22 @@ public class Interfaz extends JFrame{
 		super();
 		juego = new Jugar();
 		tablero = juego.getTablero();
-		/*
+		
 		for(int i = 0; i < 6; i ++)
 			for(int j = 0; j < 6 ; j++ )
 				tablero[i][j]= '.';
 		
-		tablero[0][0]='K';
-		tablero[1][1]='Q';
-		tablero[2][0]='P';
-		tablero[2][1]='N';
-		tablero[3][3]='B';
-		tablero[4][4]='k';
-		tablero[5][5]='q';
-		tablero[2][4]='p';
-		tablero[1][4]='n';
-		tablero[0][5]='b';
-		*/
+		tablero[4][4]='K';
+		tablero[5][3]='Q';
+		//tablero[2][0]='P';
+		tablero[2][1]='k';
+		//tablero[3][3]='B';
+		//tablero[4][4]='k';
+		//tablero[5][5]='q';
+		//tablero[2][4]='p';
+		//tablero[1][4]='n';
+		//tablero[0][5]='b';
+		/**/
 		initComponet();
 				
 	}
