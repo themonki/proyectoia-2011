@@ -100,7 +100,6 @@ public class Jugar {
 			}
 		}else if(pieza== 'k' || pieza == 'K'){//Rey
 			if(restax<=1 && restay<=1){
-				JOptionPane.showMessageDialog(null, "Negro "+ t +" "+elementoUbicar);
 				return true;
 //				CheckTheCheck check2 = new CheckTheCheck();
 //				tablero[posx][posy] = tablero[posxNow][posyNow];
@@ -170,13 +169,22 @@ public class Jugar {
 	
 	public boolean checkNegras(int posxNow, int posyNow, int posx, int posy, String elementoUbicar){
 		tablero[posx][posy] = tablero[posxNow][posyNow];
-		tablero[posxNow][posyNow]=',';
+		tablero[posxNow][posyNow]='.';
 		CheckTheCheck check = new CheckTheCheck();
 		boolean value = check.isCheck(tablero, 'k');
 		
 		tablero[posxNow][posyNow] = tablero[posx][posy];
 		tablero[posx][posy]=elementoUbicar.charAt(0);
 		return value; 
+	}
+	public String imprimirTablero(){
+		String tab ="";
+		for(int i = 0; i<6;i++){
+			for(int j=0;j<6;j++){
+				tab+=Character.toString(tablero[i][j])+" ";
+			}tab+="\n";
+		}
+		return tab;
 	}
 	
 	public boolean pierdeMin(char tablero [][]){
