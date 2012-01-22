@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 public class Jugar {
 	
 	private char tablero[][] = new char[6][6];
-	CheckTheCheck check = new CheckTheCheck();
 	public Jugar(){
 		generarPartida();
 	}
@@ -31,6 +30,7 @@ public class Jugar {
 		char fichas[] = {'k', 'K', 'p', 'P', 'p', 'P','p', 'P','p', 'P','q','Q','b','B','n','N'};
 		Random randomx = new Random(), randomy ;
 		int x = randomx.nextInt(6), y;
+		CheckTheCheck check = new CheckTheCheck();
 		
 		
 		randomy=new Random();
@@ -78,7 +78,11 @@ public class Jugar {
 		if(!fichaContrariaVacia){//si donde se va a mover NO ahi una ficha contraria o un espacio vacio
 			return false;
 		}
-		int restax = Math.abs((posxNow-posx)), restay = Math.abs((posyNow-posy));
+		
+		if(checkNegras(posxNow, posyNow, posx, posy, elementoUbicar)){//chequea si al moverla ahi jaque			
+			return false;
+		}
+		int restax = Math.abs((posxNow-posx)), restay = Math.abs((posyNow-posy));		
 		
 		if(pieza == 'p' || pieza == 'P'){//peon
 			if(restay==0 && restax==1 && elementoUbicar.contains(".")){
@@ -96,20 +100,23 @@ public class Jugar {
 			}
 		}else if(pieza== 'k' || pieza == 'K'){//Rey
 			if(restax<=1 && restay<=1){
-				tablero[posx][posy] = tablero[posxNow][posyNow];
-				tablero[posxNow][posyNow]=',';
-				if(fichaNegra && !check.isCheck(tablero, 'k')){
-					tablero[posxNow][posyNow] = tablero[posx][posy];
-					tablero[posx][posy]=elementoUbicar.charAt(0);
-					return true;
-				}else if(!fichaNegra && !check.isCheck(tablero, 'K')){
-					tablero[posxNow][posyNow] = tablero[posx][posy];
-					tablero[posx][posy]=elementoUbicar.charAt(0);
-					return true;
-				}else{
-					tablero[posxNow][posyNow] = tablero[posx][posy];
-					tablero[posx][posy]=elementoUbicar.charAt(0);
-				}
+				JOptionPane.showMessageDialog(null, "Negro");
+				return true;
+//				CheckTheCheck check2 = new CheckTheCheck();
+//				tablero[posx][posy] = tablero[posxNow][posyNow];
+//				tablero[posxNow][posyNow]=',';
+//				if(fichaNegra && !check2.isCheck(tablero, 'k')){
+//					tablero[posxNow][posyNow] = tablero[posx][posy];
+//					tablero[posx][posy]=elementoUbicar.charAt(0);
+//					return true;
+//				}else if(!fichaNegra && !check2.isCheck(tablero, 'K')){
+//					tablero[posxNow][posyNow] = tablero[posx][posy];
+//					tablero[posx][posy]=elementoUbicar.charAt(0);
+//					return true;
+//				}else{
+//					tablero[posxNow][posyNow] = tablero[posx][posy];
+//					tablero[posx][posy]=elementoUbicar.charAt(0);
+//				}
 			}
 		}else if(pieza== 'n' || pieza == 'N'){//caballo
 			if(restax==1 && restay ==2){
@@ -161,19 +168,41 @@ public class Jugar {
 		return true;
 	}
 	
-	public void ganaMin(char tablero [][]){
+	public boolean checkNegras(int posxNow, int posyNow, int posx, int posy, String elementoUbicar){
+		tablero[posx][posy] = tablero[posxNow][posyNow];
+		tablero[posxNow][posyNow]=',';
+		CheckTheCheck check = new CheckTheCheck();
+		boolean value = check.isCheck(tablero, 'k');
+		
+		tablero[posxNow][posyNow] = tablero[posx][posy];
+		tablero[posx][posy]=elementoUbicar.charAt(0);
+		return value; 
+	}
+	
+	public boolean pierdeMin(char tablero [][]){
 		Nodo raiz= new Nodo(tablero, 0, null);
 		CheckTheCheck check = new CheckTheCheck();
 		check.expandir(raiz,false);
 		Vector <Nodo> v = check.getHijos();
-		JOptionPane.showMessageDialog(null, v.size());
 		if(v.size()==0){
-			JOptionPane.showMessageDialog(null, "MATE");
+			JOptionPane.showMessageDialog(null, "MATE Perdi");
 		}
+		return v.size()==0;
 	}
 	
-	public void jugadaMax(){
-		MiniMaxClass max = new MiniMaxClass(tablero,2);
+	public boolean ganaMin(char tablero [][]){
+		Nodo raiz= new Nodo(tablero, 0, null);
+		CheckTheCheck check = new CheckTheCheck();
+		check.expandir(raiz,true);
+		Vector <Nodo> v = check.getHijos();
+		if(v.size()==0){
+			JOptionPane.showMessageDialog(null, "MATE Gane");
+		}
+		return v.size()==0;
+	}
+	
+	public void jugadaMax(int nivel){
+		MiniMaxClass max = new MiniMaxClass(tablero,nivel);
 		tablero = max.decisionMiniMax();
 		CheckTheCheck check = new CheckTheCheck();
 		check.verEstado(tablero);

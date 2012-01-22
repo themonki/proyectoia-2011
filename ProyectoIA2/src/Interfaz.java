@@ -29,13 +29,14 @@ public class Interfaz extends JFrame{
 	Color c [] = {Color.white, Color.GRAY}, colorViejo, colorSelect = Color.green;
 	Manejador manejador = new Manejador();
 	boolean seleccionado = false, flagClick = false;//nota:cambiarlo a false
-	int posSeleccionado [] = {-1,-1};
+	int posSeleccionado [] = {-1,-1}, nivelAmateur=4 , nivelPrincipiante=2, nivel=nivelPrincipiante;
 	JPanel panel;
 	JLabel etiquetaSelect;
 	JButton botonJugadaSiguiente;
 	java.awt.Dimension d = new java.awt.Dimension(70,110);//tamaño del cuadro
 	JRadioButtonMenuItem principiante, amateur;
 	JMenuItem nuevoJuego;
+	
 	
 	private char tablero[][] = new char[6][6];
 	
@@ -189,7 +190,7 @@ public class Interfaz extends JFrame{
 							etq.setBackground(colorViejo);							
 							colorViejo = null;
 							etiquetaSelect = null;
-						} else {
+						}else {
 							//no se puede mover ahi
 							if(!juego.comprobarMovimientos(tablero[posSeleccionado[0]][posSeleccionado[1]],
 									posSeleccionado[0],posSeleccionado[1], posx, posy)){
@@ -208,13 +209,17 @@ public class Interfaz extends JFrame{
 							colorViejo = null;
 							etiquetaSelect = null;
 							flagClick=false;
+							if(juego.ganaMin(tablero)){
+								return;
+							}
 							botonJugadaSiguiente.setEnabled(true);
 						}
 					} else {// primer click						
 						String may = "BKNPQ";
 						if(may.contains(Character.toString(tablero[posx][posy]))){
 							return;// PARA NO MOVER LAS FICHAS BLANCAS
-						}						
+						}
+
 						if (tablero[posx][posy] != '.'){
 							etiquetaSelect = etq;
 							colorViejo = etiquetaSelect.getBackground();
@@ -259,19 +264,25 @@ public class Interfaz extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			// este seria para el boton de movimiento maquina
-			if(e.getSource()==botonJugadaSiguiente){
-				flagClick=true;
+			if(e.getSource()==botonJugadaSiguiente){				
 				botonJugadaSiguiente.setEnabled(false);
-				juego.jugadaMax();
+				juego.jugadaMax(nivel);
 				tablero=juego.getTablero();
 				cargarImagenes();
-				juego.ganaMin(tablero);
+				amateur.setEnabled(false);
+				principiante.setEnabled(false);
+				if(juego.pierdeMin(tablero)){
+					return;
+				}
+				flagClick=true;
 			}else if(e.getSource()==amateur){
 				amateur.setSelected(true);
 				principiante.setSelected(false);
+				nivel=nivelAmateur;
 			}else if(e.getSource()==principiante){				
 				amateur.setSelected(false);
 				principiante.setSelected(true);
+				nivel=nivelPrincipiante;
 			}else if(e.getSource()==nuevoJuego){
 				dispose();
 				new Interfaz();
