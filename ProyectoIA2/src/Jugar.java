@@ -165,7 +165,7 @@ public class Jugar {
 	}
 	
 	public void jugadaMax(){
-		MiniMaxClass max = new MiniMaxClass(tablero,4);
+		MiniMaxClass max = new MiniMaxClass(tablero,2);
 		tablero = max.decisionMiniMax();
 		CheckTheCheck check = new CheckTheCheck();
 		check.verEstado(tablero);

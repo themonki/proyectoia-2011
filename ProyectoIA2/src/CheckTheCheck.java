@@ -6,8 +6,10 @@ public class CheckTheCheck {
 
 	char[][] tablero ,TableroCheck;
 
-	static int[] dxPeon = {+1,+1,+1};
-	static int[] dyPeon = {-1,+1,0};
+	static int[] dxPeon = {+1,+1};
+	static int[] dyPeon = {-1,+1};
+	static int[] dxPeon1 = {+1,+1,+1};
+	static int[] dyPeon1 = {-1,+1,0};
 	static int[] dxCaballo = {-2,-1,+2,+1,+2,+1,-2,-1};
 	static int[] dyCaballo = {-1,-2,-1,-2,+1,+2,+1,+2};
 
@@ -53,7 +55,7 @@ public class CheckTheCheck {
 
 					case 'P': //peon
 						int signX= Character.isUpperCase(actual) ? -1 : 1;
-						if(recorrido1pasoExpandir(i,j, dxPeon, dyPeon, signX,false))
+						if(recorrido1pasoExpandir(i,j, dxPeon1, dyPeon1, signX,false))
 							amenazante=actual;
 						break;
 
