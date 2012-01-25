@@ -239,18 +239,6 @@ public class UtilsChess {
 		}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
 	 boolean recorrido1pasoExpandir(int x, int y, int[] dx, int[] dy, int signoX) {
 		final char actual=tablero[x][y];
 		for(int dir=0; dir<dx.length; dir++) {
@@ -261,7 +249,7 @@ public class UtilsChess {
 				
 				if(dy[dir]==0)//voy de frente 
 					peonCase=tablero[xx][yy]=='.';
-				else peonCase=esFichaEnemiga(actual, tablero[xx][yy]);//mato de lado 
+				else { peonCase=esFichaEnemiga(actual, tablero[xx][yy]);}//mato de lado 
 				
 			};
 
@@ -287,11 +275,6 @@ public class UtilsChess {
 
 			}
 
-			
-			
-			
-			
-			
 		}
 		return false;
 	}
@@ -314,9 +297,6 @@ public class UtilsChess {
 				nuevoTablero[x][y]='.';
 
 
-
-				
-			
 				if (!isCheck (nuevoTablero,actual))
 				
 				{
@@ -441,7 +421,7 @@ public class UtilsChess {
 
 	boolean esFichaEnemiga(char actual, char otra) {	
 		//verifica que ambos no sean mayusculas 
-		return   (Character.isUpperCase(actual) ^ Character.isUpperCase(otra));
+		return   ( otra!='.'&& actual!='.' && (Character.isUpperCase(actual) ^ Character.isUpperCase(otra)));
 
 	}
 
