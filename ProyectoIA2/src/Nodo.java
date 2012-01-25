@@ -32,7 +32,7 @@ public class Nodo {
 		if (getAltura()%2==0 )  isBlanca=true; else isBlanca=false   ;
 		
 		
-		CheckTheCheck check= new CheckTheCheck() ;
+		UtilsChess check= new UtilsChess() ;
 		Vector <Nodo> hijos = new Vector<Nodo>();
 		check.expandir(this,isBlanca);
 		hijos=check.getHijos();
@@ -110,7 +110,7 @@ public class Nodo {
 		{
 			//System.out.println("papa  "+maxOmin+" altura  " + this.getAltura());
 			
-			CheckTheCheck algo = new CheckTheCheck();
+			UtilsChess algo = new UtilsChess();
 			//algo.verEstado(Tablero);
 			
 		}
@@ -169,7 +169,7 @@ public class Nodo {
 			}
 		
 		
-		CheckTheCheck check= new CheckTheCheck();
+		UtilsChess check= new UtilsChess();
 		
 		
 		return MaxFichas-MinFichas+1000*mate;

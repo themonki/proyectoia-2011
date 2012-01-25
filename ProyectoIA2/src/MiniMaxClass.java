@@ -77,7 +77,7 @@ public class MiniMaxClass {
 		}
 	
 		
-		CheckTheCheck ver =new CheckTheCheck() ;
+		UtilsChess ver =new UtilsChess() ;
 		ver.verEstado(respuesta.getTablero());
 		
 		System.out.println(respuesta.maxOmin);
@@ -120,7 +120,7 @@ public class MiniMaxClass {
 
 	  char o='Q';
 	  int a=o;
-	  CheckTheCheck chek = new CheckTheCheck();
+	  UtilsChess chek = new UtilsChess();
 	  
 	MiniMaxClass min = new MiniMaxClass(TableroInicial, 2);
 	chek.verEstado(min.decisionMiniMax());

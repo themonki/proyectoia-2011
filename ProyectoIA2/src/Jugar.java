@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 
 public class Jugar {
 	
+	
+	Vector <Integer> dxIlum= new Vector<Integer>(),dyIlum= new Vector<Integer>();
 	private char tablero[][] = new char[6][6];
 	public Jugar(){
 		generarPartida();
@@ -30,7 +32,7 @@ public class Jugar {
 		char fichas[] = {'k', 'K', 'p', 'P', 'p', 'P','p', 'P','p', 'P','q','Q','b','B','n','N'};
 		Random randomx = new Random(), randomy ;
 		int x = randomx.nextInt(6), y;
-		CheckTheCheck check = new CheckTheCheck();
+		UtilsChess check = new UtilsChess();
 		
 		
 		randomy=new Random();
@@ -170,7 +172,7 @@ public class Jugar {
 	public boolean checkNegras(int posxNow, int posyNow, int posx, int posy, String elementoUbicar){
 		tablero[posx][posy] = tablero[posxNow][posyNow];
 		tablero[posxNow][posyNow]='.';
-		CheckTheCheck check = new CheckTheCheck();
+		UtilsChess check = new UtilsChess();
 		boolean value = check.isCheck(tablero, 'k');
 		
 		tablero[posxNow][posyNow] = tablero[posx][posy];
@@ -189,7 +191,7 @@ public class Jugar {
 	
 	public boolean pierdeMin(char tablero [][]){
 		Nodo raiz= new Nodo(tablero, 0, null);
-		CheckTheCheck check = new CheckTheCheck();
+		UtilsChess check = new UtilsChess();
 		check.expandir(raiz,false);
 		Vector <Nodo> v = check.getHijos();
 		if(v.size()==0){
@@ -200,7 +202,7 @@ public class Jugar {
 	
 	public boolean ganaMin(char tablero [][]){
 		Nodo raiz= new Nodo(tablero, 0, null);
-		CheckTheCheck check = new CheckTheCheck();
+		UtilsChess check = new UtilsChess();
 		check.expandir(raiz,true);
 		Vector <Nodo> v = check.getHijos();
 		if(v.size()==0){
@@ -212,7 +214,6 @@ public class Jugar {
 	public void jugadaMax(int nivel){
 		MiniMaxClass max = new MiniMaxClass(tablero,nivel);
 		tablero = max.decisionMiniMax();
-		CheckTheCheck check = new CheckTheCheck();
-		//check.verEstado(tablero);
+		
 	}
 }
