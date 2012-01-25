@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -109,6 +110,11 @@ public class Interfaz extends JFrame{
 		
 		GridBagLayout gl = new GridBagLayout();
 		panel.setLayout(gl);
+		
+		panel.setBorder(BorderFactory.createRaisedBevelBorder());
+		
+		
+		
 		cargarFondo();
 
 				

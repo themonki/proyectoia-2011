@@ -170,10 +170,9 @@ public class Nodo {
 		
 		
 		CheckTheCheck check= new CheckTheCheck();
-		int jaque=0;
-		if(check.isCheck(Tablero, 'K')){jaque=1;};
 		
-		return MaxFichas-MinFichas+100*jaque+1000*mate;
+		
+		return MaxFichas-MinFichas+1000*mate;
 		
 	}
 	
