@@ -34,11 +34,7 @@ public class CheckTheCheck {
 		this.tablero=padre.getTablero();
 		
 
-		System.out.println("altura "+padre.altura);
 		
-	
-
-		System.out.println("blanca "+isBlanca);
 		char amenazante='.';
 
 		//	        
@@ -62,7 +58,7 @@ public class CheckTheCheck {
 					case 'N': //Caballo
 						if(recorrido1pasoExpandir(i,j, dxCaballo, dyCaballo, 1,true))
 							amenazante=actual;
-						System.out.println("entre " +actual);
+						
 						
 						break;
 
@@ -77,11 +73,11 @@ public class CheckTheCheck {
 						break;
 
 					case 'Q': //reina
-						System.out.println("si expandio "+ amenazante);
+						
 						if(recorridoMultipleExpandir(i,j, dxTorre, dyTorre) ||
 								recorridoMultipleExpandir(i,j, dxAlfil, dyAlfil))
 							amenazante=actual;
-						System.out.println("si expandio fin "+ amenazante);
+						
 						break;
 						
 					case 'K': //reina
@@ -155,7 +151,7 @@ public class CheckTheCheck {
 					break;
 				}
 				if(amenazante!='.') {
-					System.err.println("amenazante at "+i+","+j+" : "+amenazante+comparador);
+					
 					boolean temo =Character.isUpperCase(comparador)^Character.isUpperCase(amenazante);
 					//System.out.println("amena :: "+temo+comparador+amenazante);
 					amenazante='.';
@@ -168,11 +164,11 @@ public class CheckTheCheck {
 		}
 
 
-		if(amenazante=='.')// no encontro un amenazante 
-			System.out.println("no king is in check.");
+		if(amenazante=='.');// no encontro un amenazante 
+			
 		else {//si encontro un amenazante  si es mayuscula el amenazante  entonces  el amenazado el es rey negro 
 			String amenazado = Character.isUpperCase(amenazante) ? "black" : "white";
-			System.out.println(amenazado+" king is in check. "+ amenazante);
+			
 		}
 		
 		
@@ -210,8 +206,7 @@ public class CheckTheCheck {
 
 			if (valid(xx,yy) && dy[dir]==0  && tablero[xx][yy]=='.' && !isCaballo) // en caso de que se pueda mover a su frente 
 			{
-				System.out.println("if  2 ");
-
+				
 				esFichaEnemiga(actual, tablero[xx][yy]);
 				char [][] nuevoTablero= new char [6][6]; 
 				nuevoEstado(nuevoTablero);
@@ -233,8 +228,7 @@ public class CheckTheCheck {
 			
 			if (valid(xx,yy) &&  isCaballo  && ( tablero[xx][yy]=='.'||esFichaEnemiga(actual, tablero[xx][yy])))// en caso de que se pueda mover a su frente 
 			{
-				System.out.println("if  3");
-
+				
 				char [][] nuevoTablero= new char [6][6]; 
 				nuevoEstado(nuevoTablero);
 				nuevoTablero[xx][yy]=actual;
@@ -275,7 +269,7 @@ public class CheckTheCheck {
 
 
 
-				System.out.println("  " + actual);
+				
 			
 				if (!isCheck (nuevoTablero,actual))
 				
@@ -367,8 +361,16 @@ public class CheckTheCheck {
 	public Vector <Nodo> getHijos(){
 	
 		if (hijos.size()==0){// nodo hoja 
+			if(padre.getIsMax()) {
+				System.out.println("soy max "+ padre.altura);
+				padre.asignarMinMax(padre.funcionDeUtilidad(-1));}
+			else {
+				System.out.println("soy min "+ padre.altura);
+				padre.asignarMinMax(padre.funcionDeUtilidad(1));
+				
+				
+			}
 			
-			padre.asignarMinMax(padre.funcionDeUtilidad());
 		}
 		return hijos;
 		

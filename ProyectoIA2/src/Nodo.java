@@ -9,6 +9,7 @@ public class Nodo {
 	 int altura;
 	 Nodo padre;
 	 boolean primeraAsignacionMinMax=true ;
+	 boolean isMax;
 	
 	
 	
@@ -22,6 +23,7 @@ public class Nodo {
 		this.Tablero=Tablero;
 		
 		this.altura=altura;
+		isMax = altura%2==0;
 	}
 	
 	public  Vector <Nodo> expandir ()
@@ -43,6 +45,8 @@ public class Nodo {
 
 
 	public int getMinMax (){return maxOmin;}
+	public boolean getIsMax (){return isMax;}
+	
 	public char [] [] getTablero (){return Tablero ;};
 
 	public String  verEstado() {
@@ -116,7 +120,7 @@ public class Nodo {
 		
 	}
 	
-	public int    funcionDeUtilidad( ){
+	public int    funcionDeUtilidad(int mate ){
 		
 		int MaxFichas = 0,MinFichas=0;
 		for (int i=0;i<6;i++){
@@ -150,7 +154,7 @@ public class Nodo {
 						
 						break;
 						
-					case 'K':temp=1000000; //reina
+					case 'K':temp=100; //rey
 					
 						break;
 					}
@@ -159,10 +163,17 @@ public class Nodo {
 					else MinFichas+=temp;
 					
 				
-				}}}
+				
+				}
+				}
+			}
 		
-		System.out.println(MaxFichas-MinFichas);
-		return MaxFichas-MinFichas;
+		
+		CheckTheCheck check= new CheckTheCheck();
+		int jaque=0;
+		if(check.isCheck(Tablero, 'K')){jaque=1;};
+		
+		return MaxFichas-MinFichas+100*jaque+1000*mate;
 		
 	}
 	

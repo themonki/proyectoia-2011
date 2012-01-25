@@ -26,14 +26,17 @@ import javax.swing.JRadioButtonMenuItem;
 public class Interfaz extends JFrame{
 		
 	Jugar juego;
-	Color c [] = {Color.white, Color.GRAY}, colorViejo, colorSelect = Color.green;
+	
+	Color colorFondo = new Color (50,50,110);
+	
+	Color c [] = {Color.white,colorFondo }, colorViejo, colorSelect = Color.green;
 	Manejador manejador = new Manejador();
 	boolean seleccionado = false, flagClick = false;//nota:cambiarlo a false
 	int posSeleccionado [] = {-1,-1}, nivelAmateur=4 , nivelPrincipiante=2, nivel=nivelPrincipiante;
 	JPanel panel;
 	JLabel etiquetaSelect;
 	JButton botonJugadaSiguiente;
-	java.awt.Dimension d = new java.awt.Dimension(70,110);//tamaño del cuadro
+	java.awt.Dimension d = new java.awt.Dimension(100,100);//tamaño del cuadro
 	JRadioButtonMenuItem principiante, amateur;
 	JMenuItem nuevoJuego;
 	
@@ -130,7 +133,7 @@ public class Interfaz extends JFrame{
 		cargarImagenes();
 		
 		
-		setSize(600,800);
+		setSize(800,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((screenSize.width)/2-getWidth()/2,(screenSize.height)/2-getHeight()/2);

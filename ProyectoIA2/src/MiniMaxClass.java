@@ -36,7 +36,7 @@ public class MiniMaxClass {
 			
 			}
 			
-			System.out.println("hijos :: "+hijos.size());
+			
 			
 			arbol.add(hijos);
 			
@@ -56,8 +56,8 @@ public class MiniMaxClass {
 		int mayorMax=-999999;
 		for (int i=0;i<hojas.size();i++)
 		{
-			hojas.get(i).asignarMinMax(hojas.get(i).funcionDeUtilidad());
-			System.out.println("utilidad max::"+hojas.get(i).funcionDeUtilidad());
+			hojas.get(i).asignarMinMax(hojas.get(i).funcionDeUtilidad(0));
+			
 			
 			
 		}
@@ -66,7 +66,7 @@ public class MiniMaxClass {
 		
 		for (int j=0;j<SiguienteJugada.size();j++)
 		{
-			System.out.println("Nodo max::"+SiguienteJugada.get(j).getMinMax());
+			
 			if (SiguienteJugada.get(j).getMinMax()>mayorMax){
 				
 				respuesta=SiguienteJugada.get(j);
@@ -75,10 +75,12 @@ public class MiniMaxClass {
 			
 			
 		}
-		System.out.println("decision que tomo :::" +respuesta.getMinMax());
+	
 		
 		CheckTheCheck ver =new CheckTheCheck() ;
 		ver.verEstado(respuesta.getTablero());
+		
+		System.out.println(respuesta.maxOmin);
 		
 		return respuesta.getTablero();
 		
@@ -107,20 +109,23 @@ public class MiniMaxClass {
 		char [][] TableroInicial=
 			{
 		
-				{'.','.','.','.','P','P'},
-				{'.','.','.','.','P','K'},
-				{'.','.','.','.','P','P'},
+				{'.','.','.','k','.','.'},
 				{'.','.','.','.','.','.'},
-				{'.','k','.','.','.','.'},
+				{'.','N','.','.','.','n'},
 				{'.','.','.','.','.','.'},
+				{'.','P','.','.','.','K'},
+				{'.','.','.','q','.','.'},
 			};
 		
 
 	  char o='Q';
 	  int a=o;
-		System.out.println("char :: "+a);
-		//MiniMaxClass init = new MiniMaxClass(TableroInicial);
-		//init.decisionMiniMax();
+	  CheckTheCheck chek = new CheckTheCheck();
+	  
+	MiniMaxClass min = new MiniMaxClass(TableroInicial, 2);
+	chek.verEstado(min.decisionMiniMax());
+	
+		
 		
 	}
 

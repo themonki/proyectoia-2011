@@ -213,6 +213,6 @@ public class Jugar {
 		MiniMaxClass max = new MiniMaxClass(tablero,nivel);
 		tablero = max.decisionMiniMax();
 		CheckTheCheck check = new CheckTheCheck();
-		check.verEstado(tablero);
+		//check.verEstado(tablero);
 	}
 }
