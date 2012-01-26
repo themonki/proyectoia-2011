@@ -2,7 +2,7 @@
 import java.util.*;
 public class MiniMaxClass {
 	
-	
+	/* CASOOOOOOOOOO EMPATE */
 	Nodo raiz ; 
 	Vector <Vector <Nodo>> arbol= new Vector<Vector<Nodo>>() ;
 	private int profundida=4;  

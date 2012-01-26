@@ -32,9 +32,10 @@ public class Interfaz extends JFrame{
 	
 	Vector < Vector <Integer>> posxYposy;
 	Color colorFondo = new Color (50,50,110);
+	
 	Font fuenteEtiquetas =new Font("Algerian", Font.BOLD, 24);
 	
-	Color c [] = {Color.white,colorFondo }, colorViejo, colorSelect = Color.green;
+	Color c [] = {Color.white,colorFondo }, colorViejo, colorSelect = new Color (90,250,90);
 	Manejador manejador = new Manejador();
 	boolean seleccionado = false, flagClick = false;//nota:cambiarlo a false
 	int posSeleccionado [] = {-1,-1}, nivelAmateur=4 , nivelPrincipiante=2, nivel=nivelPrincipiante;
@@ -60,22 +61,9 @@ public class Interfaz extends JFrame{
 		super("Juego de Ajedrez para Aprendices.");
 		juego = new Jugar();
 		tablero = juego.getTablero();
+
 		
-		/*for(int i = 0; i < 6; i ++)
-			for(int j = 0; j < 6 ; j++ )
-				tablero[i][j]= '.';
 		
-		tablero[4][4]='K';
-		tablero[5][3]='Q';
-		//tablero[2][0]='P';
-		tablero[2][1]='k';
-		//tablero[3][3]='B';
-		//tablero[4][4]='k';
-		//tablero[5][5]='q';
-		//tablero[2][4]='p';
-		//tablero[1][4]='n';
-		//tablero[0][5]='b';
-		/**/
 		initComponet();
 				
 	}
@@ -124,6 +112,8 @@ public class Interfaz extends JFrame{
 				
 		JPanel p1 = new JPanel(new java.awt.BorderLayout()), pboton = new JPanel();
 		JPanel panelJuego = new JPanel(gl);
+	
+		 
 		
 		GridBagConstraints constrain = new GridBagConstraints();
 		constrain.gridy=1;

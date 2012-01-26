@@ -132,7 +132,7 @@ public class Nodo {
 					
 					switch(Character.toUpperCase(Tablero[i][j])) {//convierte la letra a mayuscula y busca el caso correspondiente
 
-					case 'P': temp=2;//peon
+					case 'P': temp=1;//peon
 						
 						
 						break;
@@ -170,9 +170,12 @@ public class Nodo {
 		
 		
 		UtilsChess check= new UtilsChess();
+		int factorJaque=0;
+		if(check.isCheck(Tablero, 'K')) factorJaque=-1 ;
+		if(check.isCheck(Tablero, 'k')) factorJaque=1 ;
 		
 		
-		return MaxFichas-MinFichas+1000*mate;
+		return MaxFichas-MinFichas+1000*mate+3*factorJaque;
 		
 	}
 	

@@ -42,12 +42,12 @@ public class Button extends JButton {
 	/**
      *
      */
-	private Color color1 = new Color(50, 170, 100);
+	private Color color1 = new Color(10, 10, 250);
 	/**
      * 
      * 
      */
-	private Color color2 = new Color(100, 100, 100);
+	private Color color2 = new Color(100, 100, 250);
 	/**
      * 
      */
@@ -60,7 +60,7 @@ public class Button extends JButton {
 	 *            - String con el nombre para el Boton
 	 */
 	public Button(String c) {
-		Font fontTitulo = new Font("dejavu sans", Font.BOLD, 13);
+		Font fontTitulo = new Font("dejavu sans", Font.BOLD, 17);
 		setText(c);
 		setOpaque(false);
 		setContentAreaFilled(false);

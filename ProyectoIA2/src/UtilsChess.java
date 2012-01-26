@@ -195,26 +195,26 @@ public class UtilsChess {
 				switch(Character.toUpperCase(ficha)) {//convierte la letra a mayuscula y busca el caso correspondiente
 
 				case 'P': //peon
-					System.out.println("1"+ficha);
+					
 					int signX= Character.isUpperCase(ficha) ? -1 : 1;
 					recorrido1paso2(i,j, dxPeon1, dyPeon1, signX,dxYdy);
 						
 						return dxYdy;
 
 				case 'N': //Caballo
-					System.out.println("Caballo"+ficha);
+					
 					recorrido1paso2(i,j, dxCaballo, dyCaballo, 1,dxYdy);
 						
 					return dxYdy;
 
 				case 'B': //alfil
-					System.out.println("3"+ficha);
+					
 					recorridoMultiple2(i,j, dxAlfil, dyAlfil,dxYdy);
 						
 						return dxYdy;
 
 				case 'R': //torre
-					System.out.println("4"+ficha);
+					
 					recorridoMultiple2(i,j, dxTorre, dyTorre,dxYdy);
 						
 						return dxYdy;
@@ -226,7 +226,7 @@ public class UtilsChess {
 						return dxYdy;
 					
 				case 'K': //reina
-					System.out.println("Rey"+ficha);
+					
 					recorrido1paso2(i,j, dxRey, dyRey,1,dxYdy);
 						
 						return dxYdy;
@@ -315,8 +315,7 @@ public class UtilsChess {
 				
 				}
 
-			// if(valid(xx,yy) && esReyEnemigo(actual,tablero[xx][yy]))
-			// return true;
+		
 		}
 		return false;
 	}
@@ -358,7 +357,7 @@ public class UtilsChess {
 				
 				dxYdy.get(0).add(xx);
 				dxYdy.get(1).add(yy);
-				System.out.println("posx::"+xx+ "  posy::"+ yy+" "+actual);
+			
 			}
 				
 		}
@@ -443,10 +442,10 @@ public class UtilsChess {
 	
 		if (hijos.size()==0){// nodo hoja 
 			if(padre.getIsMax()) {
-				System.out.println("soy max "+ padre.altura);
+				
 				padre.asignarMinMax(padre.funcionDeUtilidad(-1));}
 			else {
-				System.out.println("soy min "+ padre.altura);
+				
 				padre.asignarMinMax(padre.funcionDeUtilidad(1));
 				
 				
