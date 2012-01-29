@@ -38,7 +38,7 @@ public class Interfaz extends JFrame{
 	Color c [] = {Color.white,colorFondo }, colorViejo, colorSelect = new Color (90,250,90);
 	Manejador manejador = new Manejador();
 	boolean seleccionado = false, flagClick = false;//nota:cambiarlo a false
-	int posSeleccionado [] = {-1,-1}, nivelAmateur=4 , nivelPrincipiante=2, nivel=nivelPrincipiante;
+	int posSeleccionado [] = {-1,-1}, nivelAmateur=4 , nivelPrincipiante=2, nivel=nivelAmateur;
 	JPanel panel;
 	JLabel etiquetaSelect;
 	Button botonJugadaSiguiente;
