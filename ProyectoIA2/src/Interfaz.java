@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,7 @@ import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,28 +25,37 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 
 @SuppressWarnings("serial")
+/*Arreglar el mensaje , caso de empate */
 public class Interfaz extends JFrame{
 		
 	Jugar juego;
 	
 	Vector < Vector <Integer>> posxYposy;
+	String Mensaje="Jugada Min: \n";
+	
 	Color colorFondo = new Color (50,50,110);
 	
-	Font fuenteEtiquetas =new Font("Algerian", Font.BOLD, 24);
+	Font fuenteEtiquetas =new Font("Algerian", Font.BOLD, 20);
+	
+	
+	JPanel ejex= new JPanel(),ejey= new JPanel(),ejex2= new JPanel(),ejey2= new JPanel();
 	
 	Color c [] = {Color.white,colorFondo }, colorViejo, colorSelect = new Color (90,250,90);
 	Manejador manejador = new Manejador();
 	boolean seleccionado = false, flagClick = false;//nota:cambiarlo a false
-	int posSeleccionado [] = {-1,-1}, nivelAmateur=4 , nivelPrincipiante=2, nivel=nivelAmateur;
-	JPanel panel;
+	int posSeleccionado [] = {-1,-1}, nivelAmateur=4 , nivelPrincipiante=2, nivel=nivelPrincipiante;
+	JPanel panel, panelMuertasBlancas, panelMuertasNegras;
 	JLabel etiquetaSelect;
 	Button botonJugadaSiguiente;
-	java.awt.Dimension d = new java.awt.Dimension(100,100);//tamaño del cuadro
+	java.awt.Dimension d = new java.awt.Dimension(80,80);//tamaño del cuadro
 	JRadioButtonMenuItem principiante, amateur;
 	JMenuItem nuevoJuego;
+	JTextArea areaTexto;
 	
 	
 	private char tablero[][] = new char[6][6];
@@ -72,6 +83,9 @@ public class Interfaz extends JFrame{
 		Container contenedor = getContentPane();
 		
 		JMenuBar menu = new JMenuBar();
+		botonJugadaSiguiente = new Button("Siguiente Jugada");
+		botonJugadaSiguiente.addActionListener(manejador);
+		botonJugadaSiguiente.setEnabled(true);
 		JMenu archivo = new JMenu("Archivo"),dificultad = new JMenu("Dificultad");
 		nuevoJuego = new JMenuItem("Nuevo Juego");
 		principiante = new JRadioButtonMenuItem("principiante");
@@ -90,20 +104,43 @@ public class Interfaz extends JFrame{
 		menu.add(archivo);
 		this.setJMenuBar(menu);
 		
-				
+		ejex= new JPanel();ejey= new JPanel();ejex2= new JPanel();ejey2= new JPanel();
+		cargarBordes();
+		
+		JPanel panelTableroConBordes= new JPanel(new BorderLayout());
+		
 		panel = new JPanel();
+		panelMuertasNegras= new JPanel();
+		panelMuertasBlancas= new JPanel();
+		areaTexto= new JTextArea(5,7);
+		
+		areaTexto.setBackground(Color.black);
+		areaTexto.setForeground(Color.GREEN);
+		areaTexto.setFont(botonJugadaSiguiente.getFont());
+		UtilsChess util = new UtilsChess();
+		areaTexto.setText("::Partida :: \n  Tablero Inicial  \n"+util.verEstado(tablero));
+		
+		panelMuertasNegras.setBackground(Color.LIGHT_GRAY);
+		panelMuertasBlancas.setBackground(Color.DARK_GRAY);
+		
+		JLabel temp = new JLabel(),tem2 = new JLabel();
+		ImageIcon img = new ImageIcon("imagenes/"+((int) '.' )+".gif");		
+		img.setImage(img.getImage().getScaledInstance(d.width-10, d.height-10, Image.SCALE_DEFAULT));
+		temp.setIcon(img);
+		tem2.setIcon(img);
+		panelMuertasNegras.add(tem2);
+		panelMuertasBlancas.add(temp);
+		
 		//JScrollPane scroll = new JScrollPane(panel);
 		//scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		//scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
-		botonJugadaSiguiente = new Button("Siguiente Jugada");
-		botonJugadaSiguiente.addActionListener(manejador);
-		botonJugadaSiguiente.setEnabled(true);
+		
 		
 		GridBagLayout gl = new GridBagLayout();
 		panel.setLayout(gl);
 		
-		panel.setBorder(BorderFactory.createRaisedBevelBorder());
+		panelTableroConBordes.setBorder(BorderFactory.createRaisedBevelBorder());
 		
 		
 		
@@ -112,6 +149,11 @@ public class Interfaz extends JFrame{
 				
 		JPanel p1 = new JPanel(new java.awt.BorderLayout()), pboton = new JPanel();
 		JPanel panelJuego = new JPanel(gl);
+		pboton.setLayout(( new BoxLayout( pboton, BoxLayout.PAGE_AXIS)));
+		
+		JScrollPane scrollAreaEntrada = new JScrollPane(areaTexto);
+		areaTexto.setLineWrap(true);
+		areaTexto.setEditable(false);
 	
 		 
 		
@@ -123,14 +165,24 @@ public class Interfaz extends JFrame{
 		constrain.gridy=2;
 		JLabel blancas = new JLabel("Blancas");
 		blancas.setFont(fuenteEtiquetas);
-		panelJuego.add(panel, constrain);
+		panelJuego.add(panelTableroConBordes, constrain);
 		constrain.gridy=3;
 		panelJuego.add(blancas, constrain);
 		
 		pboton.add(botonJugadaSiguiente);
+		pboton.add(scrollAreaEntrada);
+		
+		
+		panelTableroConBordes.add(ejex,BorderLayout.SOUTH);
+		panelTableroConBordes.add(ejex2,BorderLayout.NORTH);
+		panelTableroConBordes.add(ejey,BorderLayout.WEST);
+		panelTableroConBordes.add(ejey2,BorderLayout.EAST);
+		panelTableroConBordes.add(panel,BorderLayout.CENTER);
 		
 		p1.add(panelJuego, BorderLayout.CENTER);		
-		p1.add(pboton, BorderLayout.SOUTH);
+		p1.add(panelMuertasNegras, BorderLayout.NORTH);
+		p1.add(panelMuertasBlancas, BorderLayout.SOUTH);
+		p1.add(pboton, BorderLayout.WEST);
 		
 		contenedor.add(p1);
 		
@@ -145,9 +197,43 @@ public class Interfaz extends JFrame{
 		
 	}
 	
+	private void cargarBordes()
+	{
+		ejex.setLayout(new GridLayout(1,6));
+		ejex2.setLayout(new GridLayout(1,6));
+		ejey2.setLayout(new GridLayout(6,1));
+		ejey.setLayout(new GridLayout(6,1));
+		
+		String letras= "fedcba";
+		
+		for(int j = 5; j >= 0 ; j--){
+			JLabel temp = new JLabel(""+letras.charAt(j),JLabel.CENTER);
+			JLabel temp2 = new JLabel(""+letras.charAt(j),JLabel.CENTER);
+			JLabel temp3 = new JLabel(""+(j+1),JLabel.CENTER);
+			JLabel temp4 = new JLabel(""+(j+1),JLabel.CENTER);
+			
+			temp.setFont(botonJugadaSiguiente.getFont());
+			temp2.setFont(botonJugadaSiguiente.getFont());
+			temp3.setFont(botonJugadaSiguiente.getFont());
+			temp4.setFont(botonJugadaSiguiente.getFont());
+			
+	
+			//temp.setBorder(BorderFactory.createLineBorder(Color.black));
+			ejex2.add(temp);
+			ejex.add(temp2);
+			ejey.add(temp3);
+			ejey2.add(temp4);
+		
+		}
+		
+		
+		
+	}
+	
 	public void cargarImagenes(){
 		int contador = 0;
 		for(int i = 0; i < 6 ; i++){
+			
 			for(int j = 0; j < 6 ; j++){
 				JLabel temp = (JLabel)(panel.getComponent(contador));
 				ImageIcon img = new ImageIcon("imagenes/"+((int)tablero[j][i])+".gif");		
@@ -157,6 +243,42 @@ public class Interfaz extends JFrame{
 				contador++;
 			}
 		}
+		cargarImagenesMuertas();
+		
+		
+	}
+	
+	public void cargarImagenesMuertas()
+	{
+		for (int i=0 ;i<juego.negrasMuertas.size();i++)
+		{
+		
+		JLabel temp = new JLabel();
+		ImageIcon img = new ImageIcon("imagenes/"+((int) juego.negrasMuertas.get(i) )+".gif");		
+		img.setImage(img.getImage().getScaledInstance(d.width-10, d.height-10, Image.SCALE_DEFAULT));
+		temp.setIcon(img);
+		//temp.setBorder(BorderFactory.createLineBorder(Color.black));
+		panelMuertasNegras.add(temp);
+		}		
+		juego.negrasMuertas.clear();
+		panelMuertasNegras.updateUI();
+		
+		
+		for (int i=0 ;i<juego.blancasMuertas.size();i++)
+		{
+		
+		JLabel temp = new JLabel();
+		ImageIcon img = new ImageIcon("imagenes/"+((int) juego.blancasMuertas.get(i) )+".gif");		
+		img.setImage(img.getImage().getScaledInstance(d.width-10, d.height-10, Image.SCALE_DEFAULT));
+		temp.setIcon(img);
+		//temp.setBorder(BorderFactory.createLineBorder(Color.black));
+		panelMuertasBlancas.add(temp);
+		}		
+		juego.blancasMuertas.clear();
+		panelMuertasBlancas.updateUI();
+		
+		
+		
 	}
 	
 	public void cargarFondo(){
@@ -213,6 +335,8 @@ public class Interfaz extends JFrame{
 	
 	
 	
+	
+	
 	private class Manejador implements MouseListener, ActionListener{
 
 		@Override
@@ -239,13 +363,31 @@ public class Interfaz extends JFrame{
 							//no se puede mover ahi
 							if(!juego.comprobarMovimientos(tablero[posSeleccionado[0]][posSeleccionado[1]],
 									posSeleccionado[0],posSeleccionado[1], posx, posy)){
-								JOptionPane.showMessageDialog(null, "No se puede mover :: Deja en Jaque a su REY");
+								JOptionPane.showMessageDialog(null, "Movimiento No Valido");
 								seleccionado = true;
 								return;
 							}
 							
-							// se actualiza la matriz
+							// se actualiza la matriz movimiento min
 							etiquetaSelect.setBackground(colorViejo);
+							
+							
+							String letras = "abcdef";
+							Mensaje+="Movimiento ( "+tablero[posSeleccionado[0]][posSeleccionado[1]]+","+letras.charAt(posy) + (6-posx) + ") \n";
+							 
+							
+							if(tablero[posx][posy] !='.' && tablero[posSeleccionado[0]][posSeleccionado[1]]!='.' )//hay muerta 
+							{
+								juego.blancasMuertas.add(tablero[posx][posy]);
+								//JOptionPane.showMessageDialog(null, "Muerta::" +tablero[posx][posy]);
+								
+								Mensaje+="Muerta::" +tablero[posx][posy]+"\n";
+								
+							}
+							
+							 
+							areaTexto.setText(areaTexto.getText()+Mensaje);
+							Mensaje="";
 							tablero[posx][posy] = tablero[posSeleccionado[0]][posSeleccionado[1]];
 							tablero[posSeleccionado[0]][posSeleccionado[1]] = '.';
 							cargarImagenes();
@@ -259,7 +401,11 @@ public class Interfaz extends JFrame{
 							}
 							botonJugadaSiguiente.setEnabled(true);
 						}
-					} else {// primer click						
+					}
+					
+					
+					
+					else {// primer click						
 						String may = "BKNPQ";
 						if(may.contains(Character.toString(tablero[posx][posy]))){
 							return;// PARA NO MOVER LAS FICHAS BLANCAS
@@ -320,6 +466,9 @@ public class Interfaz extends JFrame{
 				cargarImagenes();
 				amateur.setEnabled(false);
 				principiante.setEnabled(false);
+				
+				areaTexto.setText(areaTexto.getText()+juego.getMensaje());
+				
 				if(juego.pierdeMin(tablero)){
 					return;
 				}

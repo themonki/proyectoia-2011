@@ -8,6 +8,11 @@ import javax.swing.JOptionPane;
 
 public class Jugar {
 	
+	Vector <Character> negrasMuertas= new Vector<Character>();
+	Vector <Character> blancasMuertas= new Vector<Character>();
+	
+	String Mensaje="Jugada Max: \n";
+	
 	
 	Vector <Integer> dxIlum= new Vector<Integer>(),dyIlum= new Vector<Integer>();
 	private char tablero[][] = new char[6][6];
@@ -213,7 +218,63 @@ public class Jugar {
 	
 	public void jugadaMax(int nivel){
 		MiniMaxClass max = new MiniMaxClass(tablero,nivel);
-		tablero = max.decisionMiniMax();
+		char [][] tableroTemp= max.decisionMiniMax();
+		
+		GetFichaMuerta(tablero,tableroTemp);
+		
+		tablero = tableroTemp;
 		
 	}
+	
+	public String getMensaje(){
+		String Temp= ""+Mensaje ;
+		Mensaje="Jugada Max: \n";
+		
+		return Temp;
+	}
+	
+
+	private void GetFichaMuerta(char [][]tableroIni, char[][]tableroFin ){
+		
+		
+		for (int i=0;i<6;i++)
+			for (int j=0;j<6;j++)
+			{
+				
+				if(tableroIni[i][j]!=tableroFin[i][j] ){
+					
+					 if (tableroIni[i][j]=='.'&& tableroFin[i][j]!='.' ){
+						 String letras = "abcdef";
+						 
+						 Mensaje+="Movimiento ( "+tableroFin[i][j]+","+letras.charAt(j) + (6-i) + ") \n";
+						 System.out.println(i+";;; "+j);
+						 
+						 
+						 
+					 }
+					 if(tableroIni[i][j]!='.'&&tableroFin[i][j]!='.'){
+						 
+						// JOptionPane.showMessageDialog(null, "Muerta::" +tableroIni[i][j]);
+						 negrasMuertas.add(tableroIni[i][j]);
+						 
+						 
+						 String letras = "abcdef";
+						 Mensaje+="Movimiento ( "+tableroFin[i][j]+","+letras.charAt(j) + (6-i) + ") \n";
+						 
+						 Mensaje+="::Muerte::"+tableroIni[i][j]+" \n";
+						 
+					
+						 
+					 
+					 }
+					 
+				}
+				
+				
+				
+			}
+				
+		
+	}
+	
 }

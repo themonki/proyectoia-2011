@@ -42,12 +42,12 @@ public class Button extends JButton {
 	/**
      *
      */
-	private Color color1 = new Color(10, 10, 250);
+	private Color color1 = new Color(250, 0, 250);
 	/**
      * 
      * 
      */
-	private Color color2 = new Color(100, 100, 250);
+	private Color color2 = new Color(100, 100, 100);
 	/**
      * 
      */

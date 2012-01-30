@@ -149,7 +149,7 @@ public class Nodo {
 				
 						break;
 
-					case 'Q':temp=6; //reina
+					case 'Q':temp=7; //reina
 						
 						
 						break;
