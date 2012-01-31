@@ -36,7 +36,7 @@ public class UtilsChess {
 		
 
 		
-		char amenazante='.';
+	
 
 		//	        
 		for(int i=0; i<6; i++) {
@@ -53,37 +53,34 @@ public class UtilsChess {
 					case 'P': //peon
 						int signX= Character.isUpperCase(actual) ? -1 : 1;
 						if(recorrido1pasoExpandir(i,j, dxPeon1, dyPeon1, signX))
-							amenazante=actual;
+							
 						break;
 
 					case 'N': //Caballo
 						if(recorrido1pasoExpandir(i,j, dxCaballo, dyCaballo, 1))
-							amenazante=actual;
+							
 						
 						
 						break;
 
 					case 'B': //alfil
 						if(recorridoMultipleExpandir(i,j, dxAlfil, dyAlfil))
-							amenazante=actual;
+							
 						break;
 
-					case 'R': //torre
-						if(recorridoMultipleExpandir(i,j, dxTorre, dyTorre))
-							amenazante=actual;
-						break;
+					
 
 					case 'Q': //reina
 						
 						if(recorridoMultipleExpandir(i,j, dxTorre, dyTorre) ||
 								recorridoMultipleExpandir(i,j, dxAlfil, dyAlfil))
-							amenazante=actual;
+							
 						
 						break;
 						
-					case 'K': //reina
+					case 'K': //Rey
 						if(recorrido1pasoExpandir(i,j, dxRey, dyRey,1))
-							amenazante=actual;
+							
 						break;
 						
 					
@@ -213,19 +210,14 @@ public class UtilsChess {
 						
 						return dxYdy;
 
-				case 'R': //torre
-					
-					recorridoMultiple2(i,j, dxTorre, dyTorre,dxYdy);
-						
-						return dxYdy;
-
+			
 				case 'Q': //reina
 					recorridoMultiple2(i,j, dxTorre, dyTorre,dxYdy) ;
 							recorridoMultiple2(i,j, dxAlfil, dyAlfil,dxYdy);
 						
 						return dxYdy;
 					
-				case 'K': //reina
+				case 'K': //Rey
 					
 					recorrido1paso2(i,j, dxRey, dyRey,1,dxYdy);
 						
@@ -333,9 +325,7 @@ public class UtilsChess {
 	
 	boolean recorrido1paso2(int x, int y, int[] dx, int[] dy, int signoX,Vector <Vector <Integer >> dxYdy) {
 		
-		
-		//static int[] dxCaballo = {-2,-1,+2,+1,+2,+1,-2,-1};
-		//static int[] dyCaballo = {-1,-2,-1,-2,+1,+2,+1,+2};
+
 
 		final char actual=TableroCheck[x][y];
 		
@@ -402,13 +392,7 @@ public class UtilsChess {
 	}
 
 
-	boolean tableroVacio() {
-		for(int i=0; i<8; i++)
-			for(int j=0; j<8; j++)
-				if(TableroCheck[i][j]!='.') 
-					return false;
-		return true;
-	}
+	
 
 	boolean esReyEnemigo(char actual, char otra) {	
 		//verfica que la otra ficha sea un rey y luego que ambos no sean mayusculas ni minisculas  
