@@ -511,7 +511,9 @@ public class Interfaz extends JFrame{
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
 		new Interfaz();
+		JOptionPane.showMessageDialog(null, "Para Iniciar el juego debe dar click en el boton siguiente jugada");
 		
 		
 	}
