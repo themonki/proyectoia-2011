@@ -67,11 +67,28 @@ public class MiniMaxClass {
 		for (int j=0;j<SiguienteJugada.size();j++)
 		{
 			
-			if (SiguienteJugada.get(j).getMinMax()>mayorMax){
+
+			if (SiguienteJugada.get(j).getMinMax()==mayorMax){
+				
+				Random randon = new Random();
+				int escoje=Math.abs(randon.nextInt())%2;
+				System.out.println("escoje ::"+escoje);
+				
+				if(escoje==0){
+					respuesta=SiguienteJugada.get(j);
+					mayorMax=SiguienteJugada.get(j).getMinMax();
+					
+				}
+				
+				
+			}
+			else if (SiguienteJugada.get(j).getMinMax()>mayorMax){
 				
 				respuesta=SiguienteJugada.get(j);
 				mayorMax=SiguienteJugada.get(j).getMinMax();
 			}
+
+			 
 			
 			
 		}
@@ -105,28 +122,6 @@ public class MiniMaxClass {
 		
 	}
 	
-	public static void main (String args []){
-		char [][] TableroInicial=
-			{
-		
-				{'.','.','.','k','.','.'},
-				{'.','.','.','.','.','.'},
-				{'.','N','.','.','.','n'},
-				{'.','.','.','.','.','.'},
-				{'.','P','.','.','.','K'},
-				{'.','.','.','q','.','.'},
-			};
-		
 
-	  char o='Q';
-	  int a=o;
-	  UtilsChess chek = new UtilsChess();
-	  
-	MiniMaxClass min = new MiniMaxClass(TableroInicial, 2);
-	chek.verEstado(min.decisionMiniMax());
-	
-		
-		
-	}
 
 }

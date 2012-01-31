@@ -247,7 +247,7 @@ public class Jugar {
 						 String letras = "abcdef";
 						 
 						 Mensaje+="Movimiento ( "+tableroFin[i][j]+","+letras.charAt(j) + (6-i) + ") \n";
-						 System.out.println(i+";;; "+j);
+						
 						 
 						 
 						 
