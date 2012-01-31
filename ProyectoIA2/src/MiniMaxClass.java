@@ -72,7 +72,7 @@ public class MiniMaxClass {
 				
 				Random randon = new Random();
 				int escoje=Math.abs(randon.nextInt())%2;
-				System.out.println("escoje ::"+escoje);
+				
 				
 				if(escoje==0){
 					respuesta=SiguienteJugada.get(j);
@@ -94,10 +94,10 @@ public class MiniMaxClass {
 		}
 	
 		
-		UtilsChess ver =new UtilsChess() ;
-		ver.verEstado(respuesta.getTablero());
+		//UtilsChess ver =new UtilsChess() ;
+		//ver.verEstado(respuesta.getTablero());
 		
-		System.out.println(respuesta.maxOmin);
+		//System.out.println(respuesta.maxOmin);
 		
 		return respuesta.getTablero();
 		

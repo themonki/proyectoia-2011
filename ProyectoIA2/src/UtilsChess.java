@@ -228,7 +228,7 @@ public class UtilsChess {
 		final char actual=tablero[x][y];
 		for(int dir=0; dir<dx.length; dir++) {
 			int xx = x+dx[dir]*signoX, yy = y+dy[dir];
-			System.out.println("dx::"+(dx[dir]*signoX) +" dy::"+dy[dir]+actual);
+			
 			boolean peonCase=true ;
 			if(Character.toUpperCase(actual)=='P' && valid(xx,yy)){
 				
@@ -259,7 +259,7 @@ public class UtilsChess {
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
 				//si mi movimiento hace que quede en jaque mi rey no creo ese nodo
 				if (!isCheck (nuevoTablero,actual)){
-					verEstado(nuevoTablero);
+				//	verEstado(nuevoTablero);
 				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	       	
 				hijos.add(hijo);}
 
@@ -455,7 +455,7 @@ public class UtilsChess {
 		// TODO Auto-generated method stub
 
 	}
-	/*public static void main (String args []){
+	public static void main (String args []){
 		
 		char tablero[][]={
 				
@@ -463,11 +463,11 @@ public class UtilsChess {
 			
 				{'.','.','.','.','.','.'},
 			
-				{'.','.','.','.','.','.'},
+				{'.','.','.','k','.','.'},
 			
-				{'.','.','.','.','N','.'},
+				{'.','.','.','k','P','.'},
 			
-				{'.','.','.','.','.','.'},
+				{'.','.','.','k','.','.'},
 			
 				{'.','.','.','.','.','.'},
 
@@ -478,7 +478,7 @@ public class UtilsChess {
 		util.expandir(x, true);
 		
 		
-	}*/
+	}
 
 }
 
