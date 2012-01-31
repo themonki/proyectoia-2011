@@ -388,7 +388,7 @@ public class Interfaz extends JFrame{
 							
 							
 							String letras = "abcdef";
-							Mensaje+="Movimiento ( "+tablero[posSeleccionado[0]][posSeleccionado[1]]+","+letras.charAt(posy) + (6-posx) + ") \n";
+							Mensaje+="Movimiento ( "+juego.nombreFicha(tablero[posSeleccionado[0]][posSeleccionado[1]])+","+letras.charAt(posy) + (6-posx) + ") \n";
 							 
 							
 							if(tablero[posx][posy] !='.' && tablero[posSeleccionado[0]][posSeleccionado[1]]!='.' )//hay muerta 
@@ -396,7 +396,7 @@ public class Interfaz extends JFrame{
 								juego.blancasMuertas.add(tablero[posx][posy]);
 								//JOptionPane.showMessageDialog(null, "Muerta::" +tablero[posx][posy]);
 								
-								Mensaje+="Muerta::" +tablero[posx][posy]+"\n";
+								Mensaje+="Muerte::" +juego.nombreFicha(tablero[posx][posy])+"\n";
 								
 							}
 							

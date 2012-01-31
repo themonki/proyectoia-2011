@@ -246,7 +246,7 @@ public class Jugar {
 					 if (tableroIni[i][j]=='.'&& tableroFin[i][j]!='.' ){
 						 String letras = "abcdef";
 						 
-						 Mensaje+="Movimiento ( "+tableroFin[i][j]+","+letras.charAt(j) + (6-i) + ") \n";
+						 Mensaje+="Movimiento ( "+nombreFicha(tableroFin[i][j])+","+letras.charAt(j) + (6-i) + ") \n";
 						
 						 
 						 
@@ -259,9 +259,9 @@ public class Jugar {
 						 
 						 
 						 String letras = "abcdef";
-						 Mensaje+="Movimiento ( "+tableroFin[i][j]+","+letras.charAt(j) + (6-i) + ") \n";
+						 Mensaje+="Movimiento ( "+nombreFicha(tableroFin[i][j])+","+letras.charAt(j) + (6-i) + ") \n";
 						 
-						 Mensaje+="::Muerte::"+tableroIni[i][j]+" \n";
+						 Mensaje+="::Muerte::"+nombreFicha(tableroIni[i][j])+" \n";
 						 
 					
 						 
@@ -275,6 +275,38 @@ public class Jugar {
 			}
 				
 		
+	}
+	
+	
+	public String nombreFicha(char ficha ){
+		
+		
+		
+		switch(Character.toUpperCase(ficha)) 
+		{//convierte la letra a mayuscula y busca el caso correspondiente
+		case 'P': return "Peon";
+			
+			
+
+		case 'N': return "Caballo";
+			
+		
+
+		case 'B': return "Alfil";
+		
+		case 'Q':return "Reina";
+		
+			
+	
+		
+		case 'K':return "Rey";
+			
+	
+	
+		};
+	
+		return "";
+	
 	}
 	
 }
