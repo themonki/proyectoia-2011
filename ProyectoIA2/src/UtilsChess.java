@@ -52,19 +52,17 @@ public class UtilsChess {
 
 					case 'P': //peon
 						int signX= Character.isUpperCase(actual) ? -1 : 1;
-						if(recorrido1pasoExpandir(i,j, dxPeon1, dyPeon1, signX))
+						recorrido1pasoExpandir(i,j, dxPeon1, dyPeon1, signX);
 							
 						break;
 
 					case 'N': //Caballo
-						if(recorrido1pasoExpandir(i,j, dxCaballo, dyCaballo, 1))
-							
-						
+						recorrido1pasoExpandir(i,j, dxCaballo, dyCaballo, 1);
 						
 						break;
 
 					case 'B': //alfil
-						if(recorridoMultipleExpandir(i,j, dxAlfil, dyAlfil))
+						recorridoMultipleExpandir(i,j, dxAlfil, dyAlfil);
 							
 						break;
 
@@ -72,14 +70,14 @@ public class UtilsChess {
 
 					case 'Q': //reina
 						
-						if(recorridoMultipleExpandir(i,j, dxTorre, dyTorre) ||
-								recorridoMultipleExpandir(i,j, dxAlfil, dyAlfil))
+						recorridoMultipleExpandir(i,j, dxTorre, dyTorre) ;
+								recorridoMultipleExpandir(i,j, dxAlfil, dyAlfil);
 							
 						
 						break;
 						
 					case 'K': //Rey
-						if(recorrido1pasoExpandir(i,j, dxRey, dyRey,1))
+						recorrido1pasoExpandir(i,j, dxRey, dyRey,1);
 							
 						break;
 						
@@ -169,11 +167,6 @@ public class UtilsChess {
 	
 	
 	
-	
-	
-	
-	
-	
 	public  Vector<Vector<Integer>> posibilidadesFicha(char [][] tableroComparar,char ficha,int i, int j) {
 
 
@@ -235,18 +228,23 @@ public class UtilsChess {
 		final char actual=tablero[x][y];
 		for(int dir=0; dir<dx.length; dir++) {
 			int xx = x+dx[dir]*signoX, yy = y+dy[dir];
-			
+			System.out.println("dx::"+(dx[dir]*signoX) +" dy::"+dy[dir]+actual);
 			boolean peonCase=true ;
 			if(Character.toUpperCase(actual)=='P' && valid(xx,yy)){
 				
 				if(dy[dir]==0)//voy de frente 
 					peonCase=tablero[xx][yy]=='.';
-				else { peonCase=esFichaEnemiga(actual, tablero[xx][yy]);}//mato de lado 
+				else 
+				{ 
+					peonCase=esFichaEnemiga(actual, tablero[xx][yy]);
+					//System.out.println("cual es??? " +tablero[xx][yy] +peonCase+"dx::"+(dx[dir]*signoX) +" dy::"+dy[dir]+actual);
+				}//mato de lado 
 				
 			};
 
 			if(valid(xx,yy)&& peonCase  && (tablero[xx][yy]=='.'||esFichaEnemiga(actual, tablero[xx][yy])))// miro si es valida la posicion y si tengo uno que matar 
 			{
+				
 				
 				//System.out.println("if  1 "+tablero[xx][yy])  ;
 
@@ -261,7 +259,7 @@ public class UtilsChess {
 				// falta la condicion de si ese movimiento deja en jaque a mi rey ojo ? ????  
 				//si mi movimiento hace que quede en jaque mi rey no creo ese nodo
 				if (!isCheck (nuevoTablero,actual)){
-					//verEstado(nuevoTablero);
+					verEstado(nuevoTablero);
 				Nodo hijo = new Nodo( nuevoTablero, padre.getAltura()+1,padre);	       	
 				hijos.add(hijo);}
 
@@ -457,6 +455,30 @@ public class UtilsChess {
 		// TODO Auto-generated method stub
 
 	}
+	/*public static void main (String args []){
+		
+		char tablero[][]={
+				
+				{'.','.','.','.','.','.'},
+			
+				{'.','.','.','.','.','.'},
+			
+				{'.','.','.','.','.','.'},
+			
+				{'.','.','.','.','N','.'},
+			
+				{'.','.','.','.','.','.'},
+			
+				{'.','.','.','.','.','.'},
+
+		};
+		
+		UtilsChess util = new UtilsChess();
+		Nodo x  = new Nodo(tablero,1,null);
+		util.expandir(x, true);
+		
+		
+	}*/
 
 }
 

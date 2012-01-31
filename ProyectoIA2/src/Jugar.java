@@ -15,7 +15,23 @@ public class Jugar {
 	
 	
 	Vector <Integer> dxIlum= new Vector<Integer>(),dyIlum= new Vector<Integer>();
-	private char tablero[][] = new char[6][6];
+	private char tablero[][]=new char[6][6];/*{
+			
+			{'.','q','.','.','.','n'},
+		
+			{'p','.','P','B','.','P'},
+		
+			{'Q','.','.','.','P','.'},
+		
+			{'.','.','.','k','P','.'},
+		
+			{'N','.','.','.','.','K'},
+		
+			{'p','.','p','.','.','b'},
+
+	}; */
+	
+	 
 	public Jugar(){
 		generarPartida();
 	}
@@ -32,6 +48,8 @@ public class Jugar {
 		for(int i = 0; i < 6; i ++)
 			for(int j = 0; j < 6 ; j++ )
 				tablero[i][j]= '.';
+		
+		
 		
 		int contador=0, max = 16;
 		char fichas[] = {'k', 'K', 'p', 'P', 'p', 'P','p', 'P','p', 'P','q','Q','b','B','n','N'};
@@ -285,23 +303,17 @@ public class Jugar {
 		switch(Character.toUpperCase(ficha)) 
 		{//convierte la letra a mayuscula y busca el caso correspondiente
 		case 'P': return "Peon";
-			
-			
-
+	
 		case 'N': return "Caballo";
-			
 		
-
 		case 'B': return "Alfil";
 		
 		case 'Q':return "Reina";
 		
-			
-	
+		
 		
 		case 'K':return "Rey";
 			
-	
 	
 		};
 	
