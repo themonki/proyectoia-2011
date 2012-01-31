@@ -46,6 +46,7 @@ public class Interfaz extends JFrame{
 	JPanel ejex= new JPanel(),ejey= new JPanel(),ejex2= new JPanel(),ejey2= new JPanel();
 	
 	Color c [] = {Color.white,colorFondo }, colorViejo, colorSelect = new Color (90,250,90);
+	
 	Manejador manejador = new Manejador();
 	boolean seleccionado = false, flagClick = false;//nota:cambiarlo a false
 	int posSeleccionado [] = {-1,-1}, nivelAmateur=4 , nivelPrincipiante=2, nivel=nivelPrincipiante;
@@ -80,17 +81,69 @@ public class Interfaz extends JFrame{
 	}
 		
 	public void initComponet(){
+		//------------------Inicio Layout--------------------------
+				GridBagLayout gl = new GridBagLayout();
+		//-----------------Inicio Paneles ------------------------------------------
 		Container contenedor = getContentPane();
+		JPanel panelTableroConBordes= new JPanel(new BorderLayout());
+		panel = new JPanel();
+		panelMuertasNegras= new JPanel();
+		panelMuertasBlancas= new JPanel();
+		ejex= new JPanel();ejey= new JPanel();ejex2= new JPanel();ejey2= new JPanel();
 		
+		panelMuertasNegras.setBackground(Color.LIGHT_GRAY);
+		panelMuertasBlancas.setBackground(Color.DARK_GRAY);
+
+		JLabel temp = new JLabel(),tem2 = new JLabel();
+		ImageIcon img = new ImageIcon("imagenes/"+((int) '.' )+".gif");		
+		img.setImage(img.getImage().getScaledInstance(d.width-10, d.height-10, Image.SCALE_DEFAULT));
+		temp.setIcon(img);
+		tem2.setIcon(img);
+		
+		
+		panelMuertasNegras.add(tem2);
+		panelMuertasBlancas.add(temp);
+		
+	
+		panel.setLayout(gl);
+		
+		panelTableroConBordes.setBorder(BorderFactory.createRaisedBevelBorder());
+		
+		JPanel p1 = new JPanel(new java.awt.BorderLayout()), pboton = new JPanel();
+		JPanel panelJuego = new JPanel(gl);
+		pboton.setLayout(( new BoxLayout( pboton, BoxLayout.PAGE_AXIS)));
+		
+		
+		
+		
+		//------------------Inicio Menus-------------------------------------------------
 		JMenuBar menu = new JMenuBar();
-		botonJugadaSiguiente = new Button("Siguiente Jugada");
-		botonJugadaSiguiente.addActionListener(manejador);
-		botonJugadaSiguiente.setEnabled(true);
 		JMenu archivo = new JMenu("Archivo"),dificultad = new JMenu("Dificultad");
 		nuevoJuego = new JMenuItem("Nuevo Juego");
 		principiante = new JRadioButtonMenuItem("principiante");
 		amateur=new JRadioButtonMenuItem("Amateur");
+		//------------------Inicio Botones-------------------------------------------
+		botonJugadaSiguiente = new Button("Siguiente Jugada");
+		botonJugadaSiguiente.addActionListener(manejador);
+		botonJugadaSiguiente.setEnabled(true);
 		
+		
+		//-------------------Inicio TexAreas----------------------------------------
+		areaTexto= new JTextArea(5,7);
+		areaTexto.setBackground(Color.black);
+		areaTexto.setForeground(Color.GREEN);
+		areaTexto.setFont(botonJugadaSiguiente.getFont());
+		
+		UtilsChess util = new UtilsChess();
+		areaTexto.setText("::Partida :: \n  Tablero Inicial  \n"+util.verEstado(tablero));
+		JScrollPane scrollAreaEntrada = new JScrollPane(areaTexto);
+		areaTexto.setLineWrap(true);
+		areaTexto.setEditable(false);
+		
+		
+		//--------------------Crear Menu Bar------------------
+		
+
 		principiante.setSelected(true);
 		
 		principiante.addActionListener(manejador);
@@ -104,58 +157,19 @@ public class Interfaz extends JFrame{
 		menu.add(archivo);
 		this.setJMenuBar(menu);
 		
-		ejex= new JPanel();ejey= new JPanel();ejex2= new JPanel();ejey2= new JPanel();
-		cargarBordes();
+		//----------- ----------------------------
 		
-		JPanel panelTableroConBordes= new JPanel(new BorderLayout());
+		cargarBordes();// carga los bordes del tablero es decir las letras y los numeros  que estan a su alrededor
 		
-		panel = new JPanel();
-		panelMuertasNegras= new JPanel();
-		panelMuertasBlancas= new JPanel();
-		areaTexto= new JTextArea(5,7);
+		cargarFondo();//carga el tablero vacio 
 		
-		areaTexto.setBackground(Color.black);
-		areaTexto.setForeground(Color.GREEN);
-		areaTexto.setFont(botonJugadaSiguiente.getFont());
-		UtilsChess util = new UtilsChess();
-		areaTexto.setText("::Partida :: \n  Tablero Inicial  \n"+util.verEstado(tablero));
-		
-		panelMuertasNegras.setBackground(Color.LIGHT_GRAY);
-		panelMuertasBlancas.setBackground(Color.DARK_GRAY);
-		
-		JLabel temp = new JLabel(),tem2 = new JLabel();
-		ImageIcon img = new ImageIcon("imagenes/"+((int) '.' )+".gif");		
-		img.setImage(img.getImage().getScaledInstance(d.width-10, d.height-10, Image.SCALE_DEFAULT));
-		temp.setIcon(img);
-		tem2.setIcon(img);
-		panelMuertasNegras.add(tem2);
-		panelMuertasBlancas.add(temp);
-		
-		//JScrollPane scroll = new JScrollPane(panel);
-		//scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		//scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		
-		
-		
-		GridBagLayout gl = new GridBagLayout();
-		panel.setLayout(gl);
-		
-		panelTableroConBordes.setBorder(BorderFactory.createRaisedBevelBorder());
-		
-		
-		
-		cargarFondo();
+		cargarImagenes();//carga el panel con las fichas dependiendo del tablero 
 
 				
-		JPanel p1 = new JPanel(new java.awt.BorderLayout()), pboton = new JPanel();
-		JPanel panelJuego = new JPanel(gl);
-		pboton.setLayout(( new BoxLayout( pboton, BoxLayout.PAGE_AXIS)));
+		//-------------------------------------------
 		
-		JScrollPane scrollAreaEntrada = new JScrollPane(areaTexto);
-		areaTexto.setLineWrap(true);
-		areaTexto.setEditable(false);
-	
-		 
+		
+		//-------------ADD Panels
 		
 		GridBagConstraints constrain = new GridBagConstraints();
 		constrain.gridy=1;
@@ -186,8 +200,9 @@ public class Interfaz extends JFrame{
 		
 		contenedor.add(p1);
 		
-		cargarImagenes();
 		
+		
+		// -----------Init This------------
 		
 		setSize(900,900);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -387,7 +402,7 @@ public class Interfaz extends JFrame{
 							
 							 
 							areaTexto.setText(areaTexto.getText()+Mensaje);
-							Mensaje="";
+							Mensaje="Jugada Min: \n";
 							tablero[posx][posy] = tablero[posSeleccionado[0]][posSeleccionado[1]];
 							tablero[posSeleccionado[0]][posSeleccionado[1]] = '.';
 							cargarImagenes();
